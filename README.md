@@ -18,27 +18,27 @@ Sure, here's the course outline presented in a table format:
 |   |   |                  | - Bus Matrix|
 |   |   |                  |- Harvard To Von Neumann Conversion|
 |   |   |                  |- Register Definition and Driver Setup|
-|   | 2 | RCC Peripheral |
-|   | 3 | DIO Peripheral |
-| 2 | 4 | NVIC |
-|   | 5 | NVIC Driver |
-|   | 6 | EXTI |
-| 3 | 7 | SysTick |
-|   | 8 | OS Scheduler |
-|   | 9 | LED Matrix |
-| 4 | 10 | DAC |
-|   | 11 | Audible Signals |
-| 5 | 12 | Serial To Parallel |
-|   | 13 | IR Communication |
-|   | 14 | UART |
-|   | 15 | SPI and TFT |
-| 5 | 16 | DMA |
-| 6 | 17 | WiFi Module |
-|   | 18 | Web Development |
-|   | 19 | IoT |
-| 7 | 20 | Story of Flashing |
-|   | 21 | Hex Parser |
-|   | 22 | Bootloader Implementation |
+|   | 2 | RCC Peripheral | |
+|   | 3 | DIO Peripheral | |
+| 2 | 4 | NVIC | |
+|   | 5 | NVIC Driver | |
+|   | 6 | EXTI | |
+| 3 | 7 | SysTick | |
+|   | 8 | OS Scheduler | |
+|   | 9 | LED Matrix | |
+| 4 | 10 | DAC | |
+|   | 11 | Audible Signals | |
+| 5 | 12 | Serial To Parallel | |
+|   | 13 | IR Communication | |
+|   | 14 | UART | |
+|   | 15 | SPI and TFT | |
+| 5 | 16 | DMA | |
+| 6 | 17 | WiFi Module | |
+|   | 18 | Web Development | |
+|   | 19 | IoT | |
+| 7 | 20 | Story of Flashing | |
+|   | 21 | Hex Parser | |
+|   | 22 | Bootloader Implementation | |
 
 Each lecture is organized in a separate folder, containing the lecture slides, code examples, and exercises.
 
