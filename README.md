@@ -8,30 +8,37 @@ The course is divided into 7 chapters, with a total of 22 lectures. Here is an o
 
 Sure, here's the course outline presented in a table format:
 
-| Chapter | Lecture | Title |
+| Chapter | Lecture | Title | Outlines |
 | --- | --- | --- |
-|  | 1 | ARM Architecture |
-| 1 | 2 | RCC Peripheral |
-|  | 3 | DIO Peripheral |
-|  | 4 | NVIC |
-| 2 | 5 | NVIC Driver |
-|  | 6 | EXTI |
-|  | 7 | SysTick |
-| 3 | 8 | OS Scheduler |
-|  | 9 | LED Matrix |
-|  | 10 | DAC |
-| 4 | 11 | Audible Signals |
-|  | 12 | Serial To Parallel |
-|  | 13 | IR Communication |
-|  | 14 | UART |
-|  | 15 | SPI and TFT |
+| 1 | 1 | ARM Architecture |- ARM History
+                            - Power Factors in ARM
+                            - ARM Processor Design
+                            - ARM Core Peripheral
+                            - AMBA Bus definition
+                            - Bus Matrix
+                             - Harvard To Von Neumann Conversion
+                             - Register Definition and Driver Setup
+|   | 2 | RCC Peripheral |
+|   | 3 | DIO Peripheral |
+| 2 | 4 | NVIC |
+|   | 5 | NVIC Driver |
+|   | 6 | EXTI |
+| 3 | 7 | SysTick |
+|   | 8 | OS Scheduler |
+|   | 9 | LED Matrix |
+| 4 | 10 | DAC |
+|   | 11 | Audible Signals |
+| 5 | 12 | Serial To Parallel |
+|   | 13 | IR Communication |
+|   | 14 | UART |
+|   | 15 | SPI and TFT |
 | 5 | 16 | DMA |
-|  | 17 | WiFi Module |
-| 6 | 18 | Web Development |
-|  | 19 | IoT |
-|  | 20 | Story of Flashing |
-|  | 21 | Hex Parser |
-| 7 | 22 | Bootloader Implementation |
+| 6 | 17 | WiFi Module |
+|   | 18 | Web Development |
+|   | 19 | IoT |
+| 7 | 20 | Story of Flashing |
+|   | 21 | Hex Parser |
+|   | 22 | Bootloader Implementation |
 
 Each lecture is organized in a separate folder, containing the lecture slides, code examples, and exercises.
 
