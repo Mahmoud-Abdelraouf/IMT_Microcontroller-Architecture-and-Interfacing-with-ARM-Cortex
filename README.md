@@ -11,13 +11,13 @@ Sure, here's the course outline presented in a table format:
 | Chapter | Lecture | Title | Outlines |
 | --- | --- | --- |
 | 1 | 1 | ARM Architecture |- ARM History
-                            - Power Factors in ARM
-                            - ARM Processor Design
-                            - ARM Core Peripheral
-                            - AMBA Bus definition
-                            - Bus Matrix
-                             - Harvard To Von Neumann Conversion
-                             - Register Definition and Driver Setup
+|   |   |                  | - Power Factors in ARM
+|   |   |                  | - ARM Processor Design
+|   |   |                  | - ARM Core Peripheral
+|   |   |                  | - AMBA Bus definition
+|   |   |                  | - Bus Matrix
+|   |   |                  |- Harvard To Von Neumann Conversion
+|   |   |                  |- Register Definition and Driver Setup
 |   | 2 | RCC Peripheral |
 |   | 3 | DIO Peripheral |
 | 2 | 4 | NVIC |
