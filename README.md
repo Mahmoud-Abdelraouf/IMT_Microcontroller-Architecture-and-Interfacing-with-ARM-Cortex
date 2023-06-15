@@ -16,10 +16,21 @@ Sure, here's the course outline presented in a table format:
 |   |   |                  | - ARM Core Peripheral|
 |   |   |                  | - AMBA Bus definition|
 |   |   |                  | - Bus Matrix|
-|   |   |                  |- Harvard To Von Neumann Conversion|
-|   |   |                  |- Register Definition and Driver Setup|
-|   | 2 | RCC Peripheral | |
-|   | 3 | DIO Peripheral | |
+|   |   |                  | - Harvard To Von Neumann Conversion|
+|   |   |                  | - Register Definition and Driver Setup|
+|   | 2 | RCC Peripheral   | - IMT SDK for ARM Setup|
+|   |   |                  | - Code Naming Convention|
+|   |   |                  | - Microcontroller Clock Types|
+|   |   |                  | - PLL and FLL|
+|   |   |                  | - Different Reset Types|
+|   |   |                  | - Reset and Clock Control Peripheral Driver|
+|---|---|------------------|--------------------------------------------|
+|   | 3 | DIO Peripheral   | - Digital Input/Output peripheral Basics|
+|   |   |                  | - Different Input and Output modes|
+|   |   |                  | - Building DIO Driver for ST Microcontroller|
+|   |   |                  | - Interfacing LEDs|
+|   |   |                  | - Interfacing 7-Segment Displays|
+|   |   |                  | - Interfacing Tactile Switches|
 | 2 | 4 | NVIC | |
 |   | 5 | NVIC Driver | |
 |   | 6 | EXTI | |
