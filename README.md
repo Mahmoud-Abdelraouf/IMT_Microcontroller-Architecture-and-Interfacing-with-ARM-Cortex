@@ -9,7 +9,7 @@ The course is divided into 7 chapters, with a total of 22 lectures. Here is an o
 Sure, here's the course outline presented in a table format:
 
 | Chapter | Lecture | Title | Outlines |
-| --- | --- | --- |
+| ------- | ------- | ----- | -------- |
 | 1 | 1 | ARM Architecture |- ARM History|
 |   |   |                  | - Power Factors in ARM|
 |   |   |                  | - ARM Processor Design|
