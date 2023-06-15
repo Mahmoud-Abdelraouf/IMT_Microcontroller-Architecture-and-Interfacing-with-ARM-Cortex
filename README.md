@@ -6,41 +6,32 @@ Welcome to the ARM Embedded Systems and IoT Course! This repository contains the
 
 The course is divided into 7 chapters, with a total of 22 lectures. Here is an overview of the course outline:
 
-### Chapter 1 - ARM Architecture Basics
-- Lecture 1: ARM Architecture
-- Lecture 2: RCC Peripheral
-- Lecture 3: DIO Peripheral
+Sure, here's the course outline presented in a table format:
 
-### Chapter 2 - ARM Interrupts
-- Lecture 4: NVIC
-- Lecture 5: NVIC Driver
-- Lecture 6: EXTI
-
-### Chapter 3 - Real Time
-- Lecture 7: SysTick
-- Lecture 8: OS Scheduler
-- Lecture 9: LED Matrix
-
-### Chapter 4 - Audio Processing
-- Lecture 10: DAC
-- Lecture 11: Audible Signals
-
-### Chapter 5 - Communications
-- Lecture 12: Serial To Parallel
-- Lecture 13: IR Communication
-- Lecture 14: UART
-- Lecture 15: SPI and TFT
-- Lecture 16: DMA
-
-### Chapter 6 - IoT
-- Lecture 17: WiFi Module
-- Lecture 18: Web Development
-- Lecture 19: IoT
-
-### Chapter 7 - Bootloader
-- Lecture 20: Story of Flashing
-- Lecture 21: Hex Parser
-- Lecture 22: Bootloader Implementation
+| Chapter | Lecture | Title |
+| --- | --- | --- |
+|  | 1 | ARM Architecture |
+| 1 | 2 | RCC Peripheral |
+|  | 3 | DIO Peripheral |
+|  | 4 | NVIC |
+| 2 | 5 | NVIC Driver |
+|  | 6 | EXTI |
+|  | 7 | SysTick |
+| 3 | 8 | OS Scheduler |
+|  | 9 | LED Matrix |
+|  | 10 | DAC |
+| 4 | 11 | Audible Signals |
+|  | 12 | Serial To Parallel |
+|  | 13 | IR Communication |
+|  | 14 | UART |
+|  | 15 | SPI and TFT |
+| 5 | 16 | DMA |
+|  | 17 | WiFi Module |
+| 6 | 18 | Web Development |
+|  | 19 | IoT |
+|  | 20 | Story of Flashing |
+|  | 21 | Hex Parser |
+| 7 | 22 | Bootloader Implementation |
 
 Each lecture is organized in a separate folder, containing the lecture slides, code examples, and exercises.
 
