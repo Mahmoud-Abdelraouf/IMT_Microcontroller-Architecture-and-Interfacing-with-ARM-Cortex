@@ -10,7 +10,7 @@ Sure, here's the course outline presented in a table format:
 
 | Chapter                             | Lecture | Title                     | Outlines |
 | ----------------------------------- | ------- | ------------------------- | -------- |
-| Chapter 1 – ARM Architecture Basics | 1       | ARM Architecture          |- ARM History|
+| Chapter 1 – ARM Architecture Basics | 1       | ARM Architecture          | - ARM History|
 |                                     |         |                           | - Power Factors in ARM|
 |                                     |         |                           | - ARM Processor Design|
 |                                     |         |                           | - ARM Core Peripheral|
@@ -41,7 +41,7 @@ Sure, here's the course outline presented in a table format:
 |                                     |         |                           | - AFIO Peripheral|
 |                                     |         |                           | - Building EXTI driver|
 | Chapter 3 – Real Time               | 7       | SysTick                   | - Timer Basics|
-|                                     |         |                           |- SysTick Core Peripheral|
+|                                     |         |                           | - SysTick Core Peripheral|
 |                                     |         |                           | - Interval Vs Busy Wait delay|
 |                                     |         |                           | - Synchronous Vs Asynchronous Design|
 |                                     |         |                           | - Callback Function|
@@ -51,7 +51,7 @@ Sure, here's the course outline presented in a table format:
 |                                     |         |                           | - Time Triggered Design Patter and Real Dynamic Design Aspects|
 |                                     | 9       | LED Matrix                | - POV Concept|
 |                                     |         |                           | - 7-Segment Displays in POV Pattern|
-|                                     |         |                           |- Interfacing LED Matrix Display|
+|                                     |         |                           | - Interfacing LED Matrix Display|
 | Chapter 4 – Audio Processing        | 10      | DAC                       | - Digital To Analog Converter Basics|
 |                                     |         |                           | - R2R DAC|
 |                                     |         |                           | - Building DAC Driver|
@@ -65,19 +65,19 @@ Sure, here's the course outline presented in a table format:
 |                                     |         |                           | - Extending DIO Pins to unlimited number|
 |                                     |         |                           | - Interfacing LED Matrix Serially|
 |                                     | 13      | IR Communication          | - Communication Over light basics|
-|                                     |         |                           |- NEC IR Protocol|
-|                                     |         |                           |- Building IR Receiver Driver|
+|                                     |         |                           | - NEC IR Protocol|
+|                                     |         |                           | - Building IR Receiver Driver|
 |                                     | 14      | UART                      | - Serial Communication Characteristics
 |                                     |         |                           | - UART Basics
 |                                     |         |                           | - Building UART Driver
 |                                     |         |                           | - Interfacing USB TTL Module
 |                                     | 15      | SPI and TFT               | - SPI Basics
-|                                     |         |                           |- Building SPI Driver
-|                                     |         |                           |- Pixel Color Modes
-|                                     |         |                           |- Display Types and Comparison
-|                                     |         |                           |- Interfacing TFT Displays
-|                                     |         |                           |- Bit Map Images
-|                                     |         |                           |- Playing Video Samples
+|                                     |         |                           | - Building SPI Driver
+|                                     |         |                           | - Pixel Color Modes
+|                                     |         |                           | - Display Types and Comparison
+|                                     |         |                           | - Interfacing TFT Displays
+|                                     |         |                           | - Bit Map Images
+|                                     |         |                           | - Playing Video Samples
 |                                     | 16      | DMA                       | - Direct Memory Access Definitions and Basics
 |                                     |         |                           | - DMA Authorities against processor
 |                                     |         |                           | - DMA Driver Build
@@ -90,8 +90,8 @@ Sure, here's the course outline presented in a table format:
 |                                     |         |                           | - HTTP Requests
 |                                     |         |                           | - Building Simple Web Page
 |                                     | 19      | IoT                       | - Building Free Server with a simple web page
-|                                     |         |                           |- Connecting Microcontroller to web server
-|                                     |         |                           |- Microcontroller Communication over HTTP
+|                                     |         |                           | - Connecting Microcontroller to web server
+|                                     |         |                           | - Microcontroller Communication over HTTP
 | Chapter 7 – Bootloader              | 20      | Story of Flashing         | - C Build Process
 |                                     |         |                           | - Memory Sections
 |                                     |         |                           | - Startup Code 
@@ -100,7 +100,7 @@ Sure, here's the course outline presented in a table format:
 |                                     | 21      | Hex Parser                | - Building HEX Parser Driver
 |                                     |         |                           | - File Transfer over UART
 |                                     | 22      | Bootloader Implementation | - Flash Driver Software
-|                                     |         |                           |- Bootloader sequence
+|                                     |         |                           | - Bootloader sequence
      
 Each lecture is organized in a separate folder, containing the lecture slides, code examples, and exercises.
 
