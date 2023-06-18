@@ -2,15 +2,25 @@
 
 Welcome to the ARM Embedded Systems and IoT Course! This repository contains the materials and code for a comprehensive course on embedded systems that covers ARM architecture basics, interrupts, real-time processing, audio processing, communications, IoT, and bootloader implementation.
 
+## Course Overview
+
+The course is designed for students and professionals in the field of embedded systems or IoT who want to learn about ARM architecture, real-time processing, audio processing, communications, and IoT. By the end of this course, you will be able to:
+
+- Understand the basics of ARM architecture and peripherals.
+- Implement interrupt handling techniques using the Nested Vectored Interrupt Controller (NVIC).
+- Build a real-time scheduler using the SysTick and Operating Systems (OS) basics.
+- Implement audio processing techniques using the Digital-to-Analog Converter (DAC).
+- Implement communication protocols such as Serial, Infrared (IR), Universal Asynchronous Receiver-Transmitter (UART), and Serial Peripheral Interface (SPI).
+- Build IoT applications using Wi-Fi modules and web development techniques.
+- Implement a bootloader to update firmware in your microcontroller.
+
 ## Course Outline
 
 The course is divided into 7 chapters, with a total of 22 lectures. Here is an overview of the course outline:
 
-Sure, here's the course outline presented in a table format:
-
 | Chapter                             | Lecture | Title                     | Outlines |
 | ----------------------------------- | ------- | ------------------------- | -------- |
-| Chapter 1 – ARM Architecture Basics | 1       | ARM Architecture          |- ARM History|
+| Chapter 1 – ARM Architecture Basics | 1       | ARM Architecture          | - ARM History|
 |                                     |         |                           | - Power Factors in ARM|
 |                                     |         |                           | - ARM Processor Design|
 |                                     |         |                           | - ARM Core Peripheral|
@@ -41,7 +51,7 @@ Sure, here's the course outline presented in a table format:
 |                                     |         |                           | - AFIO Peripheral|
 |                                     |         |                           | - Building EXTI driver|
 | Chapter 3 – Real Time               | 7       | SysTick                   | - Timer Basics|
-|                                     |         |                           |- SysTick Core Peripheral|
+|                                     |         |                           | - SysTick Core Peripheral|
 |                                     |         |                           | - Interval Vs Busy Wait delay|
 |                                     |         |                           | - Synchronous Vs Asynchronous Design|
 |                                     |         |                           | - Callback Function|
@@ -51,7 +61,7 @@ Sure, here's the course outline presented in a table format:
 |                                     |         |                           | - Time Triggered Design Patter and Real Dynamic Design Aspects|
 |                                     | 9       | LED Matrix                | - POV Concept|
 |                                     |         |                           | - 7-Segment Displays in POV Pattern|
-|                                     |         |                           |- Interfacing LED Matrix Display|
+|                                     |         |                           | - Interfacing LED Matrix Display|
 | Chapter 4 – Audio Processing        | 10      | DAC                       | - Digital To Analog Converter Basics|
 |                                     |         |                           | - R2R DAC|
 |                                     |         |                           | - Building DAC Driver|
@@ -59,69 +69,61 @@ Sure, here's the course outline presented in a table format:
 |                                     |         |                           | - Sampling and Quantization|
 |                                     |         |                           | - Dealing with audio files|
 |                                     |         |                           | - Mono Vs Stereo| 
-|                                     |         |                           | - Using PICAXE and AUX Speaker|
-|                                     |         |                           | - Playing Sounds over DAC|
-| Chapter 5 – Communications          | 12      | Serial To Parallel        | - Serial Vs Parallel Communication|
-|                                     |         |                           | - Extending DIO Pins to unlimited number|
-|                                     |         |                           | - Interfacing LED Matrix Serially|
-|                                     | 13      | IR Communication          | - Communication Over light basics|
-|                                     |         |                           |- NEC IR Protocol|
-|                                     |         |                           |- Building IR Receiver Driver|
-|                                     | 14      | UART                      | - Serial Communication Characteristics
-|                                     |         |                           | - UART Basics
-|                                     |         |                           | - Building UART Driver
-|                                     |         |                           | - Interfacing USB TTL Module
-|                                     | 15      | SPI and TFT               | - SPI Basics
-|                                     |         |                           |- Building SPI Driver
-|                                     |         |                           |- Pixel Color Modes
-|                                     |         |                           |- Display Types and Comparison
-|                                     |         |                           |- Interfacing TFT Displays
-|                                     |         |                           |- Bit Map Images
-|                                     |         |                           |- Playing Video Samples
-|                                     | 16      | DMA                       | - Direct Memory Access Definitions and Basics
-|                                     |         |                           | - DMA Authorities against processor
-|                                     |         |                           | - DMA Driver Build
-| Chapter 6 – IOT                     | 17      | WiFi Module               | - WiFi Basics
-|                                     |         |                           | - WiFi Module Interfacing
-|                                     |         |                           | - Networking
-|                                     |         |                           | - Client and Server Model
-|                                     | 18      | Web Development           | - HTML Basics
-|                                     |         |                           | - PHP Basics
-|                                     |         |                           | - HTTP Requests
-|                                     |         |                           | - Building Simple Web Page
-|                                     | 19      | IoT                       | - Building Free Server with a simple web page
-|                                     |         |                           |- Connecting Microcontroller to web server
-|                                     |         |                           |- Microcontroller Communication over HTTP
-| Chapter 7 – Bootloader              | 20      | Story of Flashing         | - C Build Process
-|                                     |         |                           | - Memory Sections
-|                                     |         |                           | - Startup Code 
-|                                     |         |                           | - Flashing Sequence and Burner types
-|                                     |         |                           | - HEX File Format
-|                                     | 21      | Hex Parser                | - Building HEX Parser Driver
-|                                     |         |                           | - File Transfer over UART
-|                                     | 22      | Bootloader Implementation | - Flash Driver Software
-|                                     |         |                           |- Bootloader sequence
-     
-Each lecture is organized in a separate folder, containing the lecture slides, code examples, and exercises.
+|                                     |         |                           ||                                     |         |                           | - Building Audio Processing Application|
+| Chapter 5 – Communication Protocols  | 12      | Serial Communication      | - Asynchronous Vs Synchronous|
+|                                     |         |                           | - UART Basics and Registers|
+|                                     |         |                           | - Building UART Driver|
+|                                     | 13      | Infrared Communication    | - IR Basics|
+|                                     |         |                           | - IR transmitter and receiver|
+|                                     |         |                           | - Building IR Driver|
+|                                     | 14      | SPI Communication         | - SPI Basics|
+|                                     |         |                           | - SPI Registers and Modes|
+|                                     |         |                           | - Building SPI Driver|
+| Chapter 6 – IoT                     | 15      | Wi-Fi Overview            | - Wi-Fi Basics|
+|                                     |         |                           | - Basic Wi-Fi communication|
+|                                     | 16      | HTTP Protocol             | - HTTP Basics|
+|                                     |         |                           | - Building HTTP Server|
+|                                     | 17      | Web Development           | - HTML, CSS, and JavaScript|
+|                                     |         |                           | - Building Web Pages|
+|                                     | 18      | AJAX                      | - AJAX Basics|
+|                                     |         |                           | - Building AJAX Applications|
+|                                     | 19      | MQTT Protocol             | - MQTT Basics|
+|                                     |         |                           | - Building MQTT Applications|
+| Chapter 7 – Bootloaders             | 20      | Bootloaders Overview      | - Bootloaders Basics|
+|                                     |         |                           | - Types of Bootloaders|
+|                                     |         |                           | - Bootloader implementation|
+|                                     | 21      | Bootloader Architecture   | - Memory Map|
+|                                     |         |                           | - Building Bootloader Driver|
+|                                     | 22      | Firmware Update           | - Firmware Update Process|
+|                                     |         |                           | - Updating Firmware using Bootloader|
+
+## Intended Audience
+
+This course is intended for students and professionals with a basic understanding of microcontroller programming and electronics. Some experience with C programming is recommended but not required.
+
+## Recommended Reading
+
+Here are some recommended books and resources for further reading:
+
+- "ARM System Developer's Guide: Designing and Optimizing System Software" by Andrew N. Sloss, Dominic Symes, and Chris Wright
+- "Embedded Systems: Real-Time Operating Systems for ARM Cortex-M Microcontrollers" by Jonathan Valvano
+- "The Definitive Guide to ARM Cortex-M3 and Cortex-M4 Processors" by Joseph Yiu
+- "Programming with STM32: Getting Started with the Nucleo Board and C/C++" by Donald Norris
+
+## Frequently Asked Questions (FAQs)
+
+- **What programming language is used in this course?** This course primarily uses C programming language.
+- **What microcontroller is used in this course?** This course uses STMicroelectronics' STM32 microcontroller.
+- **Do I need to have any prior knowledge of ARM architecture?** No, this course covers the basics of ARM architecture and peripherals.
+- **Is there any software required for this course?** Yes, you will need the Integrated Development Environment (IDE) Keil uVision5 and the STM32CubeMX software.
+- **Can I get help if I have questions or get stuck during the course?** Yes, you can ask questions and get help through the course forums or by email.
 
 ## Getting Started
 
-To get started with the course, simply clone this repository to your local machine and navigate to the desired lecture folder. Each lecture folder contains a `README.md` file with instructions on how to run the code examples and complete the exercises.
+To get started with this course, follow these steps:
 
-## Prerequisites
+1. Clone or download this repository to your local machine.
+2. Install the Integrated Development Environment (IDE) Keil uVision5 and the STM32CubeMX software.
+3. Follow the instructions provided in each lecture to set up your development environment and complete the exercises.
 
-To complete the exercises and run the code examples, you will need the following:
-
-- STM32F103C8T6 microcontroller
-- Keil uVision 5 IDE/STM32CubeIDE
-- STLink V2 Debugger
-- USB to TTL Serial Converter
-- WiFi Module (ESP8266)
-
-## Author
-
-This course was created by Eng. Ahmed Assaf, at [IMT School].
-
-## License
-
-This project is licensed under the MIT License.
+That's it! We hope you enjoy this course and find it useful in your embedded systems and IoT projects.
