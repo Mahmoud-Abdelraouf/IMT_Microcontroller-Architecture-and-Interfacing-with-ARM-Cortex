@@ -4,8 +4,8 @@
 /************* Version   : V01                          *************/
 /************* Module    : GPIO                         *************/
 /********************************************************************/
-#ifndef __DIO_CONFIG_H__
-#define __DIO_CONFIG_H__
+#ifndef __GPIO_CONFIG_H__
+#define __GPIO_CONFIG_H__
 
 
 
@@ -13,4 +13,4 @@
 
 
 
-#endif
+#endif /**< __GPIO_CONFIG_H__ */

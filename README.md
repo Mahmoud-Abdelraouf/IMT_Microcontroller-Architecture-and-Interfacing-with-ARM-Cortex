@@ -69,8 +69,8 @@ The course is divided into 7 chapters, with a total of 22 lectures. Here is an o
 |                                     |         |                           | - Sampling and Quantization|
 |                                     |         |                           | - Dealing with audio files|
 |                                     |         |                           | - Mono Vs Stereo| 
-|                                     |         |                           ||                                     |         |                           | - Building Audio Processing Application|
-| Chapter 5 – Communication Protocols  | 12      | Serial Communication      | - Asynchronous Vs Synchronous|
+|                                     |         |                           ||                                     |         |          | - Building Audio Processing Application|
+| Chapter 5 – Communication Protocols | 12      | Serial Communication      | - Asynchronous Vs Synchronous|
 |                                     |         |                           | - UART Basics and Registers|
 |                                     |         |                           | - Building UART Driver|
 |                                     | 13      | Infrared Communication    | - IR Basics|
