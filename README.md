@@ -71,32 +71,46 @@ The course is divided into 7 chapters, with a total of 22 lectures. Here is an o
 |                                     |         |                           | - Mono Vs Stereo| 
 |                                     |         |                           | - Using PICAXE and AUX Speaker|
 |                                     |         |                           | - Playing Sounds over DAC|
-| Chapter 5 – Communication Protocols | 12      | Serial Communication      | - Asynchronous Vs Synchronous|
-|                                     |         |                           | - UART Basics and Registers|
-|                                     |         |                           | - Building UART Driver|
-|                                     | 13      | Infrared Communication    | - IR Basics|
-|                                     |         |                           | - IR transmitter and receiver|
-|                                     |         |                           | - Building IR Driver|
-|                                     | 14      | SPI Communication         | - SPI Basics|
-|                                     |         |                           | - SPI Registers and Modes|
-|                                     |         |                           | - Building SPI Driver|
-| Chapter 6 – IoT                     | 15      | Wi-Fi Overview            | - Wi-Fi Basics|
-|                                     |         |                           | - Basic Wi-Fi communication|
-|                                     | 16      | HTTP Protocol             | - HTTP Basics|
-|                                     |         |                           | - Building HTTP Server|
-|                                     | 17      | Web Development           | - HTML, CSS, and JavaScript|
-|                                     |         |                           | - Building Web Pages|
-|                                     | 18      | AJAX                      | - AJAX Basics|
-|                                     |         |                           | - Building AJAX Applications|
-|                                     | 19      | MQTT Protocol             | - MQTT Basics|
-|                                     |         |                           | - Building MQTT Applications|
-| Chapter 7 – Bootloaders             | 20      | Bootloaders Overview      | - Bootloaders Basics|
-|                                     |         |                           | - Types of Bootloaders|
-|                                     |         |                           | - Bootloader implementation|
-|                                     | 21      | Bootloader Architecture   | - Memory Map|
-|                                     |         |                           | - Building Bootloader Driver|
-|                                     | 22      | Firmware Update           | - Firmware Update Process|
-|                                     |         |                           | - Updating Firmware using Bootloader|
+| Chapter 5 – Communications          | 12      | Serial To Parallel        | - Serial Vs Parallel Communication|
+|                                     |         |                           | - Extending DIO Pins to unlimited number|
+|                                     |         |                           | - Interfacing LED Matrix Serially|
+|                                     | 13      | IR Communication          | - Communication Over light basics|
+|                                     |         |                           | - NEC IR Protocol|
+|                                     |         |                           | - Building IR Receiver Driver|
+|                                     | 14      | UART                      | - Serial Communication Characteristics
+|                                     |         |                           | - UART Basics
+|                                     |         |                           | - Building UART Driver
+|                                     |         |                           | - Interfacing USB TTL Module
+|                                     | 15      | SPI and TFT               | - SPI Basics
+|                                     |         |                           | - Building SPI Driver
+|                                     |         |                           | - Pixel Color Modes
+|                                     |         |                           | - Display Types and Comparison
+|                                     |         |                           | - Interfacing TFT Displays
+|                                     |         |                           | - Bit Map Images
+|                                     |         |                           | - Playing Video Samples
+|                                     | 16      | DMA                       | - Direct Memory Access Definitions and Basics
+|                                     |         |                           | - DMA Authorities against processor
+|                                     |         |                           | - DMA Driver Build
+| Chapter 6 – IOT                     | 17      | WiFi Module               | - WiFi Basics
+|                                     |         |                           | - WiFi Module Interfacing
+|                                     |         |                           | - Networking
+|                                     |         |                           | - Client and Server Model
+|                                     | 18      | Web Development           | - HTML Basics
+|                                     |         |                           | - PHP Basics
+|                                     |         |                           | - HTTP Requests
+|                                     |         |                           | - Building Simple Web Page
+|                                     | 19      | IoT                       | - Building Free Server with a simple web page
+|                                     |         |                           | - Connecting Microcontroller to web server
+|                                     |         |                           | - Microcontroller Communication over HTTP
+| Chapter 7 – Bootloader              | 20      | Story of Flashing         | - C Build Process
+|                                     |         |                           | - Memory Sections
+|                                     |         |                           | - Startup Code 
+|                                     |         |                           | - Flashing Sequence and Burner types
+|                                     |         |                           | - HEX File Format
+|                                     | 21      | Hex Parser                | - Building HEX Parser Driver
+|                                     |         |                           | - File Transfer over UART
+|                                     | 22      | Bootloader Implementation | - Flash Driver Software
+|                                     |         |                           | - Bootloader sequence
 
 ## Intended Audience
 
