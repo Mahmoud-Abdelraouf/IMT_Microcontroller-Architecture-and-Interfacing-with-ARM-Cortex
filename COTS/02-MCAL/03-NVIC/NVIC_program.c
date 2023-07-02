@@ -107,3 +107,24 @@ u8 MNVIC_u8GetActiveFlag(u8 Copy_u8InterruptNumber, u8 *Copy_pu8ReturnValue)
 	}
 	return Local_u8ErrorStatus;
 }
+
+u8 MNVIC_u8SetPriority(s8 Copy_s8InterruptNumber,u8 Copy_u8GroupPriority, u8 Copy_u8SubGroupPriority, u32 Copy_u32GROUP)
+{
+	u8 Local_u8ErrorStatus = 0;
+	u8 Local_u8Priority =  Copy_u8SubGroupPriority | Copy_u8GroupPriority << ((Copy_u32GROUP - MNVIC_GROUP3)/0x100);
+	/**< Core Peripheral */
+	
+	/**< External Peripheral */
+	if(Copy_s8InterruptNumber >= 0)
+	{
+		NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
+		SCB_AIRCR = Copy_u32GROUP;
+	}
+	else
+	{
+		// Local_u8ErrorStatus = 1;
+	}
+	
+	
+	return Local_u8ErrorStatus;
+}
