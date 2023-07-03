@@ -1,0 +1,32 @@
+{
+    "files.associations": {
+        "exti_interface.h": "c",
+        "exti_private.h": "c"
+    },
+    "cSpell.words": [
+        "AFIO",
+        "AIRCR",
+        "EXTI",
+        "FSMC",
+        "FTSR",
+        "IABR",
+        "ICER",
+        "ICPR",
+        "ISER",
+        "ISPR",
+        "MCAL",
+        "MEXTI",
+        "MNVIC",
+        "Numpad",
+        "NVIC",
+        "outdent",
+        "RTCALARM",
+        "RTSR",
+        "SDIO",
+        "SWIER",
+        "Uncollapse",
+        "USART",
+        "USBWAKEUP",
+        "WWDG"
+    ]
+}

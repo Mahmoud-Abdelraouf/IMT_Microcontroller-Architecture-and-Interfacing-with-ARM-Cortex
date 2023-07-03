@@ -34,10 +34,10 @@ void RCC_voidInitSysClock(void)
 			SET_BIT(RCC_CFGR_R, RCC_PLLSRC_BIT);		/**< 1: HSE OSCILLATOR CLOCK SELECTED AS PLL INPUT CLOCK */
 			CLR_BIT(RCC_CFGR_R, RCC_PLLXTPRE_BIT);    	/**< 0: HSE CLOCK NOT DIVIDED */
 		#else
-			#error("YOU CHOSED WRONG CLOCK INPUT FOR PLL!!")
+			#error("YOU CHOSE WRONG CLOCK INPUT FOR PLL!!")
 		#endif
 	#else
-		#error("YOU CHOSED WRONG CLOCK TYPE!!")
+		#error("YOU CHOSE WRONG CLOCK TYPE!!")
 	#endif
 	
 	

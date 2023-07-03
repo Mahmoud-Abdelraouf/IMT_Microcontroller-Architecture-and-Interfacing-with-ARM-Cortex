@@ -9,12 +9,14 @@
 
 void MEXTI_voidInit();
 
-void MEXTI_voidEnableEXTI(Copy_u8Line);
+u8 MEXTI_u8EnableEXTI(Copy_u8Line);
 
 
-void MEXTI_voidDisableEXTI(Copy_u8Line);
+u8 MEXTI_u8DisableEXTI(Copy_u8Line);
 
-void MEXTI_voidSwTrigger(u8 Copy_u8Line);
+u8 MEXTI_u8SwTrigger(u8 Copy_u8Line);
+
+u8 MEXTI_u8SetSignalLatch(u8 Copy_u8Line, u8 Copy_u8Mode);
 
 
 
