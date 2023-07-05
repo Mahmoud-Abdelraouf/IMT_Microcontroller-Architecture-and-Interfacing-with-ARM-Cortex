@@ -2,7 +2,7 @@
  * @brief This module contains functions for configuring the Nested Vectored Interrupt Controller (NVIC).
  *
  * @author Mahmoud Abdelraouf Mahmoud
- * @date 26 Feb 2022
+ * @date 27 Feb 2022
  * @version V01
  *
  * This module provides functions for enabling and disabling interrupts, setting interrupt priorities, and other

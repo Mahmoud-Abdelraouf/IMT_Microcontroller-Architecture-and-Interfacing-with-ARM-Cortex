@@ -15,11 +15,12 @@
 #ifndef __NVIC_PRIVATE_H__
 #define __NVIC_PRIVATE_H__
 
-//*****************************************************************************
-//
-// Vector table for STM32F10xxx devices
-//
-//*****************************************************************************
+/**
+ * @brief NVIC Interrupt Numbers.
+ *
+ * This list defines the interrupt numbers for the Nested Vector Interrupt Controller (NVIC), used to identify
+ * individual interrupts when configuring interrupt priorities and enabling/disabling interrupts.
+ */
 #define MNVIC_WWDG				0	/**< Window watchdog interrupt */
 #define MNVIC_PVD				1	/**< PVD through EXTI Line detection interrupt */
 #define MNVIC_TAMPER			2	/**< Tamper interrupt */
@@ -81,8 +82,77 @@
 #define MNVIC_DMA2_CHANNEL2     57  /**< DMA2 Channel2 global interrupt */
 #define MNVIC_DMA2_CHANNEL3     58  /**< DMA2 Channel3 global interrupt */
 #define MNVIC_DMA2_CHANNEL4		59  /**< DMA2 Channel4 global interrupt */
-#define MNVIC_DMA2_CHANNEL5		59  /**< DMA2 Channel5 global interrupt */
-
+#define MNVIC_DMA2_CHANNEL5		59  /**< DMA2 Channel5 global interrupt/**
+ * @brief NVIC Interrupt Numbers.
+ *
+ * This list defines the interrupt numbers for the Nested Vector Interrupt Controller (NVIC), used to identify
+ * individual interrupts when configuring interrupt priorities and enabling/disabling interrupts.
+ *
+ * @note Interrupt numbers are used to set priority and enable/disable interrupts using NVIC registers.
+ *
+ * @param MNVIC_WWDG Window watchdog interrupt.
+ * @param MNVIC_PVD PVD through EXTI Line detection interrupt.
+ * @param MNVIC_TAMPER Tamper interrupt.
+ * @param MNVIC_RTC RTC global interrupt.
+ * @param MNVIC_FLASH Flash global interrupt.
+ * @param MNVIC_RCC RCC global interrupt.
+ * @param MNVIC_EXTI0 EXTI Line0 interrupt.
+ * @param MNVIC_EXTI1 EXTI Line1 interrupt.
+ * @param MNVIC_EXTI2 EXTI Line2 interrupt.
+ * @param MNVIC_EXTI3 EXTI Line3 interrupt.
+ * @param MNVIC_EXTI4 EXTI Line4 interrupt.
+ * @param MNVIC_DMA1_CHANNEL1 DMA1 Channel1 global interrupt.
+ * @param MNVIC_DMA1_CHANNEL2 DMA1 Channel2 global interrupt.
+ * @param MNVIC_DMA1_CHANNEL3 DMA1 Channel3 global interrupt.
+ * @param MNVIC_DMA1_CHANNEL4 DMA1 Channel4 global interrupt.
+ * @param MNVIC_DMA1_CHANNEL5 DMA1 Channel5 global interrupt.
+ * @param MNVIC_DMA1_CHANNEL6 DMA1 Channel6 global interrupt.
+ * @param MNVIC_DMA1_CHANNEL7 DMA1 Channel7 global interrupt.
+ * @param MNVIC_ADC1 ADC1 global interrupt.
+ * @param MNVIC_ADC2 ADC2 global interrupt.
+ * @param MNVIC_USB_HP_CAN_TX USB High Priority or CAN TX interrupts.
+ * @param MNVIC_USB_LP_CAN_RX0 USB Low Priority or CAN RX0 interrupts.
+ * @param MNVIC_CAN_RX1 CAN RX1 interrupt.
+ * @param MNVIC_CAN_SCE CAN SCE interrupt.
+ * @param MNVIC_EXTI9_5 EXTI Line[9:5] interrupts.
+ * @param MNVIC_TIM1_BRK TIM1 Break interrupt.
+ * @param MNVIC_TIM1_UP TIM1 Update interrupt.
+ * @param MNVIC_TIM1_TRG_COM TIM1 Trigger and Commutation interrupts.
+ * @param MNVIC_TIM1_CC TIM1 Capture Compare interrupt.
+ * @param MNVIC_TIM2 TIM2 global interrupt.
+ * @param MNVIC_TIM3 TIM3 global interrupt.
+ * @param MNVIC_TIM4 TIM4 global interrupt.
+ * @param MNVIC_I2C1_EV I2C1 event interrupt.
+ * @param MNVIC_I2C1_ER I2C1 error interrupt.
+ * @param MNVIC_I2C2_EV I2C2 event interrupt.
+ * @param MNVIC_I2C2_ER I2C2 error interrupt.
+ * @param MNVIC_SPI1 SPI1 global interrupt.
+ * @param MNVIC_SPI2 SPI2 global interrupt.
+ * @param MNVIC_USART1 USART1 global interrupt.
+ * @param MNVIC_USART2 USART2 global interrupt.
+ * @param MNVIC_USART3 USART3 global interrupt.
+ * @param MNVIC_EXTI15_10 EXTI Line[15:10] interrupts.
+ * @param MNVIC_RTCALARM RTC alarm through EXTI line interrupt.
+ * @param MNVIC_USBWAKEUP USB wakeup from suspend through EXTI line interrupt.
+ * @param MNVIC_TIM8_BRK TIM8 Break interrupt.
+ * @param MNVIC_TIM8_UP TIM8 Update interrupt.
+ * @param MNVIC_TIM8_TRG_COM TIM8 Trigger and Commutation interrupts.
+ * @param MNVIC_TIM8_CC TIM8 Capture Compare interrupt.
+ * @param MNVIC_ADC3 ADC3 global interrupt.
+ * @param MNVIC_FSMC FSMC global interrupt.
+ * @param MNVIC_SDIO SDIO global interrupt.
+ * @param MNVIC_TIM5 TIM5 global interrupt.
+ * @param MNVIC_SPI3 SPI3 global interrupt.
+ * @param MNVIC_UART4 UART4 global interrupt.
+ * @param MNVIC_UART5 UART5 global interrupt.
+ * @param MNVIC_TIM6 TIM6 global interrupt.
+ * @param MNVIC_TIM7 TIM7 global interrupt.
+ * @param MNVIC_DMA2_CHANNEL1 DMA2 Channel1 global interrupt.
+ * @param MNVIC_DMA2_CHANNEL2 DMA2 Channel2 global interrupt.
+ * @param MNVIC_DMA2_CHANNEL3 DMA2 Channel3 global interrupt.
+ * @param MNVIC_DMA2_CHANNEL4 DMA2 Channel4 global interrupt.
+ * @param MNVIC_DMA2_CHANNEL5 DMA2 Channel5 global interrupt.
+ */
 
 
 //*****************************************************************************
