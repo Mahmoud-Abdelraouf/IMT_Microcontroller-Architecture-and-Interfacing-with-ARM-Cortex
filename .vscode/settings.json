@@ -1,22 +1,39 @@
 {
     "files.associations": {
         "exti_interface.h": "c",
-        "exti_private.h": "c"
+        "exti_private.h": "c",
+        "std_types.h": "c",
+        "afio_interface.h": "c"
     },
     "cSpell.words": [
         "AFIO",
+        "AFOD",
+        "AFPP",
         "AIRCR",
+        "bootloader",
+        "EVCR",
         "EXTI",
+        "EXTICR",
         "FSMC",
         "FTSR",
+        "GPIO",
         "IABR",
         "ICER",
         "ICPR",
         "ISER",
         "ISPR",
+        "Keil",
+        "MAFIO",
+        "MAPR",
         "MCAL",
         "MEXTI",
+        "MGPIO",
+        "MGPIOA",
+        "MGPIOB",
+        "MGPIOC",
+        "microcontroller",
         "MNVIC",
+        "Neumann",
         "Numpad",
         "NVIC",
         "outdent",
@@ -24,9 +41,12 @@
         "RTSR",
         "SDIO",
         "SWIER",
+        "Symes",
+        "UART",
         "Uncollapse",
         "USART",
         "USBWAKEUP",
+        "Valvano",
         "WWDG"
     ]
 }

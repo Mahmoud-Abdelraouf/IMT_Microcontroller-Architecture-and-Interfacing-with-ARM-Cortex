@@ -1,23 +1,31 @@
-/********************************************************************/
-/************* Author    : Mahmoud Abdelraouf Mahmoud   *************/
-/************* Date		 : 26 Feb 2022                  *************/
-/************* Version   : V01                          *************/
-/************* Module    : GPIO                         *************/
-/********************************************************************/
+/**
+ * @brief This module contains functions for configuring and controlling General Purpose Input/Output (GPIO) pins.
+ *
+ * @author Mahmoud Abdelraouf Mahmoud
+ * @date 26 Feb 2022
+ * @version V01
+ *
+ * This module provides functions for configuring the mode, speed, and pull-up/down resistors of GPIO pins,
+ * as well as reading and writing their values. It is designed to be used with ARM Cortex-M processors, and may not be
+ * compatible with other architectures.
+ *
+ * @note This module is intended for use with the STM32F10x microcontroller series, but may be adapted for use with
+ * other compatible processors.
+ */
 #ifndef __GPIO_INTERFACE_H__
 #define __GPIO_INTERFACE_H__
 
-/***********************************< THE AVALIBLE VALUES FOR OUTPUT ***********************************/
+/***********************************< THE AVAILABLE VALUES FOR OUTPUT ***********************************/
 #define MGPIO_HIGH						1
 #define MGPIO_LOW						0
 
-/***********************************< THE AVALIBLE PORTS IN STM32F103C8 ***********************************/
+/***********************************< THE AVAILABLE PORTS IN STM32F103C8 ***********************************/
 #define MGPIOA							0
 #define MGPIOB							1
 #define MGPIOC							2
 
 
-/***********************************< THE AVALIBLE PINS IN STM32F103C8 ***********************************/
+/***********************************< THE AVAILABLE PINS IN STM32F103C8 ***********************************/
 #define MGPIO_PIN0						0
 #define MGPIO_PIN1        				1
 #define MGPIO_PIN2        				2
@@ -116,7 +124,6 @@ void MGPIO_voidSetPinDirection(u8 Copy_u8PORT, u8 Copy_u8PIN, u8 Copy_u8Mode);
  *      @endcode
  */
 void MGPIO_voidSetPinValue(u8 Copy_u8PORT,u8 Copy_u8PIN, u8 Copy_u8Value);
-Sure! Here's a revised version of the documentation that uses Doxygen-style comments:
 
 /**
  * @brief Gets the value of a specific pin of a specific port in a microcontroller.

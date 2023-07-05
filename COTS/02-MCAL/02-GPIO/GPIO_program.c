@@ -1,9 +1,17 @@
-/********************************************************************/
-/************* Author    : Mahmoud Abdelraouf Mahmoud   *************/
-/************* Date		 : 26 Feb 2022                  *************/
-/************* Version   : V01                          *************/
-/************* Module    : GPIO                         *************/
-/********************************************************************/
+/**
+ * @brief This module contains functions for configuring and controlling General Purpose Input/Output (GPIO) pins.
+ *
+ * @author Mahmoud Abdelraouf Mahmoud
+ * @date 26 Feb 2022
+ * @version V01
+ *
+ * This module provides functions for configuring the mode, speed, and pull-up/down resistors of GPIO pins,
+ * as well as reading and writing their values. It is designed to be used with ARM Cortex-M processors, and may not be
+ * compatible with other architectures.
+ *
+ * @note This module is intended for use with the STM32F10x microcontroller series, but may be adapted for use with
+ * other compatible processors.
+ */
 
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
@@ -74,7 +82,7 @@ void MGPIO_voidSetPinDirection(u8 Copy_u8PORT, u8 Copy_u8PIN, u8 Copy_u8Mode)
 	/**< RETURN ERRORSTATUS */
 }
 
-void GPIO_voidSetPinValue(u8 Copy_u8PORT,u8 Copy_u8PIN, u8 Copy_u8Value)
+void MGPIO_voidSetPinValue(u8 Copy_u8PORT,u8 Copy_u8PIN, u8 Copy_u8Value)
 {
 	if(Copy_u8PIN < 16)
 	{
@@ -134,7 +142,7 @@ void GPIO_voidSetPinValue(u8 Copy_u8PORT,u8 Copy_u8PIN, u8 Copy_u8Value)
 	/**< RETURN ERROR STATUS */
 }
 
-u8  GPIO_u8GetPinValue(u8 Copy_u8PORT, u8 Copy_u8PIN)
+u8  MGPIO_u8GetPinValue(u8 Copy_u8PORT, u8 Copy_u8PIN)
 {
 	u8 Local_u8ReturnPinValue = 0;
 	if(Copy_u8PIN < 16)
