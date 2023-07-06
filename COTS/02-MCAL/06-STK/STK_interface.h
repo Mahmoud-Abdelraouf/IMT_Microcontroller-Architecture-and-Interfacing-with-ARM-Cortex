@@ -74,7 +74,23 @@ void MSTK_voidReset(void);
  *
  * @return The current value of the SysTick timer.
  */
-u32 MSTK_u32GetCount(void);
+u32 MSTK_u32GetRemainingCount(void);
+
+/**
+ * @brief Get the number of elapsed ticks since the last SysTick timer reset.
+ *
+ * This function calculates the number of ticks that have elapsed since the last reset of the SysTick timer.
+ * The elapsed time is calculated as the difference between the value of the SysTick timer when this function
+ * is called and the initial value of the timer when it was last reset.
+ *
+ * @note This function assumes that the SysTick timer is running and has not overflowed since it was last reset.
+ * If the timer has overflowed, the elapsed ticks value will be incorrect and the function may return unexpected results.
+ *
+ * @param None.
+ * 
+ * @return The number of elapsed ticks as an unsigned 32-bit integer.
+ */
+u32 MSTK_u32GetElapsedCount(void);
 
 /**
  * @brief Blocks the CPU for the specified number of microseconds.

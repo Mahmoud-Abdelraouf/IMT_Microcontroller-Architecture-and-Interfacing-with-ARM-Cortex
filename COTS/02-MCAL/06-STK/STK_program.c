@@ -69,19 +69,27 @@ void MSTK_voidReset(void)
 }
 
 
-u32 MSTK_u32GetCount(void)
+u32 MSTK_u32GetRemainingCount(void)
 {
     /* Get the current value of the SysTick timer */
     return STK->VAL;
 }
 
+u32 MSTK_u32GetElapsedCount(void)
+{
+    /* Calculate the number of elapsed ticks */
+    u32 Local_u32ElapsedTicks = ((STK->LOAD + 1) - (STK->VAL));
+
+    return Local_u32ElapsedTicks;
+}
+
 void MSTK_voidSetBusyWait(u32 Copy_u32Microseconds)
 {
     /**< Calculate the number of ticks required to wait for the specified number of microseconds */
-    u32 ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
+    u32 Local_u32Ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
 
     /**< Wait for the specified number of ticks using the SysTick timer */
-    STK->LOAD = ticks;
+    STK->LOAD = Local_u32Ticks;
     STK->CTRL |= STK_CTRL_ENABLE_MASK;              /**< Enable SysTick timer */
     while (!(STK->CTRL & STK_CTRL_COUNTFLAG_MASK)); /**< Wait until the SysTick timer reach to zero */
     STK->CTRL &= ~STK_CTRL_ENABLE_MASK;             /**< Disable SysTick timer */
@@ -93,10 +101,10 @@ void MSTK_voidSetIntervalSingle(u32 Copy_u32Microseconds, void (*Copy_pfCallback
     STK_pfCallback = Copy_pfCallback;
 
     /* Calculate the number of ticks required to wait for the specified number of microseconds */
-    u32 ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
+    u32 Local_u32Ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
 
     /* Set the reload value for the SysTick timer */
-    STK->LOAD = ticks;
+    STK->LOAD = Local_u32Ticks;
 
     /* Start the SysTick timer and enable the interrupt */
     STK->CTRL |= STK_CTRL_ENABLE_MASK;
@@ -109,16 +117,16 @@ void MSTK_voidSetIntervalPeriodic(u32 Copy_u32Microseconds, void (*Copy_pfCallba
     STK_pfCallback = Copy_pfCallback;
 
     /* Calculate the number of ticks required to wait for the specified number of microseconds */
-    u32 ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
+    u32 Local_u32Ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
 
     /* Set the reload value for the SysTick timer */
-    STK->LOAD = ticks;
+    STK->LOAD = Local_u32Ticks;
 
     /* Start the SysTick timer */
     STK->CTRL |= STK_CTRL_ENABLE_MASK;
     STK->CTRL |= STK_CTRL_TICKINT_MASK;
     #if STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_1
-    STK -> CTRL |= STK_CTRL_CLKSOURCE_MASK;             /**< Set bit 2 to use the processor clock */
+    STK -> CTRL |= STK_CTRL_CLKSOURCE_MASK;                 /**< Set bit 2 to use the processor clock */
     #elif STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_8
         STK-> CTRL &= ~STK_CTRL_CLKSOURCE_MASK;             /**< Clear bit 2 to use the processor clock/8 */
     #else 
