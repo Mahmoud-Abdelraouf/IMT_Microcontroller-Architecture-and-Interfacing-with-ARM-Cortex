@@ -12,10 +12,10 @@
  * @note This module is intended for use with the STM32F10x microcontroller series, but may be adapted for use with
  * other compatible processors.
  */
-/**< LIB */
+/**********************************************< LIB **********************************************/
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
-/**< MCAL */
+/**********************************************< MCAL **********************************************/
 #include "NVIC_private.h"
 #include "NVIC_interface.h"
 #include "NVIC_config.h"
@@ -119,20 +119,25 @@ u8 MNVIC_u8GetActiveFlag(u8 Copy_u8InterruptNumber, u8 *Copy_pu8ReturnValue)
 u8 MNVIC_u8SetPriority(s8 Copy_s8InterruptNumber,u8 Copy_u8GroupPriority, u8 Copy_u8SubGroupPriority, u32 Copy_u32GROUP)
 {
 	u8 Local_u8ErrorStatus = 0;
-	u8 Local_u8Priority =  Copy_u8SubGroupPriority | Copy_u8GroupPriority << ((Copy_u32GROUP - MNVIC_GROUP3)/0x100);
-	/**< Core Peripheral */
-	
-	/**< External Peripheral */
-	if(Copy_s8InterruptNumber >= 0)
+	if(Copy_s8InterruptNumber < 60)
 	{
-		NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
-		SCB_AIRCR = Copy_u32GROUP;
+		u8 Local_u8Priority =  Copy_u8SubGroupPriority | Copy_u8GroupPriority << ((Copy_u32GROUP - MNVIC_GROUP4_SUB0)/0x100);
+		
+		/**< Core Peripheral */
+		if(Copy_s8InterruptNumber < 0)
+		{
+			
+		}
+		/**< External Peripheral */
+		else
+		{
+			NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
+			SCB_AIRCR = Copy_u32GROUP;
+		}
 	}
 	else
 	{
-		// Local_u8ErrorStatus = 1;
+		Local_u8ErrorStatus = 1;
 	}
-	
-	
 	return Local_u8ErrorStatus;
 }

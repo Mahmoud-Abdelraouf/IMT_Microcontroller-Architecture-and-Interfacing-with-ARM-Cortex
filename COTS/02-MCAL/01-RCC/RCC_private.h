@@ -1,10 +1,13 @@
 /**
+ * @file RCC_private.h
  * @brief This module contains functions for configuring the Reset and Clock Control (RCC) peripheral.
  *
  * @author Mahmoud Abdelraouf Mahmoud
  * @date 25 Feb 2022
  * @version V01
  *
+ * @copyright Copyright (c) 2023
+ * 
  * This module provides functions for configuring the system clock source and frequency, as well as enabling and disabling
  * peripheral clocks. It also includes functions for resetting peripherals and reading the current clock frequency. It is
  * designed to be used with ARM Cortex-M processors, and may not be compatible with other architectures.
@@ -21,10 +24,12 @@
 #define RCC_HSI            			2 /**< High Speed Internal */
 #define RCC_PLL            			3 /**< Phase-locked loop */
 /********************************< PLL Input ********************************/
-#define RCC_PLL_IN_HSI_DIV_2		0 /**<  */
-#define RCC_PLL_IN_HSE_DIV_2		1 /**<  */
-#define RCC_PLL_IN_HSE				2 /**<  */
+#define RCC_PLL_IN_HSI_DIV_2     	0 /**< HSI oscillator clock divided by 2 */
+#define RCC_PLL_IN_HSE_DIV_2     	1 /**< HSE oscillator clock divided by 2 */
+#define RCC_PLL_IN_HSE           	2 /**< HSE oscillator clock */
 
+
+#define RCC_HSE_VALUE					8000000
 
 
 
@@ -73,4 +78,4 @@
 
 
 
-#endif
+#endif /**< __RCC_PRIVATE_H__ */

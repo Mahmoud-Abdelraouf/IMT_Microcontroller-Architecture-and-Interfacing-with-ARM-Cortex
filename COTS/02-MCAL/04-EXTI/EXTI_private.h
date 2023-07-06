@@ -78,7 +78,7 @@ typedef struct EXTI_t{
  * This macro provides access to the EXTI peripheral using the register map defined in EXTI_t. It defines EXTI as a volatile
  * pointer to the base address of the EXTI peripheral.
  */
-#define EXTI 		((volatile EXTI_t *)EXTI_BASE_ADDRESS)
+#define EXTI 		((EXTI_t *)EXTI_BASE_ADDRESS)
 
 
 

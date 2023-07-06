@@ -204,6 +204,9 @@
 #define NVIC_IPR20			    (*((volatile u32 *)0xE000E450)) /**< INTERRUPT PRIORITY REGISTERS FROM 80 TO RESERVED */
     
 #define SCB_AIRCR			    (*((volatile u32 *)0xE000ED0C)) /**< APPLICATION INTERRUPT AND RESET CONTROL REGISTER */
+#define SCB_SHPR1			    (*((volatile u32 *)0xE000ED18)) /**< SYSTEM HANDLER PRIORITY REGISTER 1 */
+#define SCB_SHPR2			    (*((volatile u32 *)0xE000ED1C)) /**< SYSTEM HANDLER PRIORITY REGISTER 2 */
+#define SCB_SHPR3			    (*((volatile u32 *)0xE000ED20)) /**< SYSTEM HANDLER PRIORITY REGISTER 3 */
 
 
 

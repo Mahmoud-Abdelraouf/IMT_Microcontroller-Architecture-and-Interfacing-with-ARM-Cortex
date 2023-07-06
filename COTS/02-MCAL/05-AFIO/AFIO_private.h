@@ -14,6 +14,9 @@
 #ifndef __AFIO_PRIVATE_H__
 #define __AFIO_PRIVATE_H__
 
+
+/*******************************************< Register Definitions *******************************************/
+
 /**
  * @brief AFIO Base Address.
  *
@@ -33,7 +36,7 @@ typedef struct AFIO_t{
     volatile u32 MAPR;        /**< Multiplexed Pin Assignments Register. */
     volatile u32 EXTICR[4];   /**< External Interrupt Configuration Registers. */
     volatile u32 MAPR2;       /**< Multiplexed Pin Assignments Register 2. */
-}AFIO_t;
+}AFIO_RegDef_t;
 
 /**
  * @brief AFIO Register Access.
@@ -41,7 +44,9 @@ typedef struct AFIO_t{
  * This macro provides access to the AFIO peripheral using the register map defined in AFIO_t. It defines AFIO as a volatile
  * pointer to the base address of the AFIO peripheral.
  */
-#define AFIO    ((volatile AFIO_t *)AFIO_BASE_ADDRESS)
+#define AFIO    ((AFIO_RegDef_t *)AFIO_BASE_ADDRESS)
+
+
 
 
 #endif /**< __AFIO_PRIVATE_H__ */
