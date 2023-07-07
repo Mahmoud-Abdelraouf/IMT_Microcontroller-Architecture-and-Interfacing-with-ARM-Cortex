@@ -17,17 +17,17 @@
 
 /**
  * @brief The external interrupt line number.
- * @note Your options: FROM LINE0 TO LINE15
+ * @note Your options: FROM MEXTI_LINE0 TO MEXTI_LINE15
  */
-#define EXTI_LINE 		LINE0  /**< The line number for external interrupts. */
+#define EXTI_LINE 		MEXTI_LINE0  /**< The line number for external interrupts. */
 
 
 
 /**
  * @brief The mode for external interrupts.
- * @note Your options: RISING, FALLING, ON_CHANGE
+ * @note Your options: EXTI_RISING, EXTI_FALLING, EXTI_ON_CHANGE
  */
-#define EXTI_MODE 		RISING /**< The mode for external interrupts. Can be RISING, FALLING, or ON_CHANGE. */
+#define EXTI_SENSE_MODE 		MEXTI_RISING /**< The mode for external interrupts. Can be RISING, FALLING, or ON_CHANGE. */
 
 
 

@@ -122,17 +122,112 @@ u8 MNVIC_u8SetPriority(s8 Copy_s8InterruptNumber,u8 Copy_u8GroupPriority, u8 Cop
 	if(Copy_s8InterruptNumber < 60)
 	{
 		u8 Local_u8Priority =  Copy_u8SubGroupPriority | Copy_u8GroupPriority << ((Copy_u32GROUP - MNVIC_GROUP4_SUB0)/0x100);
-		
-		/**< Core Peripheral */
-		if(Copy_s8InterruptNumber < 0)
+
+		switch (Copy_u32GROUP)
 		{
-			
-		}
-		/**< External Peripheral */
-		else
-		{
-			NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
-			SCB_AIRCR = Copy_u32GROUP;
+			case MNVIC_GROUP4_SUB0:
+				if(Copy_u8GroupPriority < 16 && Copy_u8SubGroupPriority == 0)
+				{
+					/**< Core Peripheral */
+					if(Copy_s8InterruptNumber < 0)
+					{
+						
+					}
+					/**< External Peripheral */
+					else
+					{
+						NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
+						SCB_AIRCR = Copy_u32GROUP;
+					}
+				}
+				else
+				{
+					Local_u8ErrorStatus = 1;
+				}
+			break;
+			case MNVIC_GROUP3_SUB1:
+				if(Copy_u8GroupPriority < 8 && Copy_u8SubGroupPriority < 2)
+				{
+					/**< Core Peripheral */
+					if(Copy_s8InterruptNumber < 0)
+					{
+						
+					}
+					/**< External Peripheral */
+					else
+					{
+						NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
+						SCB_AIRCR = Copy_u32GROUP;
+					}
+				}
+				else
+				{
+					Local_u8ErrorStatus = 1;
+				}
+			break;
+			case MNVIC_GROUP2_SUB2:
+				if(Copy_u8GroupPriority < 4 && Copy_u8SubGroupPriority < 4)
+				{
+					/**< Core Peripheral */
+					if(Copy_s8InterruptNumber < 0)
+					{
+						
+					}
+					/**< External Peripheral */
+					else
+					{
+						NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
+						SCB_AIRCR = Copy_u32GROUP;
+					}
+				}
+				else
+				{
+					Local_u8ErrorStatus = 1;
+				}
+			break;
+			case MNVIC_GROUP1_SUB3:
+				if(Copy_u8GroupPriority < 2 && Copy_u8SubGroupPriority < 8)
+				{
+					/**< Core Peripheral */
+					if(Copy_s8InterruptNumber < 0)
+					{
+						
+					}
+					/**< External Peripheral */
+					else
+					{
+						NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
+						SCB_AIRCR = Copy_u32GROUP;
+					}
+				}
+				else
+				{
+					Local_u8ErrorStatus = 1;
+				}
+			break;
+			case MNVIC_GROUP0_SUB4:
+				if(Copy_u8GroupPriority == 0 && Copy_u8SubGroupPriority < 16)
+				{
+					/**< Core Peripheral */
+					if(Copy_s8InterruptNumber < 0)
+					{
+						
+					}
+					/**< External Peripheral */
+					else
+					{
+						NVIC_IPR[Copy_s8InterruptNumber] = (Local_u8Priority << 4);
+						SCB_AIRCR = Copy_u32GROUP;
+					}
+				}
+				else
+				{
+					Local_u8ErrorStatus = 1;
+				}
+			break;
+			default:
+				Local_u8ErrorStatus = 1;
+			break;
 		}
 	}
 	else

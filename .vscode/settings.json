@@ -6,7 +6,8 @@
         "afio_interface.h": "c",
         "bit_math.h": "c",
         "stk_interface.h": "c",
-        "stk_private.h": "c"
+        "stk_private.h": "c",
+        "exti_config.h": "c"
     },
     "cSpell.words": [
         "AFIO",

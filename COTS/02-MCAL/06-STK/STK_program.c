@@ -113,25 +113,29 @@ void MSTK_voidSetIntervalSingle(u32 Copy_u32Microseconds, void (*Copy_pfCallback
 
 void MSTK_voidSetIntervalPeriodic(u32 Copy_u32Microseconds, void (*Copy_pfCallback)(void))
 {
-    /* Save the callback function pointer */
-    STK_pfCallback = Copy_pfCallback;
-
-    /* Calculate the number of ticks required to wait for the specified number of microseconds */
-    u32 Local_u32Ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
-
-    /* Set the reload value for the SysTick timer */
-    STK->LOAD = Local_u32Ticks;
-
-    /* Start the SysTick timer */
-    STK->CTRL |= STK_CTRL_ENABLE_MASK;
-    STK->CTRL |= STK_CTRL_TICKINT_MASK;
-    #if STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_1
-    STK -> CTRL |= STK_CTRL_CLKSOURCE_MASK;                 /**< Set bit 2 to use the processor clock */
-    #elif STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_8
-        STK-> CTRL &= ~STK_CTRL_CLKSOURCE_MASK;             /**< Clear bit 2 to use the processor clock/8 */
-    #else 
-        #error "WRONG CHOICE FOR SYSTICK CLOCK SOURCE"
-    #endif
+    if(Copy_pfCallback != NULL)
+    {
+        /**< Save the callback function pointer */
+        STK_pfCallback = Copy_pfCallback;
+        /* Calculate the number of ticks required to wait for the specified number of microseconds */
+        u32 Local_u32Ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
+        /**< Set the reload value for the SysTick timer */
+        STK->LOAD = Local_u32Ticks;
+        /**< Start the SysTick timer */
+        STK->CTRL |= STK_CTRL_ENABLE_MASK;
+        STK->CTRL |= STK_CTRL_TICKINT_MASK;
+        #if STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_1
+        STK -> CTRL |= STK_CTRL_CLKSOURCE_MASK;                 /**< Set bit 2 to use the processor clock */
+        #elif STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_8
+            STK-> CTRL &= ~STK_CTRL_CLKSOURCE_MASK;             /**< Clear bit 2 to use the processor clock/8 */
+        #else 
+            #error "WRONG CHOICE FOR SYSTICK CLOCK SOURCE"
+        #endif
+    }
+    else
+    {
+        /**< Set ErrorStatus */
+    }
 }
 
 void SysTick_Handler(void)
