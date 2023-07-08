@@ -45,21 +45,21 @@
  *
  * @note For EXTI0, the binary value 0000 should be used with Port A pin X=0, for EXTI1, the binary value 0001 should be used with Port B pin X=1, and so on.
  *
- * @param[in] MAFIO_PORTAX: The binary value for Port A pins (in).
- * @param[in] MAFIO_PORTBX: The binary value for Port B pins (in).
- * @param[in] MAFIO_PORTCX: The binary value for Port C pins (in).
- * @param[in] MAFIO_PORTDX: The binary value for Port D pins (in).
- * @param[in] MAFIO_PORTEX: The binary value for Port E pins (in).
- * @param[in] MAFIO_PORTFX: The binary value for Port F pins (in).
- * @param[in] MAFIO_PORTGX: The binary value for Port G pins (in).
+ * @param[in] MAFIO_PORTA: The binary value for Port A pins (in).
+ * @param[in] MAFIO_PORTB: The binary value for Port B pins (in).
+ * @param[in] MAFIO_PORTC: The binary value for Port C pins (in).
+ * @param[in] MAFIO_PORTD: The binary value for Port D pins (in).
+ * @param[in] MAFIO_PORTE: The binary value for Port E pins (in).
+ * @param[in] MAFIO_PORTF: The binary value for Port F pins (in).
+ * @param[in] MAFIO_PORTG: The binary value for Port G pins (in).
  */ 
-#define MAFIO_PORTAX                0b0000 /**< The binary value for Port A pins. */
-#define MAFIO_PORTBX                0b0001 /**< The binary value for Port B pins. */
-#define MAFIO_PORTCX                0b0010 /**< The binary value for Port C pins. */
-#define MAFIO_PORTDX                0b0011 /**< The binary value for Port D pins. */
-#define MAFIO_PORTEX                0b0100 /**< The binary value for Port E pins. */
-#define MAFIO_PORTFX                0b0101 /**< The binary value for Port F pins. */
-#define MAFIO_PORTGX                0b0110 /**< The binary value for Port G pins. */
+#define MAFIO_PORTA                0b0000 /**< The binary value for Port A pins. */
+#define MAFIO_PORTB                0b0001 /**< The binary value for Port B pins. */
+#define MAFIO_PORTC                0b0010 /**< The binary value for Port C pins. */
+#define MAFIO_PORTD                0b0011 /**< The binary value for Port D pins. */
+#define MAFIO_PORTE                0b0100 /**< The binary value for Port E pins. */
+#define MAFIO_PORTF                0b0101 /**< The binary value for Port F pins. */
+#define MAFIO_PORTG                0b0110 /**< The binary value for Port G pins. */
 
 /*******************************************< Register Definitions *******************************************/
 /**

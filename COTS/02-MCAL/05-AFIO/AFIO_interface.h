@@ -39,20 +39,20 @@
  *                          - MAFIO_EXTI15
  * 
  * @param[in] Copy_u8PortMap: The binary value for the port to be mapped to the EXTI line. Available options are:
- *                          - MAFIO_PORTAX
- *                          - MAFIO_PORTBX
- *                          - MAFIO_PORTCX
- *                          - MAFIO_PORTDX
- *                          - MAFIO_PORTEX
- *                          - MAFIO_PORTFX
- *                          - MAFIO_PORTGX
+ *                          - MAFIO_PORTA
+ *                          - MAFIO_PORTB
+ *                          - MAFIO_PORTC
+ *                          - MAFIO_PORTD
+ *                          - MAFIO_PORTE
+ *                          - MAFIO_PORTF
+ *                          - MAFIO_PORTG
  *
  * @retval None
  * 
  * @note The available options for "Copy_u8Line" are MAFIO_EXTI0 through MAFIO_EXTI15.
  * @note The available options for "Copy_u8PortMap" are MAFIO_PORTAX through MAFIO_PORTGX.
  */ 
-void MAFIO_voidSetEXTIConfiguration(u8 Copy_u8Line, u8 Copy_u8PortMap);
+void MAFIO_voidSetEXTIPinConfiguration(u8 Copy_u8Line, u8 Copy_u8PortMap);
 
 
 
