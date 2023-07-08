@@ -138,7 +138,7 @@ Here are some recommended books and resources for further reading:
 To get started with this course, follow these steps:
 
 1. Clone or download this repository to your local machine.
-2. Install the Integrated Development Environment (IDE) Keil uVision5 and the STM32CubeMX software.
+2. Install the Integrated Development Environment (IDE) Keil uVision5 or the STM32CubeMX software.
 3. Follow the instructions provided in each lecture to set up your development environment and complete the exercises.
 
 That's it! We hope you enjoy this course and find it useful in your embedded systems and IoT projects.
