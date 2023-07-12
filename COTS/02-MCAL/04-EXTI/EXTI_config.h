@@ -19,7 +19,7 @@
  * @brief The external interrupt line number.
  * @note Your options: FROM MEXTI_LINE0 TO MEXTI_LINE15
  */
-#define EXTI_LINE 		MEXTI_LINE0  /**< The line number for external interrupts. */
+#define EXTI_LINE 		        MEXTI_LINE0  /**< The line number for external interrupts. */
 
 
 

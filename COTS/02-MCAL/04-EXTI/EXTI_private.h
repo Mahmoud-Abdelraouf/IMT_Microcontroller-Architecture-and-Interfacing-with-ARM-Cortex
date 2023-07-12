@@ -15,37 +15,6 @@
 #ifndef __EXTI_PRIVATE_H__
 #define __EXTI_PRIVATE_H__
 
-/*******************************< Macros for configuration *******************************/
-/**
- * @brief Defines the line numbers for external interrupts.
- * @note Your options: FROM LINE0 TO LINE15
- */
-#define MEXTI_LINE0 				0     /**< The line number for interrupt line 0. */
-#define MEXTI_LINE1 				1     /**< The line number for interrupt line 1. */
-#define MEXTI_LINE2 				2     /**< The line number for interrupt line 2. */
-#define MEXTI_LINE3 				3     /**< The line number for interrupt line 3. */
-#define MEXTI_LINE4 				4     /**< The line number for interrupt line 4. */
-#define MEXTI_LINE5 				5     /**< The line number for interrupt line 5. */
-#define MEXTI_LINE6 				6     /**< The line number for interrupt line 6. */
-#define MEXTI_LINE7 				7     /**< The line number for interrupt line 7. */
-#define MEXTI_LINE8 				8     /**< The line number for interrupt line 8. */
-#define MEXTI_LINE9 				9     /**< The line number for interrupt line 9. */
-#define MEXTI_LINE10 				10    /**< The line number for interrupt line 10. */
-#define MEXTI_LINE11 				11    /**< The line number for interrupt line 11. */
-#define MEXTI_LINE12 				12    /**< The line number for interrupt line 12. */
-#define MEXTI_LINE13 				13    /**< The line number for interrupt line 13. */
-#define MEXTI_LINE14 				14    /**< The line number for interrupt line 14. */
-#define MEXTI_LINE15 				15    /**< The line number for interrupt line 15. */
-
-
-
-/**
- * @brief The mode for external interrupts.
- * @note Your options: RISING, FALLING, ON_CHANGE
- */
-#define MEXTI_RISING 			0    	  /**< The rising edge mode for external interrupts. */
-#define MEXTI_FALLING 			1    	  /**< The falling edge mode for external interrupts. */
-#define MEXTI_ON_CHANGE 		2    	  /**< The on-change mode for external interrupts. */
 
 
 /*******************************< Register Definitions *******************************/

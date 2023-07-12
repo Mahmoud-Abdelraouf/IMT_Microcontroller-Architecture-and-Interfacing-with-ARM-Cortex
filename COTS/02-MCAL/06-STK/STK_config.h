@@ -56,25 +56,7 @@
  */
 #define STK_CTRL_TICKINT       STK_CTRL_TICKINT_ENABLE
 
-/**
- * @brief Sets the system clock frequency for the SysTick peripheral.
- *
- * This function sets the system clock frequency for the SysTick peripheral. It does not allow changes to the values defined by the STK_CTRL_CLKSOURCE constant.
- *
- * @note
- * The available options for STK_CTRL_CLKSOURCE are:
- * - STK_CTRL_CLKSOURCE_1: Processor clock (AHB clock) divided by 1
- * - STK_CTRL_CLKSOURCE_8: Processor clock (AHB clock) divided by 8
- *
- * @retval None
- */
-#if STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_1
-    #define STK_AHB_CLK       8000000   /**< Processor clock (AHB clock) divided by 1 */
-#elif STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_8
-    #define STK_AHB_CLK       1000000   /**< Processor clock (AHB clock) divided by 8 */
-#else
-    #error "You chose a wrong clock source for the SysTick"
-#endif
+
 
 
 

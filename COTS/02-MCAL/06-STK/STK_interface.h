@@ -105,6 +105,21 @@ u32 MSTK_u32GetElapsedCount(void);
  */
 void MSTK_voidSetBusyWait(u32 Copy_u32Microseconds);
 
+
+/**
+ * @brief Blocks the CPU for the specified number of milliseconds.
+ *
+ * This function blocks the CPU for the specified number of microseconds using the SysTick timer. The function calculates the
+ * number of ticks required to wait for the specified number of microseconds based on the current system clock frequency and
+ * the reload value of the SysTick timer.
+ *
+ * @param[in] Copy_u32Milliseconds The number of milliseconds to wait. This value should be less than or equal to 16777215 (0x00FFFFFF).
+ *
+ * @return None.
+ */
+void MSTK_voidSetDelayMs(f32 Copy_u32Milliseconds);
+
+
 /**
  * @brief Calls a function after the specified number of microseconds.
  *

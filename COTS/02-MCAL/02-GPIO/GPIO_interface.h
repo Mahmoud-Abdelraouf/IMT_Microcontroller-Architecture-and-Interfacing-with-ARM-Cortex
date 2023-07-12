@@ -18,13 +18,10 @@
 /***********************************< THE AVAILABLE VALUES FOR OUTPUT ***********************************/
 #define MGPIO_HIGH						1
 #define MGPIO_LOW						0
-
 /***********************************< THE AVAILABLE PORTS IN STM32F103C8 ***********************************/
 #define MGPIOA							0
 #define MGPIOB							1
 #define MGPIOC							2
-
-
 /***********************************< THE AVAILABLE PINS IN STM32F103C8 ***********************************/
 #define MGPIO_PIN0						0
 #define MGPIO_PIN1        				1
@@ -42,7 +39,6 @@
 #define MGPIO_PIN13       				13
 #define MGPIO_PIN14       				14
 #define MGPIO_PIN15       				15
-
 /***********************************< PORT BIT CONFIGURATION OPTIONS ***********************************/
 #define MGPIO_INPUT_ANALOG				0b0000		/**< INPUT_ANALOG */
 #define MGPIO_INPUT_FLOATING			0b0100		/**< INPUT_FLOATING */
@@ -63,6 +59,72 @@
 #define MGPIO_OUTPUT_OD_50MHZ			0b0111		/**< OUTPUT_OPEN-DRAIN, MAXIMUM OUTPUT SPEED 50 MHZ*/
 #define MGPIO_OUTPUT_AFPP_50MHZ			0b1011		/**< OUTPUT_ALTERNATE FUNCTION_PUSH-PULL, MAXIMUM OUTPUT SPEED 50 MHZ*/
 #define MGPIO_OUTPUT_AFOD_50MHZ			0b1111		/**< OUTPUT_ALTERNATE FUNCTION_OPEN-DRAIN, MAXIMUM OUTPUT SPEED 50 MHZ */
+
+
+typedef enum {
+    GPIO_PORTA_INDEX = 0,
+    GPIO_PORTB_INDEX,
+    GPIO_PORTC_INDEX,
+    GPIO_PORTD_INDEX,
+    GPIO_PORTE_INDEX,
+    GPIO_PORTF_INDEX,
+    GPIO_PORTG_INDEX
+}GPIO_PortIndex_t;
+
+typedef enum {
+    GPIO_PIN0 = 0,
+    GPIO_PIN1,
+    GPIO_PIN2,
+    GPIO_PIN3,
+    GPIO_PIN4,
+    GPIO_PIN5,
+    GPIO_PIN6,
+    GPIO_PIN7,
+    GPIO_PIN8,
+    GPIO_PIN9,
+    GPIO_PIN10,
+    GPIO_PIN11,
+    GPIO_PIN12,
+    GPIO_PIN13,
+    GPIO_PIN14,
+    GPIO_PIN15
+}GPIO_PinIndex_t;
+
+typedef enum {
+    /**< INPUT Direction with different modes */
+    GPIO_INPUT_ANALOG       = 0b0000,   /**< INPUT_ANALOG */                     	
+    GPIO_INPUT_FLOATING     = 0b0100,   /**< INPUT_FLOATING */                     
+    GPIO_INPUT_PD           = 0b1000,   /**< INPUT_PULL-DOWN */                    	
+    GPIO_INPUT_PU           = 0b1000,   /**< INPUT_PULL-UP */                    	
+    /**< OUTPUT Direction with different modes */
+    GPIO_OUTPUT_PP_10MHZ    = 0b0001,  	/**< OUTPUT_PUSH-PULL, MAXIMUM OUTPUT SPEED 10 MHZ */
+    GPIO_OUTPUT_OD_10MHZ	= 0b0101,   /**< OUTPUT_OPEN-DRAIN, MAXIMUM OUTPUT SPEED 10 MHZ */
+    GPIO_OUTPUT_AFPP_10MHZ	= 0b1001,   /**< OUTPUT_ALTERNATE FUNCTION_PUSH-PULL, MAXIMUM OUTPUT SPEED 10 MHZ */
+    GPIO_OUTPUT_AFOD_10MHZ	= 0b1101,   /**< OUTPUT_ALTERNATE FUNCTION_OPEN-DRAIN, MAXIMUM OUTPUT SPEED 10 MHZ */
+
+    GPIO_OUTPUT_PP_2MHZ 	= 0b0010,   /**< OUTPUT_PUSH-PULL, MAXIMUM OUTPUT SPEED 2 MHZ */
+    GPIO_OUTPUT_OD_2MHZ	    = 0b0110,   /**< OUTPUT_OPEN-DRAIN, MAXIMUM OUTPUT SPEED 2 MHZ */
+    GPIO_OUTPUT_AFPP_2MHZ	= 0b1010,   /**< OUTPUT_ALTERNATE FUNCTION_PUSH-PULL, MAXIMUM OUTPUT SPEED 2 MHZ */
+    GPIO_OUTPUT_AFOD_2MHZ	= 0b1110,   /**< OUTPUT_ALTERNATE FUNCTION_OPEN-DRAIN, MAXIMUM OUTPUT SPEED 2 MHZ */
+
+    GPIO_OUTPUT_PP_50MHZ 	= 0b0011,   /**< OUTPUT_PUSH-PULL, MAXIMUM OUTPUT SPEED 50 MHZ */
+    GPIO_OUTPUT_OD_50MHZ	= 0b0111,   /**< OUTPUT_OPEN-DRAIN, MAXIMUM OUTPUT SPEED 50 MHZ*/
+    GPIO_OUTPUT_AFPP_50MHZ	= 0b1011,   /**< OUTPUT_ALTERNATE FUNCTION_PUSH-PULL, MAXIMUM OUTPUT SPEED 50 MHZ*/
+    GPIO_OUTPUT_AFOD_50MHZ	= 0b1111    /**< OUTPUT_ALTERNATE FUNCTION_OPEN-DRAIN, MAXIMUM OUTPUT SPEED 50 MHZ */	
+}GPIO_PinMode_t;
+
+
+typedef enum {
+    GPIO_LOW  = 0,
+    GPIO_HIGH = !GPIO_LOW
+}GPIO_Logic_t;
+
+typedef struct {
+    u8 PinIndex  : 4;
+    u8 PinMode   : 4;
+    u8 PortIndex : 3;
+    u8 PinLogic  : 1;
+}GPIO_PinConfig_t;
 
 
 /***********************************< FUNCTIONS PROTOTYPES AND DESCRIPTION ***********************************/

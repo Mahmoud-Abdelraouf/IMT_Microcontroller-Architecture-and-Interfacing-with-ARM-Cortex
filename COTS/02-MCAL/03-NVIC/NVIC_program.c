@@ -19,7 +19,7 @@
 #include "NVIC_private.h"
 #include "NVIC_interface.h"
 #include "NVIC_config.h"
-
+/**********************************************< FUNCTIONS IMPLEMENTATION **********************************************/
 u8 MNVIC_u8EnableInterrupt(u8 Copy_u8InterruptNumber) 
 {
 	u8 Local_u8ErrorStatus = 0;
