@@ -63,6 +63,11 @@ typedef struct STK_RegDef_t{
 #define STK_CTRL_TICKINT_ENABLE           1
 #define STK_CTRL_TICKINT_DISABLE          0
 
+
+#define MSTK_SINGLE_INTERVAL              0
+#define MSTK_PERIOD_INTERVAL              1
+
+
 /**
  * @brief Sets the system clock frequency for the SysTick peripheral.
  *

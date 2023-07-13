@@ -3,7 +3,7 @@
  *
  * @author Mahmoud Abdelraouf Mahmoud
  * @date 26 Feb 2022
- * @version V01
+ * @version V02
  *
  * This module provides functions for configuring the mode, speed, and pull-up/down resistors of GPIO pins,
  * as well as reading and writing their values. It is designed to be used with ARM Cortex-M processors, and may not be
@@ -125,6 +125,9 @@ typedef struct {
     u8 PortIndex : 3;
     u8 PinLogic  : 1;
 }GPIO_PinConfig_t;
+
+
+Std_ReturnType M_GPIO_SetPinDirectionInitialize(const GPIO_PinConfig_t *Copy_psPinConfig);
 
 
 /***********************************< FUNCTIONS PROTOTYPES AND DESCRIPTION ***********************************/

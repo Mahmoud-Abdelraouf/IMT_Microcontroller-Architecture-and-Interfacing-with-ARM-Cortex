@@ -7,7 +7,7 @@
  * This module provides functions for configuring and using the SysTick timer in the STM32F10xx microcontroller.
  *
  * @date 06 Jul 2023
- * @version V01
+ * @version V02
  * @author Mahmoud Abdelraouf Mahmoud
  */
 
@@ -19,9 +19,12 @@
 #include "STK_config.h"
 #include "STK_private.h"
 
+/**< Define Callback Global Variable */
 static void (*STK_pfCallback)(void) = NULL;
+/**< Define Variable for interval mode */
+static u8 MSTK_u8ModeOfInterval;
 
-void MSTK_voidInit(u32 Copy_u32LoadValue)
+void MSTK_voidInit(void)
 {
     /**< Disable SysTick timer */
     STK->CTRL &= ~STK_CTRL_ENABLE_MASK;
@@ -40,9 +43,6 @@ void MSTK_voidInit(u32 Copy_u32LoadValue)
     #else
         #error "WRONG OPTION"
     #endif
-    /**< Set the reload value for the SysTick timer */
-    STK -> LOAD = Copy_u32LoadValue;
-    
 }
 
 void MSTK_voidStart(void)
@@ -65,18 +65,18 @@ void MSTK_voidReset(void)
     STK->VAL = 0;
     /**< Set the reload value to 0 */
     STK->LOAD = 0;
-    /**< Clear the count flag */
+    /**< Clear the count/interrupt flag */
     STK->CTRL &= ~STK_CTRL_COUNTFLAG_MASK;
 }
 
 
-u32 MSTK_u32GetRemainingCount(void)
+u32 MSTK_u32GetRemainingCounts(void)
 {
     /* Get the current value of the SysTick timer */
     return STK->VAL;
 }
 
-u32 MSTK_u32GetElapsedCount(void)
+u32 MSTK_u32GetElapsedCounts(void)
 {
     /* Calculate the number of elapsed ticks */
     u32 Local_u32ElapsedTicks = ((STK->LOAD + 1) - (STK->VAL));
@@ -121,7 +121,10 @@ void MSTK_voidSetIntervalSingle(u32 Copy_u32Microseconds, void (*Copy_pfCallback
     
         /* Set the reload value for the SysTick timer */
         STK->LOAD = Local_u32Ticks;
-    
+
+        /**< Set the Mode of interval to be single */
+        MSTK_u8ModeOfInterval = MSTK_SINGLE_INTERVAL;
+
         /* Start the SysTick timer and enable the interrupt */
         STK->CTRL |= STK_CTRL_ENABLE_MASK;
         STK->CTRL |= STK_CTRL_TICKINT_MASK; 
@@ -139,20 +142,19 @@ void MSTK_voidSetIntervalPeriodic(u32 Copy_u32Microseconds, void (*Copy_pfCallba
     {
         /**< Save the callback function pointer */
         STK_pfCallback = Copy_pfCallback;
+
         /* Calculate the number of ticks required to wait for the specified number of microseconds */
         u32 Local_u32Ticks = (Copy_u32Microseconds * STK_AHB_CLK) / 1000000;
+
         /**< Set the reload value for the SysTick timer */
         STK->LOAD = Local_u32Ticks;
+
+        /**< Set the Mode of interval to be periodic */
+        MSTK_u8ModeOfInterval = MSTK_PERIOD_INTERVAL;
+
         /**< Start the SysTick timer */
         STK->CTRL |= STK_CTRL_ENABLE_MASK;
         STK->CTRL |= STK_CTRL_TICKINT_MASK;
-        #if STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_1
-        STK -> CTRL |= STK_CTRL_CLKSOURCE_MASK;                 /**< Set bit 2 to use the processor clock */
-        #elif STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_8
-            STK-> CTRL &= ~STK_CTRL_CLKSOURCE_MASK;             /**< Clear bit 2 to use the processor clock/8 */
-        #else 
-            #error "WRONG CHOICE FOR SYSTICK CLOCK SOURCE"
-        #endif
     }
     else
     {
@@ -164,8 +166,16 @@ void SysTick_Handler(void)
 {
     /**< Call the callback function */
     if (STK_pfCallback != NULL)
-    {
+    { 
+        if(MSTK_u8ModeOfInterval == MSTK_SINGLE_INTERVAL)  
+        {
+            MSTK_voidReset();
+        }
+        /**< Callback notification */
         STK_pfCallback();
+
+         /**< Clear the count/interrupt flag */
+        STK->CTRL &= ~STK_CTRL_COUNTFLAG_MASK;
     }
 }
 

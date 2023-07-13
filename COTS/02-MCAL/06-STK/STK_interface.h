@@ -21,11 +21,11 @@
  * when it reaches zero, and then reloads the timer with the specified value. The interrupt can be used to implement a periodic
  * timebase for the application.
  *
- * @param[in] Copy_u32LoadValue The reload value to use for the SysTick timer. This value should be less than or equal to 0x00FFFFFF.
+ * @param[in] void.
  *
  * @return None.
  */
-void MSTK_voidInit(u32 Copy_u32LoadValue);
+void MSTK_voidInit(void);
 
 /**
  * @brief Starts the SysTick timer.
@@ -74,7 +74,7 @@ void MSTK_voidReset(void);
  *
  * @return The current value of the SysTick timer.
  */
-u32 MSTK_u32GetRemainingCount(void);
+u32 MSTK_u32GetRemainingCounts(void);
 
 /**
  * @brief Get the number of elapsed ticks since the last SysTick timer reset.
@@ -90,7 +90,7 @@ u32 MSTK_u32GetRemainingCount(void);
  * 
  * @return The number of elapsed ticks as an unsigned 32-bit integer.
  */
-u32 MSTK_u32GetElapsedCount(void);
+u32 MSTK_u32GetElapsedCounts(void);
 
 /**
  * @brief Blocks the CPU for the specified number of microseconds.

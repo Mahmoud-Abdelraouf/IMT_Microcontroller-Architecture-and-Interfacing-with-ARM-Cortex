@@ -29,9 +29,13 @@ void HLEDMTRX_voidTurnOn(u8 Copy_u8Row, u8 Copy_u8Col)
 
 void HLEDMTRX_voidTurnOff(u8 Copy_u8Row, u8 Copy_u8Col)
 {
-
+  
 }
 
+void HLEDMTRX_voidClear(void)
+{
+  
+}
 
 void HLEDMTRX_voidInit(void)
 {

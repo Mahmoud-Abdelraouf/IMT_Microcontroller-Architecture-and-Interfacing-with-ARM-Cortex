@@ -50,6 +50,18 @@ void HLEDMTRX_voidClear(void);
  */
 void HLEDMTRX_voidInit(void);
 
+/**
+ * @brief Displays data on the LED Matrix.
+ *
+ * This function displays data on the LED Matrix by enabling one column at a time and setting
+ * the values for the rows. It uses an array of 8 bytes to represent the data for each column.
+ * The function shifts the data to the left after displaying all columns, creating a scrolling
+ * effect.
+ *
+ * @param Copy_pau8Data Pointer to an array of 8 bytes representing the data for each column.
+ *
+ * @return void
+ */
 void HLEDMTRX_voidDisplay(u8 *Copy_pau8Data);
 
 /**
@@ -62,7 +74,7 @@ void HLEDMTRX_voidDisplay(u8 *Copy_pau8Data);
  * @param state The state to set the LED to (0 for off, 1 for on).
  * @return None.
  */
-void HLEDMTRX_voidSetLedState(u8 row, u8 col, u8 state);
+void HLEDMTRX_voidSetLedState(u8 row, u8 col, u8 state);f
 
 /**
  * @brief Shift the LED matrix display to the left by one column.
