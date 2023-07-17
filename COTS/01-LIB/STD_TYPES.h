@@ -7,10 +7,6 @@
 #ifndef __STD_TYPES_H__
 #define __STD_TYPES_H__
 
-#define NULL				((void *)0)
-
-#define E_OK                (unsigned char)1
-#define E_NOT_OK            (unsigned char)0
 
 typedef unsigned char		u8;
 typedef unsigned short  	u16;
@@ -27,6 +23,13 @@ typedef double 				f64;
 typedef long double  		f96;
 
 typedef u8                  Std_ReturnType;
+
+
+
+#define NULL				((void *)0)
+
+#define E_OK                (Std_ReturnType)1
+#define E_NOT_OK            (Std_ReturnType)0
 
 
 #endif /**< __STD_TYPES_H__ */

@@ -74,7 +74,7 @@ void HLEDMTRX_voidDisplay(u8 *Copy_pau8Data);
  * @param state The state to set the LED to (0 for off, 1 for on).
  * @return None.
  */
-void HLEDMTRX_voidSetLedState(u8 row, u8 col, u8 state);f
+void HLEDMTRX_voidSetLedState(u8 row, u8 col, u8 state);
 
 /**
  * @brief Shift the LED matrix display to the left by one column.

@@ -27,13 +27,13 @@ void MGPIO_voidSetPinDirection(u8 Copy_u8PORT, u8 Copy_u8PIN, u8 Copy_u8Mode)
 		case MGPIOA:
 			if(Copy_u8PIN < 8)
 			{
-				MGPIOA_CRL_R &=~ ((0b1111) << (Copy_u8PIN * 4));
+				MGPIOA_CRL_R &= ~((0b1111) << (Copy_u8PIN * 4));
 				MGPIOA_CRL_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
 			}
 			else if(Copy_u8PIN < 16)
 			{
 				Copy_u8PIN-=8;
-				MGPIOA_CRH_R &=~ ((0b1111) << (Copy_u8PIN * 4));
+				MGPIOA_CRH_R &= ~((0b1111) << (Copy_u8PIN * 4));
 			    MGPIOA_CRH_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
 			}
 			else
@@ -44,7 +44,7 @@ void MGPIO_voidSetPinDirection(u8 Copy_u8PORT, u8 Copy_u8PIN, u8 Copy_u8Mode)
 		case MGPIOB:
 			if(Copy_u8PIN < 8)
 			{
-				MGPIOB_CRL_R &=~ ((0b1111) << (Copy_u8PIN * 4));
+				MGPIOB_CRL_R &= ~((0b1111) << (Copy_u8PIN * 4));
 				MGPIOB_CRL_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
 			}
 			else if(Copy_u8PIN < 16)
