@@ -135,11 +135,11 @@ static void SPI_voidSetSlaveSelectPin(SPI_Status_t Copy_Status)
   /* Set or clear the slave select pin */
   if (Copy_Status == LOW)
   {
-    SET_BIT(GPIOA->ODR, GPIO_ODR_ODR4);
+    MGPIO_voidSetPinValue(MGPIOA,GPIO_PIN4,MGPIO_HIGH);
   }
   else
   {
-    CLEAR_BIT(GPIOA->ODR, GPIO_ODR_ODR4);
+    MGPIO_voidSetPinValue(MGPIOA,GPIO_PIN4,MGPIO_LOW);
   }
 }
 
