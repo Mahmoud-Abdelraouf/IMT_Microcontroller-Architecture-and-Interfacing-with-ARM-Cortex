@@ -17,10 +17,61 @@
 #define __SPI_PRIVATE_H__
 
 /**
- * @defgroup SPI_Private_Macros
+ * @defgroup SPI_Private_Macros Private Macros
  * @{
  */
-#define SPI_CR1_BR_MSK    0x38      
+
+#define SPI_SR_RXNE         0
+#define SPI_SR_TXE          1
+#define SPI_SR_BSY          7
+
+ /**
+ * @brief Mask to clear the baud rate control bits in the SPI_CR1 register.
+ * 
+ * This mask is used to clear the baud rate control bits in the SPI_CR1 register
+ * so that they can be set to a new value without affecting other bits in the register.
+ */
+#define SPI_CR1_BR_MSK          (u32)0x0038 
+
+/**
+ * @brief Baud rate control value for a divider of 2.
+ */
+#define SPI_CR1_BR_DIV2         (u32)0x0000   
+
+/**
+ * @brief Baud rate control value for a divider of 4.
+ */
+#define SPI_CR1_BR_DIV4         (u32)0x0008 
+
+/**
+ * @brief Baud rate control value for a divider of 8.
+ */
+#define SPI_CR1_BR_DIV8         (u32)0x0010
+
+/**
+ * @brief Baud rate control value for a divider of 16.
+ */
+#define SPI_CR1_BR_DIV16        (u32)0x0018
+
+/**
+ * @brief Baud rate control value for a divider of 32.
+ */
+#define SPI_CR1_BR_DIV32        (u32)0x0020
+
+/**
+ * @brief Baud rate control value for a divider of 64.
+ */
+#define SPI_CR1_BR_DIV64        (u32)0x0028
+
+/**
+ * @brief Baud rate control value for a divider of 128.
+ */
+#define SPI_CR1_BR_DIV128       (u32)0x0030
+
+/**
+ * @brief Baud rate control value for a divider of 256.
+ */
+#define SPI_CR1_BR_DIV256       (u32)0x0038
 
 /**
  * @}
@@ -139,11 +190,11 @@ typedef struct {
  * 
  * This function sends a single byte of data over SPI.
  * 
- * @param[in] data The data byte to send.
+ * @param[in] Copy_u8Data The data byte to send.
  * 
  * @note This function is for internal use only.
  */
-static void SPI_voidSendByte(u8 data);
+static void SPI_voidSendByte(u8 Copy_u8Data);
 
 /**
  * @brief Receive a byte of data over SPI.

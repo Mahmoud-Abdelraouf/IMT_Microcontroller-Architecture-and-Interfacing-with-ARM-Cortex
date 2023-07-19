@@ -9,11 +9,14 @@
  * @version V01
  */
 
-/**< LIB */
+/*****************************< LIB *****************************/
 #include "STD_TYPES.h"
 #include "BIT_MATH.h"
 
-/**< MCAL */
+/*****************************< MCAL *****************************/
+/**< GPIO */
+#include "GPIO_interface.h"
+/**< SPI */
 #include "SPI_config.h"
 #include "SPI_private.h"
 #include "SPI_interface.h"
@@ -26,7 +29,7 @@
  */
 
 void SPI_voidInit(SPI_DataFrame_t Copy_DataFrame, SPI_ClockPolarity_t Copy_ClockPolarity,
-                  SPI_ClockPhase_t Copy_ClockPhase, u32 Copy_u32ClockSpeed)
+                  SPI_ClockPhase_t Copy_ClockPhase, SPI_BaudRateControl_t Copy_BaudRateControl)
 {
   /* Configure the SPI peripheral */
   /* Set the data frame format */
@@ -61,7 +64,7 @@ void SPI_voidInit(SPI_DataFrame_t Copy_DataFrame, SPI_ClockPolarity_t Copy_Clock
 
   /* Set the clock speed */
   SPI->CR1 &= ~SPI_CR1_BR_MSK;
-  SPI->CR1 |= SPI_CR1_BR_DIV2;
+  SPI->CR1 |= Copy_BaudRateControl;
 
   /* Set the master mode */
   SET_BIT(SPI->CR1, SPI_CR1_MSTR);
@@ -70,21 +73,21 @@ void SPI_voidInit(SPI_DataFrame_t Copy_DataFrame, SPI_ClockPolarity_t Copy_Clock
   SET_BIT(SPI->CR1, SPI_CR1_SPE);
 }
 
-void SPI_voidTransfer(u8* pTxData, u8* pRxData, u16 size)
+void SPI_voidTransfer(u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size)
 {
-  u16 i;
+  u16 Local_u16Iterator;
 
   /* Set the slave select pin */
   SPI_voidSetSlaveSelectPin(LOW);
 
   /* Send and receive the data */
-  for (i = 0; i < size; i++)
+  for (Local_u16Iterator = 0; Local_u16Iterator < Copy_u16size; Local_u16Iterator++)
   {
     /* Send the data */
-    SPI_voidSendByte(pTxData[i]);
+    SPI_voidSendByte(Copy_u8pTxData[Local_u16Iterator]);
 
     /* Receive the data */
-    pRxData[i] = SPI_u8ReceiveByte();
+    Copy_u8pRxData[Local_u16Iterator] = SPI_u8ReceiveByte();
   }
 
   /* Wait for the transmission to complete */
@@ -103,19 +106,19 @@ void SPI_voidTransfer(u8* pTxData, u8* pRxData, u16 size)
  * @{
  */
 
-static void SPI_voidSendByte(u8 data)
+static void SPI_voidSendByte(u8 Copy_u8Data)
 {
   /* Wait for the transmit buffer to be empty */
-  while (!(SPI->SR & SPI_SR_TXE));
+  while (!GET_BIT(SPI->SR,SPI_SR_TXE));
 
   /* Send the data */
-  *((u8*)&(SPI->DR)) = data;
+  *((u8*)&(SPI->DR)) = Copy_u8Data;
 }
 
 static u8 SPI_u8ReceiveByte(void)
 {
   /* Wait for the receive buffer to be full */
-  while (!(SPI->SR & SPI_SR_RXNE));
+  while (!GET_BIT(SPI->SR,SPI_SR_RXNE));
 
   /* Return the received data */
   return *((u8*)&(SPI->DR));
@@ -124,13 +127,13 @@ static u8 SPI_u8ReceiveByte(void)
 static void SPI_voidWaitForTransmissionComplete(void)
 {
   /* Wait for the transmission to complete */
-  while (SPI->SR & SPI_SR_BSY);
+  while (GET_BIT(SPI->SR,SPI_SR_BSY));
 }
 
-static void SPI_voidSetSlaveSelectPin(u8 status)
+static void SPI_voidSetSlaveSelectPin(SPI_Status_t Copy_Status)
 {
   /* Set or clear the slave select pin */
-  if (status == LOW)
+  if (Copy_Status == LOW)
   {
     SET_BIT(GPIOA->ODR, GPIO_ODR_ODR4);
   }
