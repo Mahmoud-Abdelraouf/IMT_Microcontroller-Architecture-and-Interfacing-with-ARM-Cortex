@@ -28,7 +28,8 @@ void MSTK_voidInit(void)
 {
     /**< Disable SysTick timer */
     STK->CTRL &= ~STK_CTRL_ENABLE_MASK;
-    /**< Configure SysTick timer to use the processor clock and generate interrupt when it reaches zero */
+
+    /**< Configure SysTick timer to use the processor clock */
     #if STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_1
         STK -> CTRL |= STK_CTRL_CLKSOURCE_MASK;             /**< Set bit 2 to use the processor clock */
     #elif STK_CTRL_CLKSOURCE == STK_CTRL_CLKSOURCE_8
@@ -36,6 +37,8 @@ void MSTK_voidInit(void)
     #else 
         #error "WRONG CHOICE FOR SYSTICK CLOCK SOURCE"
     #endif
+
+    /**< Generate interrupt when it reaches zero */
     #if STK_CTRL_TICKINT == STK_CTRL_TICKINT_ENABLE
         STK->CTRL |= STK_CTRL_TICKINT_MASK;      /**< Set bit 1 to enable interrupt when the counter reaches zero */
     #elif STK_CTRL_TICKINT == STK_CTRL_TICKINT_DISABLE

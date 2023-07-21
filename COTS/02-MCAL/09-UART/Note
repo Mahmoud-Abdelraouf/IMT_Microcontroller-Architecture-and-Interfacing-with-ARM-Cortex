@@ -1,0 +1,76 @@
+
+
+void UART_voidInit(UART_Config_t *config)
+{
+  // Configure UART word length (data bits)
+  if (config->WordLength == UART_WORD_LENGTH_8BIT)
+  {
+    USART1->CR1 &= ~USART_CR1_M; // Clear the M bit for 8-bit word length
+  }
+  else if (config->WordLength == UART_WORD_LENGTH_9BIT)
+  {
+    USART1->CR1 |= USART_CR1_M; // Set the M bit for 9-bit word length
+  }
+
+  // Configure UART stop bits
+  USART1->CR2 &= ~USART_CR2_STOP; // Clear the STOP bits
+  USART1->CR2 |= config->StopBits; // Set the specified stop bits
+
+  // Configure UART parity mode
+  if (config->ParityMode == UART_PARITY_NONE)
+  {
+    USART1->CR1 &= ~(USART_CR1_PCE | USART_CR1_PS); // Clear the PCE and PS bits for no parity
+  }
+  else if (config->ParityMode == UART_PARITY_EVEN)
+  {
+    USART1->CR1 |= USART_CR1_PCE; // Set the PCE bit for even parity
+    USART1->CR1 &= ~USART_CR1_PS; // Clear the PS bit for even parity
+  }
+  else if (config->ParityMode == UART_PARITY_ODD)
+  {
+    USART1->CR1 |= USART_CR1_PCE; // Set the PCE bit for odd parity
+    USART1->CR1 |= USART_CR1_PS;  // Set the PS bit for odd parity
+  }
+
+  // Configure UART hardware flow control
+  if (config->HwFlowControl == UART_HW_FLOW_CONTROL_NONE)
+  {
+    USART1->CR3 &= ~(USART_CR3_RTSE | USART_CR3_CTSE); // Clear the RTSE and CTSE bits for no hardware flow control
+  }
+  else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_RTS)
+  {
+    USART1->CR3 |= USART_CR3_RTSE; // Set the RTSE bit for RTS hardware flow control
+    USART1->CR3 &= ~USART_CR3_CTSE; // Clear the CTSE bit
+  }
+  else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_CTS)
+  {
+    USART1->CR3 |= USART_CR3_CTSE; // Set the CTSE bit for CTS hardware flow control
+    USART1->CR3 &= ~USART_CR3_RTSE; // Clear the RTSE bit
+  }
+  else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_RTS_CTS)
+  {
+    USART1->CR3 |= USART_CR3_RTSE | USART_CR3_CTSE; // Set both RTSE and CTSE bits for RTS and CTS hardware flow control
+  }
+
+  // Configure UART baud rate
+  // Assuming the system clock frequency is 72MHz
+  if (config->BaudRate == BAUD_RATE_9600)
+  {
+    USART1->BRR = 468; // Baud rate = 72,000,000 / 9600 = 4687.5
+  }
+  else if (config->BaudRate == BAUD_RATE_115200)
+  {
+    USART1->BRR = 39; // Baud rate = 72,000,000 / 115200 = 39.0625
+  }
+  // Add more baud rate configurations as needed
+
+  // Enable UART
+  USART1->CR1 |= USART_CR1_UE; // Set the UE bit to enable UART
+}
+
+
+
+
+
+
+

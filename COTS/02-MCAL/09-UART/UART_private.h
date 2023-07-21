@@ -31,10 +31,24 @@
 #ifndef __UART_PRIVATE_H__
 #define __UART_PRIVATE_H__
 
+
+
 /**< Register Definitions */
-#define UART1_BASE_ADDRESS  0x40013800U
-#define UART2_BASE_ADDRESS  0x40004400U
-#define UART3_BASE_ADDRESS  0x40004800U
+#define USART1_BASE_ADDRESS  0x40013800U
+#define USART2_BASE_ADDRESS  0x40004400U
+#define USART3_BASE_ADDRESS  0x40004800U
+
+/**
+ * @brief Enumeration for UART USART peripheral options.
+ *
+ * This enumeration defines the available USART peripherals that can be used in the UART driver.
+ */
+typedef enum
+{
+  USART1,     /**< USART1 peripheral */
+  USART2,     /**< USART2 peripheral */
+  USART3      /**< USART3 peripheral */
+} USART_Selection_t;
 
 typedef struct
 {
@@ -45,11 +59,48 @@ typedef struct
   volatile u32 CR2;
   volatile u32 CR3;
   volatile u32 GTPR;
-} UART_RegDef_t;
+} USART_RegDef_t;
 
-#define UART1   ((UART_RegDef_t *)UART1_BASE_ADDRESS)
-#define UART2   ((UART_RegDef_t *)UART2_BASE_ADDRESS)
-#define UART3   ((UART_RegDef_t *)UART3_BASE_ADDRESS)
+/**
+ * @brief Get the base address of the specified USART peripheral.
+ *
+ * This function returns the base address of the specified USART peripheral.
+ *
+ * @param[in] usart The USART peripheral to get the base address for. Must be one of the following:
+ *                      - USART1
+ *                      - USART2
+ *                      - USART3
+ *
+ * @return The base address of the specified USART peripheral.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Choose the USART peripheral you want to use (in this case, USART1)
+ * USART_Selection_t usart_selected = USART1;
+ *
+ * /**< Get the base address of USART1 using the UART_GetUSARTBaseAddress function
+ * RegDef_t *usart1_base_address = GetUSARTBaseAddress(usart_selected);
+ *
+ * /**< Now you can access USART1 registers and configure the UART communication
+ * /**< For example, you can configure the baud rate, word length, stop bits, etc.
+ *
+ * /**< ... (add your UART configuration code here)
+ * @endcode
+ */
+inline USART_RegDef_t *UART_GetUSARTBaseAddress(USART_Selection_t usart)
+{
+  switch (usart)
+  {
+    case USART1:
+      return (USART_RegDef_t *)USART1_BASE_ADDRESS;
+    case USART2:
+      return (USART_RegDef_t *)USART2_BASE_ADDRESS;
+    case USART3:
+      return (USART_RegDef_t *)USART3_BASE_ADDRESS;
+    default:
+      return NULL;
+  }
+}
 
 /**
  * @brief USART control register 1 (USART_CR1) bit definitions.

@@ -36,64 +36,64 @@
 #include "UART_private.h"
 #include "UART_interface.h"
 
-void UART_voidInit(UART_Config_t *config)
+void UART_voidInit(USART_RegDef_t *Copy_psUSART, UART_Config_t *config)
 {
   /* Configure UART word length */
-  if (config->wordLength == UART_WORD_LENGTH_8BIT)
+  if (config->WordLength == UART_WORD_LENGTH_8BIT)
   {
     /* Configure 8-bit word length */
   }
-  else if (config->wordLength == UART_WORD_LENGTH_9BIT)
+  else if (config->WordLength == UART_WORD_LENGTH_9BIT)
   {
     /* Configure 9-bit word length */
   }
 
   /* Configure UART stop bits */
-  if (config->stopBits == UART_STOP_BITS_1)
+  if (config->StopBits == UART_STOP_BITS_1)
   {
     /* Configure 1 stop bit */
   }
-  else if (config->stopBits == UART_STOP_BITS_0_5)
+  else if (config->StopBits == UART_STOP_BITS_0_5)
   {
     /* Configure 0.5 stop bit */
   }
-  else if (config->stopBits == UART_STOP_BITS_2)
+  else if (config->StopBits == UART_STOP_BITS_2)
   {
     /* Configure 2 stop bits */
   }
-  else if (config->stopBits == UART_STOP_BITS_1_5)
+  else if (config->StopBits == UART_STOP_BITS_1_5)
   {
     /* Configure 1.5 stop bits */
   }
 
   /* Configure UART parity mode */
-  if (config->parityMode == UART_PARITY_NONE)
+  if (config->ParityMode == UART_PARITY_NONE)
   {
     /* Configure no parity */
   }
-  else if (config->parityMode == UART_PARITY_EVEN)
+  else if (config->ParityMode == UART_PARITY_EVEN)
   {
     /* Configure even parity */
   }
-  else if (config->parityMode == UART_PARITY_ODD)
+  else if (config->ParityMode == UART_PARITY_ODD)
   {
     /* Configure odd parity */
   }
 
   /* Configure UART hardware flow control */
-  if (config->hwFlowControl == UART_HW_FLOW_CONTROL_NONE)
+  if (config->HwFlowControl == UART_HW_FLOW_CONTROL_NONE)
   {
     /* Configure no hardware flow control */
   }
-  else if (config->hwFlowControl == UART_HW_FLOW_CONTROL_RTS)
+  else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_RTS)
   {
     /* Configure RTS (Request to Send) hardware flow control */
   }
-  else if (config->hwFlowControl == UART_HW_FLOW_CONTROL_CTS)
+  else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_CTS)
   {
     /* Configure CTS (Clear to Send) hardware flow control */
   }
-  else if (config->hwFlowControl == UART_HW_FLOW_CONTROL_RTS_CTS)
+  else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_RTS_CTS)
   {
     /* Configure RTS and CTS hardware flow control */
   }
@@ -105,16 +105,32 @@ void UART_voidInit(UART_Config_t *config)
   /* ... */
 }
 
-void UART_voidTransmit(u8* data, u16 size)
+
+void UART_voidTransmit(USART_RegDef_t *Copy_psUSART, u8* data, u16 size)
 {
-  /* Transmit data over UART */
-  /* ... */
+  // Wait until the transmit buffer is empty
+  while (!(Copy_psUSART->SR & USART_SR_TXE));
+
+  for (u16 i = 0; i < size; i++)
+  {
+    // Transmit one byte of data
+    Copy_psUSART->DR = data[i];
+
+    // Wait until the transmission is complete
+    while (!(Copy_psUSART->SR & USART_SR_TC));
+  }
 }
 
-void UART_voidReceive(u8* data, u16 size)
+void UART_voidReceive(USART_RegDef_t *Copy_psUSART, u8* data, u16 size)
 {
-  /* Receive data from UART */
-  /* ... */
+  for (u16 i = 0; i < size; i++)
+  {
+    // Wait until data is available to receive
+    while (!(Copy_psUSART->SR & USART_SR_RXNE));
+
+    // Receive one byte of data
+    data[i] = Copy_psUSART->DR;
+  }
 }
 
 /**

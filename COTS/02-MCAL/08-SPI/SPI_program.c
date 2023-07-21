@@ -28,12 +28,11 @@
  * @{
  */
 
-void SPI_voidInit(SPI_DataFrame_t Copy_DataFrame, SPI_ClockPolarity_t Copy_ClockPolarity,
-                  SPI_ClockPhase_t Copy_ClockPhase, SPI_BaudRateControl_t Copy_BaudRateControl)
+void SPI_voidInit(SPI_config_t *Copy_psSPIConfig)
 {
   /* Configure the SPI peripheral */
   /* Set the data frame format */
-  if (Copy_DataFrame == SPI_DATA_FRAME_8BIT)
+  if (Copy_psSPIConfig->DataFrame == SPI_DATA_FRAME_8BIT)
   {
     SET_BIT(SPI->CR1, SPI_CR1_DFF);
   }
@@ -43,7 +42,7 @@ void SPI_voidInit(SPI_DataFrame_t Copy_DataFrame, SPI_ClockPolarity_t Copy_Clock
   }
 
   /* Set the clock polarity */
-  if (Copy_ClockPolarity == SPI_CLOCK_POLARITY_HIGH)
+  if (Copy_psSPIConfig->ClockPolarity == SPI_CLOCK_POLARITY_HIGH)
   {
     SET_BIT(SPI->CR1, SPI_CR1_CPOL);
   }
@@ -53,7 +52,7 @@ void SPI_voidInit(SPI_DataFrame_t Copy_DataFrame, SPI_ClockPolarity_t Copy_Clock
   }
 
   /* Set the clock phase */
-  if (Copy_ClockPhase == SPI_CLOCK_PHASE_SECOND_EDGE)
+  if (Copy_psSPIConfig->ClockPhase == SPI_CLOCK_PHASE_SECOND_EDGE)
   {
     SET_BIT(SPI->CR1, SPI_CR1_CPHA);
   }
@@ -64,7 +63,7 @@ void SPI_voidInit(SPI_DataFrame_t Copy_DataFrame, SPI_ClockPolarity_t Copy_Clock
 
   /* Set the clock speed */
   SPI->CR1 &= ~SPI_CR1_BR_MSK;
-  SPI->CR1 |= Copy_BaudRateControl;
+  SPI->CR1 |= Copy_psSPIConfig->BaudRateDIV;
 
   /* Set the master mode */
   SET_BIT(SPI->CR1, SPI_CR1_MSTR);
@@ -132,6 +131,7 @@ static void SPI_voidWaitForTransmissionComplete(void)
 
 static void SPI_voidSetSlaveSelectPin(SPI_Status_t Copy_Status)
 {
+  
   /* Set or clear the slave select pin */
   if (Copy_Status == LOW)
   {

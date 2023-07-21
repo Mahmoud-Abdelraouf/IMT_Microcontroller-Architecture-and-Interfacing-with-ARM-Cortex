@@ -61,16 +61,60 @@ typedef enum
  */
 typedef enum
 {
-  SPI_BAUD_RATE_DIV2   = (u32)0x0000,    /**< baud rate divider of 2 */
-  SPI_BAUD_RATE_DIV4   = (u32)0x0008,    /**< baud rate divider of 4 */
-  SPI_BAUD_RATE_DIV8   = (u32)0x0010,    /**< baud rate divider of 8 */
-  SPI_BAUD_RATE_DIV16  = (u32)0x0018,    /**< baud rate divider of 16 */
-  SPI_BAUD_RATE_DIV32  = (u32)0x0020,    /**< baud rate divider of 32 */
-  SPI_BAUD_RATE_DIV64  = (u32)0x0028,    /**< baud rate divider of 64 */
-  SPI_BAUD_RATE_DIV128 = (u32)0x0030,    /**< baud rate divider of 128 */
-  SPI_BAUD_RATE_DIV256 = (u32)0x0038     /**< baud rate divider of 256 */
+  SPI_BAUD_RATE_DIV2   = (u16)0x0000,    /**< baud rate divider of 2 */
+  SPI_BAUD_RATE_DIV4   = (u16)0x0008,    /**< baud rate divider of 4 */
+  SPI_BAUD_RATE_DIV8   = (u16)0x0010,    /**< baud rate divider of 8 */
+  SPI_BAUD_RATE_DIV16  = (u16)0x0018,    /**< baud rate divider of 16 */
+  SPI_BAUD_RATE_DIV32  = (u16)0x0020,    /**< baud rate divider of 32 */
+  SPI_BAUD_RATE_DIV64  = (u16)0x0028,    /**< baud rate divider of 64 */
+  SPI_BAUD_RATE_DIV128 = (u16)0x0030,    /**< baud rate divider of 128 */
+  SPI_BAUD_RATE_DIV256 = (u16)0x0038     /**< baud rate divider of 256 */
 } SPI_BaudRateControl_t;
 
+/**
+ * @brief SPI Configuration Structure.
+ *
+ * This structure holds the configuration options for the SPI peripheral.
+ *
+ * @note The structure's bit-field size and arrangement may vary depending on the hardware and specific SPI module used.
+ *
+ * @attention When using this structure, ensure that the bit-field sizes and arrangement match the hardware configuration.
+ */
+typedef struct 
+{
+  u8 BaudRateDIV:6;      /**< SPI Baud Rate Divider.
+                             The value determines the SPI clock frequency based on the peripheral's clock source.
+                             The Baud Rate Divider is represented by a 6-bit value, allowing a range of possible values.
+                             The actual SPI clock frequency is calculated using the peripheral clock and this divider.
+                             The BaudRateDIV values are used to divide the peripheral clock as follows:
+                             - 000000: fPCLK/2
+                             - 001000: fPCLK/4
+                             - 010000: fPCLK/8
+                             - 011000: fPCLK/16
+                             - 100000: fPCLK/32
+                             - 101000: fPCLK/64
+                             - 110000: fPCLK/128
+                             - 111000: fPCLK/256
+                             Adjust the value accordingly to achieve the desired SPI clock frequency. */
+  
+  u8 DataFrame:1;        /**< Data Frame Format.
+                             Set this bit to configure the data frame format used by the SPI peripheral.
+                             - 0: The SPI peripheral operates in 8-bit data frame format.
+                             - 1: The SPI peripheral operates in 16-bit data frame format.
+                             The actual data frame format must match the configuration of the connected SPI devices. */
+                             
+  u8 ClockPolarity:1;    /**< Clock Polarity.
+                             Set this bit to define the idle state of the SPI clock.
+                             - 0: The clock is low in the idle state (CPOL = 0).
+                             - 1: The clock is high in the idle state (CPOL = 1).
+                             The idle state of the clock should be chosen to meet the requirements of the connected devices. */
+                             
+  u8 ClockPhase:1;       /**< Clock Phase.
+                             Set this bit to define the clock transition edge for data sampling.
+                             - 0: Data is sampled on the first clock edge (rising edge) (CPHA = 0).
+                             - 1: Data is sampled on the second clock edge (falling edge) (CPHA = 1).
+                             The clock phase setting should match the requirements of the connected devices. */
+} SPI_config_t;
 
 /**
  * @}
@@ -83,31 +127,49 @@ typedef enum
 
 /**
  * @brief Initialize the SPI peripheral.
- * 
+ *
  * This function initializes the SPI peripheral with the specified configuration.
- * 
- * @param[in] dataFrame The data frame format to use. Must be one of the following:
- *                      - SPI_DATA_FRAME_8BIT
- *                      - SPI_DATA_FRAME_16BIT
- * @param[in] clockPolarity The clock polarity to use. Must be one of the following:
- *                      - SPI_CLOCK_POLARITY_LOW
- *                      - SPI_CLOCK_POLARITY_HIGH
- * @param[in] clockPhase The clock phase to use. Must be one of the following:
- *                      - SPI_CLOCK_PHASE_FIRST_EDGE
- *                      - SPI_CLOCK_PHASE_SECOND_EDGE
- * @param[in] Copy_BaudRateControl The clock speed to use in Hz. Must be one of the following:
- *                      - SPI_BAUD_RATE_DIV2
- *                      - SPI_BAUD_RATE_DIV4
- *                      - SPI_BAUD_RATE_DIV8
- *                      - SPI_BAUD_RATE_DIV16
- *                      - SPI_BAUD_RATE_DIV32
- *                      - SPI_BAUD_RATE_DIV64
- *                      - SPI_BAUD_RATE_DIV128
- *                      - SPI_BAUD_RATE_DIV256
+ *
+ * @param[in] Copy_psSPIConfig Pointer to the SPI configuration structure that holds the configuration options.
+ *                            The structure must contain the following fields:
+ *                            - DataFrame: The data frame format to use. Must be one of the following:
+ *                                          - SPI_DATA_FRAME_8BIT: 8-bit data frame.
+ *                                          - SPI_DATA_FRAME_16BIT: 16-bit data frame.
+ *                            - ClockPolarity: The clock polarity to use. Must be one of the following:
+ *                                          - SPI_CLOCK_POLARITY_LOW: Clock is low when idle (leading edge is rising).
+ *                                          - SPI_CLOCK_POLARITY_HIGH: Clock is high when idle (leading edge is falling).
+ *                            - ClockPhase: The clock phase to use. Must be one of the following:
+ *                                          - SPI_CLOCK_PHASE_FIRST_EDGE: Data is captured on the first clock edge (read then write).
+ *                                          - SPI_CLOCK_PHASE_SECOND_EDGE: Data is captured on the second clock edge (write then read).
+ *                            - BaudRateDIV: The clock speed to use. Must be one of the following:
+ *                                          - SPI_BAUD_RATE_DIV2: Baud rate divider of 2.
+ *                                          - SPI_BAUD_RATE_DIV4: Baud rate divider of 4.
+ *                                          - SPI_BAUD_RATE_DIV8: Baud rate divider of 8.
+ *                                          - SPI_BAUD_RATE_DIV16: Baud rate divider of 16.
+ *                                          - SPI_BAUD_RATE_DIV32: Baud rate divider of 32.
+ *                                          - SPI_BAUD_RATE_DIV64: Baud rate divider of 64.
+ *                                          - SPI_BAUD_RATE_DIV128: Baud rate divider of 128.
+ *                                          - SPI_BAUD_RATE_DIV256: Baud rate divider of 256.
+ *
+ * @retval None
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Create an SPI configuration structure and set the desired options
+ * SPI_config_t spi_config;
+ * spi_config.DataFrame = SPI_DATA_FRAME_8BIT;
+ * spi_config.ClockPolarity = SPI_CLOCK_POLARITY_LOW;
+ * spi_config.ClockPhase = SPI_CLOCK_PHASE_FIRST_EDGE;
+ * spi_config.BaudRateDIV = SPI_BAUD_RATE_DIV32;
+ *
+ * /**< Initialize the SPI peripheral using the SPI_voidInit function
+ * SPI_voidInit(&spi_config);
+ *
+ * /**< Now the SPI peripheral is initialized and ready to use for communication.
+ * @endcode
  */
-void SPI_voidInit(SPI_DataFrame_t dataFrame, SPI_ClockPolarity_t clockPolarity,
-                  SPI_ClockPhase_t clockPhase, SPI_BaudRateControl_t Copy_BaudRateControl);
-       
+void SPI_voidInit(SPI_config_t *Copy_psSPIConfig);
+      
 /**
  * @brief Send and receive data over SPI.
  * 
