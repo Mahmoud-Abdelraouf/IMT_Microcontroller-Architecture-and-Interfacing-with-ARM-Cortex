@@ -38,71 +38,70 @@
 
 void UART_voidInit(USART_RegDef_t *Copy_psUSART, UART_Config_t *config)
 {
-  /* Configure UART word length */
+  /* Configure UART word length (data bits) */
   if (config->WordLength == UART_WORD_LENGTH_8BIT)
   {
     /* Configure 8-bit word length */
+    Copy_psUSART->CR1 &= ~USART_CR1_M;  /**< Clear the M bit for 8-bit word length */ 
   }
   else if (config->WordLength == UART_WORD_LENGTH_9BIT)
   {
     /* Configure 9-bit word length */
+    Copy_psUSART->CR1 |= USART_CR1_M;  /**< Set the M bit for 8-bit word length */ 
   }
 
   /* Configure UART stop bits */
-  if (config->StopBits == UART_STOP_BITS_1)
-  {
-    /* Configure 1 stop bit */
-  }
-  else if (config->StopBits == UART_STOP_BITS_0_5)
-  {
-    /* Configure 0.5 stop bit */
-  }
-  else if (config->StopBits == UART_STOP_BITS_2)
-  {
-    /* Configure 2 stop bits */
-  }
-  else if (config->StopBits == UART_STOP_BITS_1_5)
-  {
-    /* Configure 1.5 stop bits */
-  }
+  Copy_psUSART->CR2 &= ~USART_CR2_STOP;     /**< Clear the STOP bits */ 
+  Copy_psUSART->CR2 |= config->StopBits;    /**< Set the specified stop bits */
 
   /* Configure UART parity mode */
   if (config->ParityMode == UART_PARITY_NONE)
   {
     /* Configure no parity */
+    Copy_psUSART->CR1 &= ~(USART_CR1_PCE | USART_CR1_PS); /**< Clear the PCE and PS bits for no parity */
   }
   else if (config->ParityMode == UART_PARITY_EVEN)
   {
     /* Configure even parity */
+    Copy_psUSART->CR1 |= USART_CR1_PCE;   /**< Set the PCE bit for even parity */ 
+    Copy_psUSART->CR1 &= ~USART_CR1_PS;   /**< Clear the PS bit for even parity */
   }
   else if (config->ParityMode == UART_PARITY_ODD)
   {
     /* Configure odd parity */
+    Copy_psUSART->CR1 |= USART_CR1_PCE;   /**< Set the PCE bit for odd parity */ 
+    Copy_psUSART->CR1 |= USART_CR1_PS;    /**< Set the PS bit for odd parity */ 
   }
 
   /* Configure UART hardware flow control */
   if (config->HwFlowControl == UART_HW_FLOW_CONTROL_NONE)
   {
     /* Configure no hardware flow control */
+    Copy_psUSART->CR3 &= ~(USART_CR3_RTSE | USART_CR3_CTSE); // Clear the RTSE and CTSE bits for no hardware flow control
   }
   else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_RTS)
   {
-    /* Configure RTS (Request to Send) hardware flow control */
+    /* Configure RTS (Request to Send) hardware flow control */  
+    Copy_psUSART->CR3 |= USART_CR3_RTSE;    /**< Set the RTSE bit for RTS hardware flow control */
+    Copy_psUSART->CR3 &= ~USART_CR3_CTSE;   /**< Clear the CTSE bit */
   }
   else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_CTS)
   {
     /* Configure CTS (Clear to Send) hardware flow control */
+    Copy_psUSART->CR3 |= USART_CR3_CTSE;      /**< Set the CTSE bit for CTS hardware flow control */
+    Copy_psUSART->CR3 &= ~USART_CR3_RTSE;     /**< Clear the RTSE bit */
   }
   else if (config->HwFlowControl == UART_HW_FLOW_CONTROL_RTS_CTS)
   {
     /* Configure RTS and CTS hardware flow control */
+    Copy_psUSART->CR3 |= USART_CR3_RTSE | USART_CR3_CTSE; /**< Set both RTSE and CTSE bits for RTS and CTS hardware flow control */ 
   }
 
   /* Configure UART baud rate */
   /* ... */
 
   /* Enable UART */
-  /* ... */
+  Copy_psUSART->CR1 |= USART_CR1_UE;  /**< Set the UE bit to enable UART */ 
 }
 
 

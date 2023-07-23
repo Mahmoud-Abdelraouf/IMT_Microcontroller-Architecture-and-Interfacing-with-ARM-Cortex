@@ -61,8 +61,8 @@ typedef enum
 typedef enum
 {
   UART_STOP_BITS_1,     /**< 1 stop bit is used */
-  UART_STOP_BITS_2,     /**< 2 stop bits are used */
   UART_STOP_BITS_0_5,   /**< 0.5 stop bit is used */
+  UART_STOP_BITS_2,     /**< 2 stop bits are used */
   UART_STOP_BITS_1_5    /**< 1.5 stop bits are used */
 } UART_StopBits_t;
 
