@@ -236,24 +236,86 @@ inline USART_RegDef_t *UART_GetUSARTBaseAddress(USART_Selection_t usart);
 void UART_voidInit(USART_RegDef_t *Copy_psUSART, UART_Config_t *config);
 
 /**
- * @brief Send data over UART.
+ * @brief Transmit data through the UART peripheral.
  *
- * This function sends data over UART.
+ * This function transmits data through the UART peripheral specified by `Copy_psUSART`.
+ * The data to be transmitted is provided through the `data` buffer, and the number of bytes
+ * to be transmitted is specified by `size`.
  *
- * @param[in] data The data to send.
+ * @param[in] Copy_psUSART Pointer to the USART peripheral structure. Must point to one of the following:
+ *                           - USART1: Pointer to the USART1 peripheral structure.
+ *                           - USART2: Pointer to the USART2 peripheral structure.
+ *                           - USART3: Pointer to the USART3 peripheral structure.
+ * @param[in] data Pointer to the buffer containing the data to be transmitted.
+ * @param[in] size The number of bytes to be transmitted.
  *
  * @retval None
+ *
+ * @note This function waits until the transmit buffer is empty before starting the transmission.
+ *       It then transmits the data one byte at a time and waits for each transmission to complete
+ *       before sending the next byte. This ensures that the data is transmitted correctly.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Choose the USART peripheral you want to use (in this case, USART1)
+ * USART_RegDef_t *usart_selected = USART1;
+ *
+ * /**< Data to be transmitted
+ * u8 data_buffer[] = "Hello, UART!";
+ *
+ * /**< Calculate the size of the data buffer
+ * u16 data_size = sizeof(data_buffer);
+ *
+ * /**< Transmit the data using the UART_voidTransmit function
+ * UART_voidTransmit(usart_selected, data_buffer, data_size);
+ *
+ * /**< Now the data is transmitted through the UART peripheral.
+ * @endcode
  */
-void UART_voidSendData(u8 data);
+void UART_voidTransmit(USART_RegDef_t *Copy_psUSART, u8* data, u16 size);
 
 /**
- * @brief Receive data over UART.
+ * @brief Receive data through the UART peripheral.
  *
- * This function receives data over UART.
+ * This function receives data through the UART peripheral specified by `Copy_psUSART`.
+ * The received data will be stored in the `data` buffer, and the number of bytes to receive is specified by `size`.
  *
- * @return The received data.
+ * @param[in] Copy_psUSART Pointer to the USART peripheral structure. Must point to one of the following:
+ *                           - USART1: Pointer to the USART1 peripheral structure.
+ *                           - USART2: Pointer to the USART2 peripheral structure.
+ *                           - USART3: Pointer to the USART3 peripheral structure.
+ * @param[out] data Pointer to the buffer where the received data will be stored.
+ * @param[in] size The number of bytes to receive.
+ *
+ * @retval None
+ *
+ * @note This function waits until data is available to receive before starting the reception.
+ *       It then receives the data one byte at a time and stores it in the specified buffer `data`.
+ *       The function will loop `size` times, and each time it will wait for new data to be available.
+ *       After receiving all the bytes specified by `size`, the function will return.
+ *
+ * @note If the transmit and receive processes are synchronized, the same buffer can be used
+ *       for both transmission and reception. However, ensure that the buffer is large enough
+ *       to hold the received data without overwriting the data intended for transmission.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Choose the USART peripheral you want to use (in this case, USART1)
+ * USART_RegDef_t *usart_selected = USART1;
+ *
+ * /**< Prepare a buffer to store the received data
+ * u8 received_data_buffer[50];
+ *
+ * /**< Specify the number of bytes to receive
+ * u16 data_size = sizeof(received_data_buffer);
+ *
+ * /**< Receive data using the UART_voidReceive function
+ * UART_voidReceive(usart_selected, received_data_buffer, data_size);
+ *
+ * /**< Now the data is received and stored in the 'received_data_buffer'.
+ * @endcode
  */
-u8 UART_u8ReceiveData(void);
+void UART_voidReceive(USART_RegDef_t *Copy_psUSART, u8* data, u16 size);
 
 /**
  * @}
