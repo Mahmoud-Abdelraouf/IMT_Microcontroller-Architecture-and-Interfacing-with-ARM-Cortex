@@ -98,7 +98,30 @@ void UART_voidInit(USART_RegDef_t *Copy_psUSART, UART_Config_t *config)
   }
 
   /* Configure UART baud rate */
-  /* ... */
+
+  /* Calculate the value of the USARTDIV register based on the desired baud rate */
+  f32 Local_f32USARTDIV = (f32)USART_CLK_SRC / (16 * config->BaudRate);
+
+  /* Calculate the integer (mantissa) and fractional parts of USARTDIV */
+  u16 Local_u16DIV_Mantissa = (u16)Local_f32USARTDIV;
+  u16 Local_u16DIV_Fraction = (u16)(((Local_f32USARTDIV - Local_u16DIV_Mantissa) * 16) + 0.5);
+
+  /* Check if the fractional part requires carrying */
+  u8 Local_u8Carry = 0;
+  if (Local_u16DIV_Fraction >= 16)
+  {
+    Local_u16DIV_Fraction -= 16;
+    Local_u8Carry = 1;
+  }
+
+  /* Adjust the mantissa if carry is required */
+  if (Local_u8Carry == 1)
+  {
+    Local_u16DIV_Mantissa += 1;
+  }
+
+  /* Configure the Baud Rate Register (BRR) with calculated values */
+  Copy_psUSART->BRR = (Local_u16DIV_Mantissa << 4) | Local_u16DIV_Fraction;
 
   /* Enable UART */
   Copy_psUSART->CR1 |= USART_CR1_UE;  /**< Set the UE bit to enable UART */ 

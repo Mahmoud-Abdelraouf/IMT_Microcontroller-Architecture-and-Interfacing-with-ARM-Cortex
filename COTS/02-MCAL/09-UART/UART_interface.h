@@ -36,6 +36,7 @@
  * @{
  */
 
+#define USART_CLK_SRC           8000000
 /**
  * @brief Enumeration for UART parity modes.
  *
@@ -184,9 +185,9 @@ inline USART_RegDef_t *UART_GetUSARTBaseAddress(USART_Selection_t usart);
  * This function configures the UART peripheral with the specified options.
  *
  * @param[in] Copy_psUSART Pointer to the USART peripheral structure. Must point to one of the following:
- *                           - USART1: Pointer to the USART1 peripheral structure.
- *                           - USART2: Pointer to the USART2 peripheral structure.
- *                           - USART3: Pointer to the USART3 peripheral structure.
+*                                      - USART1: Pointer to the USART1 peripheral structure.
+*                                      - USART2: Pointer to the USART2 peripheral structure.
+*                                      - USART3: Pointer to the USART3 peripheral structure.
  * @param[in] config Pointer to the UART configuration structure that holds the configuration options.
  *                   The structure must contain the following fields:
  *                   - HwFlowControl: The hardware flow control option to use. Must be one of the following:

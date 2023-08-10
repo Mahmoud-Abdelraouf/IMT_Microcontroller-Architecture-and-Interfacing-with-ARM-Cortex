@@ -94,36 +94,37 @@ void MRCC_voidDisableClock(u8 Copy_u8BusId,u8 Copy_u8PeriphId)
 u32 MRCC_GetSystemClockFreq(void)
 {
     u32 freq = 0;
-    u8 clk_src = (RCC_CFGR_R >> 2) & 0x3; // Read the clock source bits from RCC_CFGR_R
+    u8 clk_src = (RCC_CFGR_R >> 2) & 0x3;
 
-    if (clk_src == 0x00) // HSI oscillator used as system clock
+    switch (clk_src)
     {
-        freq = 16000000; // HSI frequency is fixed at 16 MHz
-    }
-    else if (clk_src == 0x01) // HSE oscillator used as system clock
-    {
-        freq = RCC_HSE_VALUE; // HSE_VALUE is defined in the header file and represents the frequency of the external crystal or oscillator
-    }
-    else if (clk_src == 0x02) // PLL used as system clock
-    {
-        u8 pll_src = (RCC_CFGR_R >> 16) & 0x3; // Read the PLL source bits from RCC_CFGR_R
-        u32 pll_input_freq = 0;
+        case 0x00: // HSI oscillator used as system clock
+            freq = 16000000; // HSI frequency is fixed at 16 MHz
+        break;
+        
+        case 0x01: // HSE oscillator used as system clock
+            freq = RCC_HSE_VALUE; // HSE_VALUE should be defined properly
+        break;
+        
+        case 0x02: // PLL used as system clock
+            u8 pll_src = (RCC_CFGR_R >> 16) & 0x3;
+            u32 pll_input_freq = 0;
 
-        if (pll_src == 0x00) // HSI oscillator divided by 2 used as PLL input clock
-        {
-            pll_input_freq = 8000000; // HSI frequency divided by 2 is fixed at 8 MHz
-        }
-        else if (pll_src == 0x01) // HSE oscillator divided by 2 used as PLL input clock
-        {
-            pll_input_freq = RCC_HSE_VALUE / 2;
-        }
-        else if (pll_src == 0x02) // HSE oscillator not divided used as PLL input clock
-        {
-            pll_input_freq = RCC_HSE_VALUE;
-        }
-
-        u8 pll_mul = (RCC_CFGR_R >> 18) & 0xF; // Read the PLL multiplication factor bits from RCC_CFGR_R
-        freq = pll_input_freq * pll_mul;
+            switch (pll_src)
+            {
+                case 0x00: // HSI oscillator divided by 2 used as PLL input clock
+                    pll_input_freq = 8000000; // HSI frequency divided by 2 is fixed at 8 MHz
+                break;
+                case 0x01: // HSE oscillator divided by 2 used as PLL input clock
+                    pll_input_freq = RCC_HSE_VALUE / 2;
+                break;
+                case 0x02: // HSE oscillator not divided used as PLL input clock
+                    pll_input_freq = RCC_HSE_VALUE;
+                break;
+            }
+            u8 pll_mul = (RCC_CFGR_R >> 18) & 0xF;
+            freq = pll_input_freq * pll_mul;
+        break;
     }
 
     return freq;

@@ -29,7 +29,7 @@
 #define RCC_PLL_IN_HSE           	2 /**< HSE oscillator clock */
 
 
-#define RCC_HSE_VALUE					8000000
+#define RCC_HSE_VALUE				8000000
 
 
 
