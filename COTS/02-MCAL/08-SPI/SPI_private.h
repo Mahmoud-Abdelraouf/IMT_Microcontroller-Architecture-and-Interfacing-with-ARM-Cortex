@@ -112,20 +112,17 @@
  */
 
 /**
- * @brief SPI module number definitions
+ * @brief Enumeration of available SPI module selections.
  *
- * This section defines the different SPI modules in the system and their corresponding numbers.
- *
- * @note The numbers follow a common convention of using sequential numbers to identify different modules.
- *       For example, SPI1 is usually the first SPI module, SPI2 is the second, and so on.
- *
- * @param SPI1: Definition for SPI1 module.
- * @param SPI2: Definition for SPI2 module.
- * @param SPI3: Definition for SPI3 module.
+ * This enumeration defines the available SPI module selections that can be used to identify different SPI modules.
+ * Use these enum values to specify the desired SPI module when working with SPI peripheral functions.
  */
-#define SPI1                1 /**< Definition for SPI1 module. */
-#define SPI2                2 /**< Definition for SPI2 module. */
-#define SPI3                3 /**< Definition for SPI3 module. */
+typedef enum
+{
+    SPI1,     /**< SPI module 1 */
+    SPI2,     /**< SPI module 2 */
+    SPI3      /**< SPI module 3 */
+} SPI_Selection_t;
 
 /**
  * @brief Register definitions for the SPI driver.
@@ -163,29 +160,46 @@ typedef struct {
 } SPI_RegDef_t;
 
 /**
- * @brief Select the appropriate SPI module.
- * 
- * This section includes a block of conditional compilation statements to select the appropriate SPI module based on a user-defined value.
- * The user-defined value is defined as SPI_PERIPHERAL, which is expected to be defined outside of this header file.
- * 
- * If the value of SPI_PERIPHERAL matches one of the predefined values (SPI1, SPI2, or SPI3), then the appropriate base address is selected for the SPI module.
- * The SPI register map is then defined using a volatile structure, which defines the various registers of the SPI module.
- * 
- * If SPI_PERIPHERAL is not defined or does not match any of the predefined values, a compilation error is generated with an appropriate error message.
+ * @brief Get the base address of the specified SPI peripheral.
  *
- * @note The SPI_Peripheral macro is expected to be defined in the application code before including this header file.
+ * This function returns the base address of the specified SPI peripheral.
  *
- * @param SPI: A pointer to the SPI register map for the selected module.
+ * @param[in] spi The SPI peripheral to get the base address for. Must be one of the following:
+ *                - SPI1: SPI1 peripheral.
+ *                - SPI2: SPI2 peripheral.
+ *                - SPI3: SPI3 peripheral.
+ *
+ * @return The base address of the specified SPI peripheral as a pointer to the corresponding register structure.
+ *         If an invalid SPI peripheral is provided, the function returns NULL.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Choose the SPI peripheral you want to use (in this case, SPI1)
+ * SPI_Selection_t spi_selected = SPI1;
+ *
+ * /**< Get the base address of SPI1 using the SPI_GetBaseAddress function
+ * SPI_RegDef_t *spi1_base_address = SPI_GetBaseAddress(spi_selected);
+ *
+ * /**< Now you can access SPI1 registers and configure the SPI communication
+ * /**< For example, you can configure data frame format, clock polarity, etc.
+ *
+ * /**< ... (add your SPI configuration code here)
+ * @endcode
  */
-#if     SPI_PERIPHERAL == SPI1
-    #define SPI    ((SPI_RegDef_t *)SPI1_BASE_ADDRESS) /**< SPI register map for the SPI1 module. */
-#elif   SPI_PERIPHERAL == SPI2
-    #define SPI    ((SPI_RegDef_t *)SPI2_BASE_ADDRESS) /**< SPI register map for the SPI2 module. */
-#elif   SPI_PERIPHERAL == SPI3
-     #define SPI    ((SPI_RegDef_t *)SPI3_BASE_ADDRESS) /**< SPI register map for the SPI3 module. */
-#else
-    #error "Your Chose is not available" /**< Error message for an invalid SPI module selection. */
-#endif
+SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi)
+{
+    switch (spi)
+    {
+    case SPI1:
+        return (SPI_RegDef_t *)SPI1_BASE_ADDRESS;
+    case SPI2:
+        return (SPI_RegDef_t *)SPI2_BASE_ADDRESS;
+    case SPI3:
+        return (SPI_RegDef_t *)SPI3_BASE_ADDRESS;
+    default:
+        return NULL;
+    }
+}
 
 /**
  * @brief SPI Control Register 1 Bits
@@ -214,35 +228,82 @@ typedef struct {
  */
 
 /**
- * @brief Send a byte of data over SPI.
- * 
- * This function sends a single byte of data over SPI.
- * 
- * @param[in] Copy_u8Data The data byte to send.
- * 
- * @note This function is for internal use only.
+ * @brief Send a single byte of data through the SPI peripheral.
+ *
+ * This function waits until the transmit buffer of the SPI peripheral is empty,
+ * then sends the provided byte of data through the SPI Data Register (DR).
+ *
+ * @param[in] Copy_psSPI Pointer to the SPI peripheral structure through which to send data.
+ * @param[in] Copy_u8Data The byte of data to send.
+ *
+ * @return None.
+ *
+ * @note This function blocks until the transmit buffer is empty and data is sent.
+ *       Ensure that the SPI peripheral and appropriate communication settings are configured
+ *       before calling this function.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Select the SPI peripheral (e.g., SPI3)
+ * SPI_RegDef_t *spi_selected = SPI3;
+ *
+ * /**< Send a byte of data through the SPI peripheral
+ * u8 data_to_send = 0xAB;
+ * SPI_voidSendByte(spi_selected, data_to_send);
+ * @endcode
  */
-static void SPI_voidSendByte(u8 Copy_u8Data);
+static void SPI_voidSendByte(SPI_RegDef_t *Copy_psSPI, u8 Copy_u8Data);
 
 /**
- * @brief Receive a byte of data over SPI.
- * 
- * This function receives a single byte of data over SPI.
- * 
- * @return The received data byte.
- * 
- * @note This function is for internal use only.
+ * @brief Receive a single byte of data from the SPI peripheral.
+ *
+ * This function waits until the receive buffer of the SPI peripheral is full,
+ * then returns the received byte of data.
+ *
+ * @param[in] Copy_psSPI Pointer to the SPI peripheral structure from which to receive data.
+ *
+ * @return The received byte of data.
+ *
+ * @note This function blocks until the receive buffer is full and data is available for reading.
+ *       Ensure that the SPI peripheral and appropriate communication settings are configured
+ *       before calling this function.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Select the SPI peripheral (e.g., SPI1)
+ * SPI_RegDef_t *spi_selected = SPI_GetBaseAddress(SPI1);
+ *
+ * /**< Receive a byte of data from the SPI peripheral
+ * u8 received_data = SPI_u8ReceiveByte(spi_selected);
+ * @endcode
  */
-static u8 SPI_u8ReceiveByte(void);
+static u8 SPI_u8ReceiveByte(SPI_RegDef_t *Copy_psSPI);
 
 /**
  * @brief Wait for the SPI transmission to complete.
- * 
- * This function waits for the SPI transmission to complete.
- * 
- * @note This function is for internal use only.
+ *
+ * This function blocks until the SPI transmission is complete, indicated by the BSY (busy) flag
+ * in the status register being cleared.
+ *
+ * @param[in] Copy_psSPI Pointer to the SPI peripheral structure to monitor for transmission completion.
+ *
+ * @return None.
+ *
+ * @note This function blocks until the SPI transmission is complete.
+ *       Ensure that the SPI peripheral and appropriate communication settings are configured
+ *       before calling this function.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Select the SPI peripheral (e.g., SPI2)
+ * SPI_RegDef_t *spi_selected = SPI_GetBaseAddress(SPI2);
+ *
+ * /**< Perform SPI transmission and wait for completion
+ * SPI_voidTransmit(spi_selected, data_buffer, data_size);
+ * SPI_voidWaitForTransmissionComplete(spi_selected);
+ * @endcode
  */
-static void SPI_voidWaitForTransmissionComplete(void);
+static void SPI_voidWaitForTransmissionComplete(SPI_RegDef_t *Copy_psSPI);
 
 /**
  * @brief Set the SPI slave select pin.

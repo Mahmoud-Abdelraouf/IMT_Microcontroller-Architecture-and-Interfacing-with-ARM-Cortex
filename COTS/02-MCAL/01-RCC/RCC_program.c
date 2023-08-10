@@ -93,17 +93,17 @@ void MRCC_voidDisableClock(u8 Copy_u8BusId,u8 Copy_u8PeriphId)
 
 u32 MRCC_GetSystemClockFreq(void)
 {
-    u32 freq = 0;
+    u32 Local_u32Freq = 0;
     u8 clk_src = (RCC_CFGR_R >> 2) & 0x3;
 
     switch (clk_src)
     {
         case 0x00: // HSI oscillator used as system clock
-            freq = 16000000; // HSI frequency is fixed at 16 MHz
+            Local_u32Freq = 16000000; // HSI frequency is fixed at 16 MHz
         break;
         
         case 0x01: // HSE oscillator used as system clock
-            freq = RCC_HSE_VALUE; // HSE_VALUE should be defined properly
+            Local_u32Freq = RCC_HSE_VALUE; // HSE_VALUE should be defined properly
         break;
         
         case 0x02: // PLL used as system clock
@@ -127,5 +127,5 @@ u32 MRCC_GetSystemClockFreq(void)
         break;
     }
 
-    return freq;
+    return Local_u32Freq;
 }

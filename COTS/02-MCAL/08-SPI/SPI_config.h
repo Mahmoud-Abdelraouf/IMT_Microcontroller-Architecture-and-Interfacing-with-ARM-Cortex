@@ -18,16 +18,6 @@
  */
 
 /**
- * @brief The SPI peripheral to use.
- * 
- * This option specifies which SPI peripheral to use. Valid options
- * are SPI1, SPI2, and SPI3.
- * 
- * @note This option must be defined in the project configuration file.
- */
-#define SPI_PERIPHERAL     SPI1
-
-/**
  * @brief The SPI clock speed in Hz.
  * 
  * This option specifies the clock speed for the SPI peripheral in Hz.

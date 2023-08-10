@@ -25,8 +25,8 @@
  */
 typedef enum
 {
-  LOW,            /**< Logic low voltage level (0V) */
-  HIGH = !LOW     /**< Logic high voltage level (3.3V or 5V, depending on the system) */
+  LOW,                            /**< Logic low voltage level (0V) */
+  HIGH = !LOW                     /**< Logic high voltage level (3.3V or 5V, depending on the system) */
 } SPI_Status_t;
 
 /**
@@ -34,8 +34,8 @@ typedef enum
  */
 typedef enum
 {
-  SPI_DATA_FRAME_8BIT,    /**< 8-bit data frame */
-  SPI_DATA_FRAME_16BIT    /**< 16-bit data frame */
+  SPI_DATA_FRAME_8BIT,            /**< 8-bit data frame */
+  SPI_DATA_FRAME_16BIT            /**< 16-bit data frame */
 } SPI_DataFrame_t;
 
 /**
@@ -43,8 +43,8 @@ typedef enum
  */
 typedef enum
 {
-  SPI_CLOCK_POLARITY_LOW,    /**< clock is low when idle ==> The leading edge will be rising */
-  SPI_CLOCK_POLARITY_HIGH    /**< clock is high when idle ==> The leading edge will be falling */
+  SPI_CLOCK_POLARITY_LOW,         /**< clock is low when idle ==> The leading edge will be rising */
+  SPI_CLOCK_POLARITY_HIGH         /**< clock is high when idle ==> The leading edge will be falling */
 } SPI_ClockPolarity_t;
 
 /**
@@ -52,8 +52,8 @@ typedef enum
  */
 typedef enum
 {
-  SPI_CLOCK_PHASE_FIRST_EDGE,    /**< data is captured on the first clock edge ==> Read then Write */
-  SPI_CLOCK_PHASE_SECOND_EDGE    /**< data is captured on the second clock edge ==> Write then Read */
+  SPI_CLOCK_PHASE_FIRST_EDGE,     /**< data is captured on the first clock edge ==> Read then Write */
+  SPI_CLOCK_PHASE_SECOND_EDGE     /**< data is captured on the second clock edge ==> Write then Read */
 } SPI_ClockPhase_t;
 
 /**
@@ -126,10 +126,40 @@ typedef struct
  */
 
 /**
+ * @brief Get the base address of the specified SPI peripheral.
+ *
+ * This function returns the base address of the specified SPI peripheral.
+ *
+ * @param[in] spi The SPI peripheral to get the base address for. Must be one of the following:
+ *                - SPI1: SPI1 peripheral.
+ *                - SPI2: SPI2 peripheral.
+ *                - SPI3: SPI3 peripheral.
+ *
+ * @return The base address of the specified SPI peripheral as a pointer to the corresponding register structure.
+ *         If an invalid SPI peripheral is provided, the function returns NULL.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Choose the SPI peripheral you want to use (in this case, SPI1)
+ * SPI_Selection_t spi_selected = SPI1;
+ *
+ * /**< Get the base address of SPI1 using the SPI_GetBaseAddress function
+ * SPI_RegDef_t *spi1_base_address = SPI_GetBaseAddress(spi_selected);
+ *
+ * /**< Now you can access SPI1 registers and configure the SPI communication
+ * /**< For example, you can configure data frame format, clock polarity, etc.
+ *
+ * /**< ... (add your SPI configuration code here)
+ * @endcode
+ */
+SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi);
+
+/**
  * @brief Initialize the SPI peripheral.
  *
  * This function initializes the SPI peripheral with the specified configuration.
  *
+ * @param[in] Copy_psSPI Pointer to the SPI peripheral structure.
  * @param[in] Copy_psSPIConfig Pointer to the SPI configuration structure that holds the configuration options.
  *                            The structure must contain the following fields:
  *                            - DataFrame: The data frame format to use. Must be one of the following:
@@ -162,25 +192,49 @@ typedef struct
  * spi_config.ClockPhase = SPI_CLOCK_PHASE_FIRST_EDGE;
  * spi_config.BaudRateDIV = SPI_BAUD_RATE_DIV32;
  *
+ * /**< Select the SPI peripheral (e.g., SPI1)
+ * SPI_RegDef_t *spi_selected = SPI_GetBaseAddress(SPI1);
+ *
  * /**< Initialize the SPI peripheral using the SPI_voidInit function
- * SPI_voidInit(&spi_config);
+ * SPI_voidInit(spi_selected, &spi_config);
  *
  * /**< Now the SPI peripheral is initialized and ready to use for communication.
  * @endcode
  */
-void SPI_voidInit(SPI_config_t *Copy_psSPIConfig);
+void SPI_voidInit(SPI_RegDef_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
+
       
 /**
- * @brief Send and receive data over SPI.
- * 
- * This function sends and receives data over SPI. The data is transmitted and received
- * in full duplex mode.
- * 
- * @param[in] Copy_u8pTxData Pointer to the data to transmit.
- * @param[out] Copy_u8pRxData Pointer to the buffer to receive the data.
- * @param[in] Copy_u16size The number of bytes to transmit and receive.
+ * @brief Perform a full-duplex SPI data transfer.
+ *
+ * This function sends and receives an array of data bytes using the SPI peripheral in full-duplex mode.
+ * It sends the data in `Copy_u8pTxData` and simultaneously receives the data in `Copy_u8pRxData`.
+ *
+ * @param[in] Copy_psSPI Pointer to the SPI peripheral structure to perform the transfer.
+ * @param[in] Copy_u8pTxData Pointer to the array of data bytes to be transmitted.
+ * @param[out] Copy_u8pRxData Pointer to the array where received data bytes will be stored.
+ * @param[in] Copy_u16size The number of data bytes to be transmitted and received.
+ *
+ * @return None.
+ *
+ * @note This function blocks until the full transfer is complete.
+ *       Ensure that the SPI peripheral and appropriate communication settings are configured
+ *       before calling this function.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Select the SPI peripheral (e.g., SPI2)
+ * SPI_RegDef_t *spi_selected = SPI_GetBaseAddress(SPI2);
+ *
+ * /**< Data arrays for transmission and reception
+ * u8 tx_data[] = {0x01, 0x02, 0x03, 0x04};
+ * u8 rx_data[4];
+ *
+ * /**< Perform the SPI data transfer
+ * SPI_voidTransfer(spi_selected, tx_data, rx_data, sizeof(tx_data));
+ * @endcode
  */
-void SPI_voidTransfer(u8* Copy_u8pTxData, u8* Copy_u8pRxData, u16 Copy_u16size);
+void SPI_voidTransfer(SPI_RegDef_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
 
 /**
  * @}
