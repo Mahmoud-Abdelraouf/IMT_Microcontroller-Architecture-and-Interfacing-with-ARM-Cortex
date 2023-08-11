@@ -152,7 +152,7 @@ typedef struct
  * /**< ... (add your SPI configuration code here)
  * @endcode
  */
-SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi);
+inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi);
 
 /**
  * @brief Initialize the SPI peripheral.

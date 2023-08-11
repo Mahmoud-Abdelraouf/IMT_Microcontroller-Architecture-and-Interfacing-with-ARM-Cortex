@@ -186,7 +186,7 @@ typedef struct {
  * /**< ... (add your SPI configuration code here)
  * @endcode
  */
-SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi)
+inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi)
 {
     switch (spi)
     {
@@ -212,11 +212,11 @@ SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi)
  * @param SPI_CR1_SPE: The SPI Enable bit.
  * @param SPI_CR1_DFF: The Data Frame Format bit.
  */
-#define SPI_CR1_CPHA            0 /**< The Clock Phase bit. */
-#define SPI_CR1_CPOL            1 /**< The Clock Polarity bit. */
-#define SPI_CR1_MSTR            2 /**< The Master Selection bit. */
-#define SPI_CR1_SPE             6 /**< The SPI Enable bit. */
-#define SPI_CR1_DFF             11 /**< The Data Frame Format bit. */
+#define SPI_CR1_CPHA            0   /**< The Clock Phase bit. */
+#define SPI_CR1_CPOL            1   /**< The Clock Polarity bit. */
+#define SPI_CR1_MSTR            2   /**< The Master Selection bit. */
+#define SPI_CR1_SPE             6   /**< The SPI Enable bit. */
+#define SPI_CR1_DFF             11  /**< The Data Frame Format bit. */
 
 /**
  * @}
