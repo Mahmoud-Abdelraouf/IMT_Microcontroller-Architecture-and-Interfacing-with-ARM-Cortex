@@ -17,20 +17,29 @@
 /**< GPIO */
 #include "GPIO_interface.h"
 /**< SPI */
-#include "SPI_config.h"
-#include "SPI_private.h"
+#include "SPI_registers.h"
 #include "SPI_interface.h"
-
- 
+#include "SPI_private.h"
+#include "SPI_config.h"
 
 /**
  * @addtogroup SPI_Functions
  * @{
  */
 
-SPI_t *SPI_SelectSpi(SPI_Peripheral_t spi)
+inline SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi)
 {
-  return (SPI_GetBaseAddress(spi)); /**< Returning the base address of the specified SPI peripheral */
+    switch (spi)
+    {
+    case SPI_1:
+        return (SPI_RegDef_t *)SPI1_BASE_ADDRESS;
+    case SPI_2:
+        return (SPI_RegDef_t *)SPI2_BASE_ADDRESS;
+    case SPI_3:
+        return (SPI_RegDef_t *)SPI3_BASE_ADDRESS;
+    default:
+        return NULL;
+    }
 }
 
 void SPI_voidInit(SPI_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
@@ -43,7 +52,7 @@ void SPI_voidInit(SPI_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
   }
   else
   {
-    CLEAR_BIT(Copy_psSPI->CR1, SPI_CR1_DFF);
+	  CLR_BIT(Copy_psSPI->CR1, SPI_CR1_DFF);
   }
 
   /* Set the clock polarity */
@@ -53,7 +62,7 @@ void SPI_voidInit(SPI_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
   }
   else
   {
-    CLEAR_BIT(Copy_psSPI->CR1, SPI_CR1_CPOL);
+	  CLR_BIT(Copy_psSPI->CR1, SPI_CR1_CPOL);
   }
 
   /* Set the clock phase */
@@ -63,7 +72,7 @@ void SPI_voidInit(SPI_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
   }
   else
   {
-    CLEAR_BIT(Copy_psSPI->CR1, SPI_CR1_CPHA);
+    CLR_BIT(Copy_psSPI->CR1, SPI_CR1_CPHA);
   }
 
   /* Set the clock speed */
@@ -166,21 +175,6 @@ static void SPI_voidSetSlaveSelectPin(SPI_Status_t Copy_Status)
   {
     MGPIO_voidSetPinValue(MGPIOA,GPIO_PIN4,MGPIO_LOW);
   }
-}
-
-static inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Peripheral_t spi)
-{
-    switch (spi)
-    {
-    case SPI_1:
-        return (SPI_RegDef_t *)SPI1_BASE_ADDRESS;
-    case SPI_2:
-        return (SPI_RegDef_t *)SPI2_BASE_ADDRESS;
-    case SPI_3:
-        return (SPI_RegDef_t *)SPI3_BASE_ADDRESS;
-    default:
-        return NULL;
-    }
 }
 
 /**

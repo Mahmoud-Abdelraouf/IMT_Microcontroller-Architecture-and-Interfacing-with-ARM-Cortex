@@ -68,7 +68,7 @@ typedef enum
  * and the SPI clock speed for communication.
  */
 typedef struct {
-    u32 TFT_SpiClkSpeed;             /**< SPI clock speed */
+    /**< u32 TFT_SpiClkSpeed;        /**< SPI clock speed */
     SPI_Peripheral_t TFT_Spi: 2;     /**< SPI peripheral to be used for communication */
     u8 TFT_Port  : 3;                /**< GPIO port index for TFT signals */
     u8 TFT_CsPin : 4;                /**< Chip Select (CS) pin number */

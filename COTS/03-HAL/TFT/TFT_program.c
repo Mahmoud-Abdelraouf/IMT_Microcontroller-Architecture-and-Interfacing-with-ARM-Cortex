@@ -38,11 +38,23 @@
  * @param None
  * @retval None
  */
-void TFT_voidInit(void)
-{
-    /**< Implement the TFT display initialization steps */
+void TFT_voidInit(SPI_Peripheral_t Copy_Spi, const TFT_Config_t *Copy_psTftDisplay)
+{   
+    /**< Initialization sequence for the TFT display */ 
+    TFT_SendCommand(Copy_Spi, Copy_psTftDisplay, TFT_COMMAND_SOFT_RESET);
+    HAL_Delay(100); // Delay after reset
     
+    TFT_SendCommand(Copy_Spi, Copy_psTftDisplay, TFT_COMMAND_SLEEP_OUT);
+    HAL_Delay(100); // Delay after sleep out
+
+    // Configure display settings, gamma correction, etc.
+    TFT_SendCommand(Copy_Spi, Copy_psTftDisplay, TFT_COMMAND_DISPLAY_ON);
+    
+    // Additional configuration steps as needed
+
+    // End of initialization
 }
+
 
 /**
  * @brief Clears the display screen.
@@ -149,10 +161,26 @@ static void TFT_SendCommand(SPI_Peripheral_t Copy_Spi,const TFT_Config_t *Copy_p
 
     /**< Set CS pin high to release the TFT display */ 
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin,MGPIO_HIGH); 
-
-    /**< Set RS pin high for data mode */ 
-    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RsPin,MGPIO_HIGH); 
+    
 }
+
+static void TFT_SendData(SPI_Peripheral_t Copy_Spi, const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Data)
+{
+    /**< Set RS (Register Select) pin high to indicate data mode */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RsPin, MGPIO_HIGH);
+
+    /**< Set CS (Chip Select) pin low to select the TFT display for communication */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin, MGPIO_LOW);
+
+    SPI_t *spi = SPI_SelectSpi(Copy_Spi);
+
+    /**< Perform SPI data transfer to send the data byte */
+    SPI_voidTransfer(spi, &Copy_Data, NULL, 1);
+
+    /**< Set CS pin high to release the TFT display */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin, MGPIO_HIGH);
+}
+
 
 /**
  * @} TFT_Private_Functions

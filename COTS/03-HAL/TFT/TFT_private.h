@@ -53,17 +53,43 @@ typedef struct
  *
  * @param command The command byte to be sent.
  */
-static void TFT_SendCommand(u8 command);
+static void TFT_SendCommand(SPI_Peripheral_t Copy_Spi,const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Command);
 
 /**
- * @brief Internal function to send data to the TFT display controller.
+ * @brief Send data to the TFT display using SPI communication.
  *
- * This function is used internally to send data to the TFT display controller
- * using the specified communication interface.
+ * This function sends a single data byte to the TFT display using the specified SPI peripheral.
+ * It sets the RS (Register Select) pin to high to indicate data mode, selects the TFT display by
+ * setting the CS (Chip Select) pin low, performs an SPI data transfer to send the data byte, and
+ * then releases the display by setting the CS pin high again.
  *
- * @param data The data byte to be sent.
+ * @param[in] Copy_Spi The SPI peripheral to be used for communication.
+ * @param[in] Copy_psTftDisplay Pointer to the TFT display configuration structure.
+ * @param[in] Copy_Data The data byte to be sent to the TFT display.
+ *
+ * @return None.
+ *
+ * @note Make sure to properly configure the TFT display and GPIO functions before calling this function.
+ *
+ * @note Example Usage:
+ * @code
+ * /**< Create a TFT display configuration structure
+ * TFT_Config_t tftConfig = {
+ *     .TFT_Port = PORTA_INDEX,
+ *     .TFT_CsPin = GPIO_PIN0,
+ *     .TFT_RsPin = GPIO_PIN1,
+ *     /**< ... other configuration settings ...
+ * };
+ *
+ * /**< Select the SPI peripheral (e.g., SPI_1)
+ * SPI_Peripheral_t spiPeripheral = SPI_1;
+ *
+ * /**< Send data (e.g., 0x55) to the TFT display
+ * TFT_SendData(spiPeripheral, &tftConfig, 0x55);
+ * @endcode
  */
-static void TFT_SendData(u8 data);
+static void TFT_SendData(SPI_Peripheral_t Copy_Spi, const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Data);
+
 
 /**
  * @brief Internal function to initialize the TFT display controller.
