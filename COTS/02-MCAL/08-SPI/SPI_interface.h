@@ -11,6 +11,39 @@
 
 #ifndef __SPI_INTERFACE_H__
 #define __SPI_INTERFACE_H__
+/**
+ * @addtogroup SPI
+ * @{
+ */
+
+/**
+ * @brief Type definition for the base address of a specified SPI peripheral.
+ *
+ * This typedef defines a pointer type `SPI_t` that represents the base address
+ * of the register structure for a specific SPI peripheral. It can be used to access
+ * and configure the registers of the selected SPI peripheral.
+ *
+ * @note Users can obtain a `SPI_t` pointer using the `SPI_SelectSpi` function by providing
+ *       a valid SPI peripheral identifier.
+ */
+typedef SPI_RegDef_t SPI_t;
+
+/**
+ * @brief Enumeration of available SPI module selections.
+ *
+ * This enumeration defines the available SPI module selections that can be used to identify different SPI modules.
+ * Use these enum values to specify the desired SPI module when working with SPI peripheral functions.
+ */
+typedef enum
+{
+    SPI_1,     /**< SPI module 1 */
+    SPI_2,     /**< SPI module 2 */
+    SPI_3      /**< SPI module 3 */
+} SPI_Peripheral_t;
+
+/**
+ * @} SPI
+ */
 
 /**
  * @addtogroup SPI_Configuration_Options
@@ -117,7 +150,7 @@ typedef struct
 } SPI_config_t;
 
 /**
- * @}
+ * @} SPI_Configuration_Options
  */
 
 /**
@@ -126,33 +159,31 @@ typedef struct
  */
 
 /**
- * @brief Get the base address of the specified SPI peripheral.
+ * @brief Selects and returns the base address of a specified SPI peripheral.
  *
- * This function returns the base address of the specified SPI peripheral.
+ * This function takes an SPI peripheral identifier and returns a pointer to the
+ * corresponding base address of the SPI register structure. It can be used to configure
+ * and interact with the selected SPI peripheral.
  *
- * @param[in] spi The SPI peripheral to get the base address for. Must be one of the following:
- *                - SPI1: SPI1 peripheral.
- *                - SPI2: SPI2 peripheral.
- *                - SPI3: SPI3 peripheral.
+ * @param[in] spi The SPI peripheral to select. Must be one of the following values:
+ *                - SPI_1: SPI1 peripheral.
+ *                - SPI_2: SPI2 peripheral.
+ *                - SPI_3: SPI3 peripheral.
  *
- * @return The base address of the specified SPI peripheral as a pointer to the corresponding register structure.
+ * @return A pointer to the base address of the specified SPI peripheral's register structure.
  *         If an invalid SPI peripheral is provided, the function returns NULL.
  *
  * @note Example Usage:
  * @code
- * /**< Choose the SPI peripheral you want to use (in this case, SPI1)
- * SPI_Selection_t spi_selected = SPI1;
- *
- * /**< Get the base address of SPI1 using the SPI_GetBaseAddress function
- * SPI_RegDef_t *spi1_base_address = SPI_GetBaseAddress(spi_selected);
+ * /**< Select the desired SPI peripheral (in this case, SPI_1)
+ * SPI_t *spi1_base_address = SPI_SelectSpi(SPI_1);
  *
  * /**< Now you can access SPI1 registers and configure the SPI communication
  * /**< For example, you can configure data frame format, clock polarity, etc.
- *
- * /**< ... (add your SPI configuration code here)
+ * /**< ...
  * @endcode
  */
-inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi);
+SPI_t *SPI_SelectSpi(SPI_Peripheral_t spi);
 
 /**
  * @brief Initialize the SPI peripheral.
@@ -193,7 +224,7 @@ inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi);
  * spi_config.BaudRateDIV = SPI_BAUD_RATE_DIV32;
  *
  * /**< Select the SPI peripheral (e.g., SPI1)
- * SPI_RegDef_t *spi_selected = SPI_GetBaseAddress(SPI1);
+ * SPI_RegDef_t *spi_selected = SPI_SelectSpi(SPI1);
  *
  * /**< Initialize the SPI peripheral using the SPI_voidInit function
  * SPI_voidInit(spi_selected, &spi_config);
@@ -201,7 +232,7 @@ inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi);
  * /**< Now the SPI peripheral is initialized and ready to use for communication.
  * @endcode
  */
-void SPI_voidInit(SPI_RegDef_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
+void SPI_voidInit(SPI_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
 
       
 /**
@@ -224,7 +255,7 @@ void SPI_voidInit(SPI_RegDef_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
  * @note Example Usage:
  * @code
  * /**< Select the SPI peripheral (e.g., SPI2)
- * SPI_RegDef_t *spi_selected = SPI_GetBaseAddress(SPI2);
+ * SPI_t *spi_selected = SPI_SelectSpi(SPI2);
  *
  * /**< Data arrays for transmission and reception
  * u8 tx_data[] = {0x01, 0x02, 0x03, 0x04};
@@ -234,10 +265,10 @@ void SPI_voidInit(SPI_RegDef_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
  * SPI_voidTransfer(spi_selected, tx_data, rx_data, sizeof(tx_data));
  * @endcode
  */
-void SPI_voidTransfer(SPI_RegDef_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
+void SPI_voidTransfer(SPI_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
 
 /**
- * @}
+ * @} SPI_Functions
  */
 
 #endif /* __SPI_INTERFACE_H__ */

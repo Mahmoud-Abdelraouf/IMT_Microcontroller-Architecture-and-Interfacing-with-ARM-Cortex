@@ -28,7 +28,12 @@
  * @{
  */
 
-void SPI_voidInit(SPI_RegDef_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
+SPI_t *SPI_SelectSpi(SPI_Peripheral_t spi)
+{
+  return (SPI_GetBaseAddress(spi)); /**< Returning the base address of the specified SPI peripheral */
+}
+
+void SPI_voidInit(SPI_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
 {
   /* Configure the SPI peripheral */
   /* Set the data frame format */
@@ -72,7 +77,7 @@ void SPI_voidInit(SPI_RegDef_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
   SET_BIT(Copy_psSPI->CR1, SPI_CR1_SPE);
 }
 
-void SPI_voidTransfer(SPI_RegDef_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size)
+void SPI_voidTransfer(SPI_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size)
 {
   u16 Local_u16Iterator;
 
@@ -97,7 +102,7 @@ void SPI_voidTransfer(SPI_RegDef_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8p
 }
 
 /**
- * @}
+ * @} SPI_Functions
  */
 
 /**
@@ -161,6 +166,21 @@ static void SPI_voidSetSlaveSelectPin(SPI_Status_t Copy_Status)
   {
     MGPIO_voidSetPinValue(MGPIOA,GPIO_PIN4,MGPIO_LOW);
   }
+}
+
+static inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Peripheral_t spi)
+{
+    switch (spi)
+    {
+    case SPI_1:
+        return (SPI_RegDef_t *)SPI1_BASE_ADDRESS;
+    case SPI_2:
+        return (SPI_RegDef_t *)SPI2_BASE_ADDRESS;
+    case SPI_3:
+        return (SPI_RegDef_t *)SPI3_BASE_ADDRESS;
+    default:
+        return NULL;
+    }
 }
 
 /**

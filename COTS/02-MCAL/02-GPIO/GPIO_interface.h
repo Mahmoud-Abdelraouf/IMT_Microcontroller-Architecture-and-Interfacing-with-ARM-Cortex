@@ -62,13 +62,13 @@
 
 
 typedef enum {
-    GPIO_PORTA_INDEX = 0,
-    GPIO_PORTB_INDEX,
-    GPIO_PORTC_INDEX,
-    GPIO_PORTD_INDEX,
-    GPIO_PORTE_INDEX,
-    GPIO_PORTF_INDEX,
-    GPIO_PORTG_INDEX
+    PORTA_INDEX = 0,
+    PORTB_INDEX,
+    PORTC_INDEX,
+    PORTD_INDEX,
+    PORTE_INDEX,
+    PORTF_INDEX,
+    PORTG_INDEX
 }GPIO_PortIndex_t;
 
 typedef enum {
@@ -119,12 +119,31 @@ typedef enum {
     GPIO_HIGH = !GPIO_LOW
 }GPIO_Logic_t;
 
+/**
+ * @struct GPIO_PinConfig_t
+ * @brief Structure representing the configuration settings for a GPIO pin.
+ *
+ * This structure encapsulates the configuration settings for a GPIO pin, including its pin index,
+ * pin mode, port index, and pin logic (high or low).
+ *
+ * @var GPIO_PinConfig_t::PinIndex
+ * The pin index (0 to 15) of the GPIO pin. Refer to @ref GPIO_PinIndex_t for valid values.
+ *
+ * @var GPIO_PinConfig_t::PinMode
+ * The pin mode of the GPIO pin. Refer to @ref GPIO_PinMode_t for valid values.
+ *
+ * @var GPIO_PinConfig_t::PortIndex
+ * The port index (0 to 7) of the GPIO port to which the pin belongs. Refer to @ref GPIO_PortIndex_t for valid values.
+ *
+ * @var GPIO_PinConfig_t::PinLogic
+ * The pin logic level. Use @ref GPIO_Logic_t enumeration to specify whether the pin logic is high or low.
+ */
 typedef struct {
-    u8 PinIndex  : 4;
-    u8 PinMode   : 4;
-    u8 PortIndex : 3;
-    u8 PinLogic  : 1;
-}GPIO_PinConfig_t;
+    u8 PinIndex  : 4; /**< @ref GPIO_PinIndex_t */
+    u8 PinMode   : 4; /**< @ref GPIO_PinMode_t */
+    u8 PortIndex : 3; /**< @ref GPIO_PortIndex_t */
+    u8 PinLogic  : 1; /**< @ref GPIO_Logic_t */
+} GPIO_PinConfig_t;
 
 
 Std_ReturnType M_GPIO_SetPinDirectionInitialize(const GPIO_PinConfig_t *Copy_psPinConfig);

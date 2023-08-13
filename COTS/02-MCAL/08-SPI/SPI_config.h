@@ -18,16 +18,6 @@
  */
 
 /**
- * @brief The SPI clock speed in Hz.
- * 
- * This option specifies the clock speed for the SPI peripheral in Hz.
- * 
- * @note The actual clock speed may be lower than this value, depending on
- *       the clock configuration of the system.
- */
-#define SPI_CLOCK_SPEED    1000000
-
-/**
  * @brief The SPI data frame format.
  * 
  * This option specifies the data frame format for the SPI peripheral.
@@ -58,7 +48,7 @@
 #define SPI_CLOCK_PHASE    SPI_CLOCK_PHASE_FIRST_EDGE
 
 /**
- * @}
+ * @} SPI_Configuration_Options SPI Configuration Options
  */
 
 #endif /**< __SPI_CONFIG_H__ */

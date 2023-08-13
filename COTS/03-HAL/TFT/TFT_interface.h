@@ -38,19 +38,6 @@
  */
 
 /**
- * @brief Structure representing the font used for rendering text on the TFT display.
- *
- * This structure defines the font size and style used for rendering text on the TFT display.
- * It includes members for the font width, height, and the array of character bitmaps.
- */
-typedef struct
-{
-    u8 width;           /**< Width of the font characters in pixels */
-    u8 height;          /**< Height of the font characters in pixels */
-    const u16 *charMap; /**< Pointer to the array of character bitmaps in RGB565 format */
-} Font_t;
-
-/**
  * @brief Enumeration of common colors in 16-bit RGB565 format.
  */
 typedef enum
@@ -71,6 +58,37 @@ typedef enum
     COLOR_GOLD          = 0xFEA0,   /**< Gold color (255, 215, 0) */
     COLOR_SILVER        = 0xC618    /**< Silver color (192, 192, 192) */
 } TFT_Color_t;
+
+/**
+ * @struct TFT_Config_t
+ * @brief TFT LCD Configuration Structure
+ *
+ * This structure defines the configuration parameters for the TFT LCD module.
+ * It specifies the GPIO port and pins for various signals, the SPI peripheral,
+ * and the SPI clock speed for communication.
+ */
+typedef struct {
+    u32 TFT_SpiClkSpeed;             /**< SPI clock speed */
+    SPI_Peripheral_t TFT_Spi: 2;     /**< SPI peripheral to be used for communication */
+    u8 TFT_Port  : 3;                /**< GPIO port index for TFT signals */
+    u8 TFT_CsPin : 4;                /**< Chip Select (CS) pin number */
+    u8 TFT_RsPin : 4;                /**< Register Select (RS) pin number */
+    u8 TFT_WrPin : 4;                /**< Write Control (WR) pin number */
+    u8 TFT_RstPin: 4;                /**< Reset (RST) pin number */
+} TFT_Config_t;
+
+/**
+ * @brief Structure representing the font used for rendering text on the TFT display.
+ *
+ * This structure defines the font size and style used for rendering text on the TFT display.
+ * It includes members for the font width, height, and the array of character bitmaps.
+ */
+typedef struct
+{
+    u8 width;           /**< Width of the font characters in pixels */
+    u8 height;          /**< Height of the font characters in pixels */
+    const u16 *charMap; /**< Pointer to the array of character bitmaps in RGB565 format */
+} Font_t;
 
 /** @} TFT_Configuration_Options */
 

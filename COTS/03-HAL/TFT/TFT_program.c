@@ -129,4 +129,33 @@ void TFT_voidDisplayText(u16 x, u16 y, const char* text, const Font_t* font, u16
 
 }
 
+/**
+ * @addtogroup TFT_Private_Functions
+ * @{
+ */
+
+static void TFT_SendCommand(SPI_Peripheral_t Copy_Spi,const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Command)
+{
+    /**< Set RS (Register Select) pin low to indicate command mode */ 
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RsPin,MGPIO_LOW); 
+
+    /**<  Set CS (Chip Select) pin low to select the TFT display for communication */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin,MGPIO_LOW); 
+
+    SPI_t *spi = SPI_SelectSpi(Copy_Spi);
+
+    /**< Perform SPI data transfer to send the command byte */ 
+    SPI_voidTransfer(spi, &Copy_Command, NULL, 1); 
+
+    /**< Set CS pin high to release the TFT display */ 
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin,MGPIO_HIGH); 
+
+    /**< Set RS pin high for data mode */ 
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RsPin,MGPIO_HIGH); 
+}
+
+/**
+ * @} TFT_Private_Functions
+ */
+
 /** @} */ // End of TFT_Displays_program.c module.

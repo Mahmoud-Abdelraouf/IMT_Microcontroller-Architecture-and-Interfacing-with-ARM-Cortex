@@ -112,19 +112,6 @@
  */
 
 /**
- * @brief Enumeration of available SPI module selections.
- *
- * This enumeration defines the available SPI module selections that can be used to identify different SPI modules.
- * Use these enum values to specify the desired SPI module when working with SPI peripheral functions.
- */
-typedef enum
-{
-    SPI1,     /**< SPI module 1 */
-    SPI2,     /**< SPI module 2 */
-    SPI3      /**< SPI module 3 */
-} SPI_Selection_t;
-
-/**
  * @brief Register definitions for the SPI driver.
  *
  * This section defines the base addresses of the different SPI modules and a structure definition for the SPI register map.
@@ -175,7 +162,7 @@ typedef struct {
  * @note Example Usage:
  * @code
  * /**< Choose the SPI peripheral you want to use (in this case, SPI1)
- * SPI_Selection_t spi_selected = SPI1;
+ * SPI_Peripheral_t spi_selected = SPI1;
  *
  * /**< Get the base address of SPI1 using the SPI_GetBaseAddress function
  * SPI_RegDef_t *spi1_base_address = SPI_GetBaseAddress(spi_selected);
@@ -186,20 +173,8 @@ typedef struct {
  * /**< ... (add your SPI configuration code here)
  * @endcode
  */
-inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Selection_t spi)
-{
-    switch (spi)
-    {
-    case SPI1:
-        return (SPI_RegDef_t *)SPI1_BASE_ADDRESS;
-    case SPI2:
-        return (SPI_RegDef_t *)SPI2_BASE_ADDRESS;
-    case SPI3:
-        return (SPI_RegDef_t *)SPI3_BASE_ADDRESS;
-    default:
-        return NULL;
-    }
-}
+static inline SPI_RegDef_t *SPI_GetBaseAddress(SPI_Peripheral_t spi);
+
 
 /**
  * @brief SPI Control Register 1 Bits

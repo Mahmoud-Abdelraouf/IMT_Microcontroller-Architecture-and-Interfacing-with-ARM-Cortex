@@ -81,10 +81,10 @@ extern const Font_t TFT_DEFAULT_FONT;
  * @brief Defines the communication interface used to communicate with the TFT display.
  *
  * This option should be set to the communication interface used to communicate with the TFT display.
- * For example, if the display uses SPI for communication, set TFT_COMM_INTERFACE to SPI.
- * If the display uses I2C, set TFT_COMM_INTERFACE to I2C.
+ * For example, if the display uses SPI for communication, set TFT_COMM_INTERFACE to TFT_COMM_INTERFACE_SPI.
+ * If the display uses I2C, set TFT_COMM_INTERFACE to TFT_COMM_INTERFACE_I2C.
  */
-#define TFT_COMM_INTERFACE          SPI
+#define TFT_COMM_INTERFACE          TFT_COMM_INTERFACE_SPI
 
 /**
  * @brief Defines the GPIO pins used for communication with the TFT display.
