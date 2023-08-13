@@ -142,7 +142,7 @@ This document outlines the sequence for initializing the Serial Peripheral Inter
    - Initialize the SPI peripheral with appropriate settings:
      - Data Frame Format: (Insert desired data frame format, e.g., 8 bits)
      - Clock Polarity: Idle High (CPOL = 1)
-     - Clock Phase: First clock transition is the first data capture edge (CPHA = 0)
+     - Clock Phase: First clock transition is the first data write edge (CPHA = 1)
      - Clock Speed: Choose an appropriate clock speed.
      - MSB/LSB First: (Insert preferred data order, e.g., MSB first)
      - Enable SPI.
