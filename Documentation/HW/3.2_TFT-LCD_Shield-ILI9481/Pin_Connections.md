@@ -45,6 +45,28 @@
 | 33     | SPI_CLK    | SPI bus clock signal                 | 34     | SD_CS      | SD card select control signal, low level enable |
 | 35     | GND        | Power ground                         | 36     | GND        | Power ground |
 
+# TFT LCD Module Interface Using SPI with STM32F103C8
+
+## Step 1: GPIO Configuration
+Configure the microcontroller's GPIO (General Purpose Input/Output) pins for the communication and control signals required by the LCD module. In your case, you need to configure pins for Chip Select (CSX), Serial Clock (SCL), Serial Data In/Out (SDA/DOUT), and Data/Command control (D/CX).
+
+## Step 2: SPI Peripheral Initialization
+Initialize the SPI peripheral of your microcontroller. This involves setting up the SPI communication parameters such as data frame format, clock polarity, clock phase, etc. The SPI peripheral will be used to exchange data with the LCD module.
+
+## Step 3: Configure Control Pins
+Configure the control pins (CSX and D/CX) as GPIO outputs. These pins are used to control the LCD module's behavior, such as indicating whether you are sending a command or data.
+
+## Step 4: Write Sequence Implementation
+In this step, you implement the process of sending commands or data to the LCD module. This involves several sub-steps:
+
+- Start Sequence: Lower the CSX pin to signal the start of a write sequence.
+- Command/Data Mode: Depending on whether you are sending a command or data, you may need to set the D/CX pin to the appropriate level. For example, low for command and high for data.
+- Send Data: Use the SPI peripheral to send bytes of data to the LCD module. Each byte may consist of multiple write cycles. The clock signal (SCL) is generated to synchronize the data transmission.
+- End Sequence: Raise the CSX pin to signal the end of the write sequence.
+
+## Step 5: Data and Command Handling
+Depending on your LCD module's specifications, you might need to manage the D/CX pin to indicate whether you are sending a command or data. This step ensures that the LCD module knows what type of information you are transmitting.
+
 ## TFT LCD Module SPI Interface Pin Connections
 
 - **SPI_MISO (Display Data In - from Display to Microcontroller):**
