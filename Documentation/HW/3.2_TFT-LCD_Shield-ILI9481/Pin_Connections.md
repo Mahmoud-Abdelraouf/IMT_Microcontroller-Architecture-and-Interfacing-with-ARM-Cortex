@@ -124,6 +124,80 @@ int main() {
     }
 }
 ```
+
+# SPI Initialization Sequence for LCD Communication
+
+## Introduction
+
+This document outlines the sequence for initializing the Serial Peripheral Interface (SPI) communication to interface with an LCD module using the Type C interface. The provided information focuses on the write cycle and sequence during data transmission.
+
+## SPI Initialization Steps
+
+1. **Configure GPIO Pins**:
+
+   - Configure CSX (Chip Select), SCL (Serial Clock), SDA (Serial Data) or DOUT (Data Out), and potentially D/CX (Data/Command) pins as GPIO outputs.
+
+2. **Initialize SPI Peripheral**:
+
+   - Initialize the SPI peripheral with appropriate settings:
+     - Data Frame Format: (Insert desired data frame format, e.g., 8 bits)
+     - Clock Polarity: Idle High (CPOL = 1)
+     - Clock Phase: First clock transition is the first data capture edge (CPHA = 0)
+     - Clock Speed: Choose an appropriate clock speed.
+     - MSB/LSB First: (Insert preferred data order, e.g., MSB first)
+     - Enable SPI.
+
+3. **Write Cycle and Sequence**:
+
+   During the write sequence, the host processor writes one or more bytes of information to the display module via the interface. The sequence is as follows:
+
+   - Initiate Write Sequence:
+     - Lower CSX (Chip Select) from high to low to start the write sequence.
+     - If applicable, drive D/CX (Data/Command) low to indicate command information.
+
+   - Send Data Bits:
+     - Iterate through each bit of the data byte to be sent.
+     - For each bit:
+       - Assert DOUT or SDA line when there is a falling edge of SCL (Serial Clock).
+       - Display reads DOUT or SDA line when there is a rising edge of SCL.
+       - After the SCL is high, the host negates DOUT or SDA line.
+
+   - End Write Sequence:
+     - Raise CSX from low to high to end the write sequence.
+     - If applicable, pull D/CX high to indicate data presence.
+
+## Example Pseudo Code
+
+Below is an example pseudo code snippet demonstrating the SPI initialization and write sequence:
+
+```c
+// Configure GPIO pins for CSX, SCL, SDA/DOUT, and potentially D/CX
+Configure_CSX_Pin();
+Configure_SCL_Pin();
+Configure_SDA_Pin();
+Configure_D_CX_Pin(); // If applicable
+
+// Initialize SPI peripheral with desired settings
+SPI_Init();
+
+// Initiate Write Sequence
+CSX_LOW();
+D_CX_LOW(); // If command information
+
+// Send Data Bits
+for (bit in data_byte) {
+    SDA_HIGH(); // Assert DOUT or SDA line
+    SCL_HIGH();
+    SCL_LOW();  // Display reads DOUT or SDA line
+    SDA_LOW();  // Negate DOUT or SDA line
+    SCL_HIGH();
+}
+
+// End Write Sequence
+CSX_HIGH();
+D_CX_HIGH(); // If data information
+```
+
 ## TFT LCD Module SPI Interface Pin Connections
 
 - **SPI_MISO (Display Data In - from Display to Microcontroller):**
