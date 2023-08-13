@@ -124,7 +124,6 @@ int main() {
     }
 }
 ```
-
 ## TFT LCD Module SPI Interface Pin Connections
 
 - **SPI_MISO (Display Data In - from Display to Microcontroller):**
