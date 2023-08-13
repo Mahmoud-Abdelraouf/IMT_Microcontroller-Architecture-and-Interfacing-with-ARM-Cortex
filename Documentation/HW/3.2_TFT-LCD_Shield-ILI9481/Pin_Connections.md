@@ -123,6 +123,7 @@ int main() {
         // Your code logic
     }
 }
+```
 
 ## TFT LCD Module SPI Interface Pin Connections
 
