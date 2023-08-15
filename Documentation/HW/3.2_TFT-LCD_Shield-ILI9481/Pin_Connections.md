@@ -201,10 +201,10 @@ D_CX_HIGH(); // If data information
 ## TFT LCD Module SPI Interface Pin Connections
 
 - **SPI_MISO (Display Data In - from Display to Microcontroller):**
-  Connect this pin from the TFT LCD module to the MOSI (Master Out Slave In) pin of the STM32F103C8. This connection allows data to flow from the display to the microcontroller, such as touch input data or display status information.
+  Connect this pin from the TFT LCD module to the MISO (Master In Slave Out) pin of the STM32F103C8. This connection allows data to flow from the display to the microcontroller, such as touch input data or display status information.
 
 - **SPI_MOSI (Display Data Out - from Microcontroller to Display):**
-  Connect this pin from the TFT LCD module to the MISO (Master In Slave Out) pin of the STM32F103C8. This connection allows data to flow from the microcontroller to the display, such as display commands and pixel data.
+  Connect this pin from the TFT LCD module to the MOSI (Master Out Slave In) pin of the STM32F103C8. This connection allows data to flow from the microcontroller to the display, such as display commands and pixel data.
 
 - **SPI_CLK (Clock Signal):**
   Connect this pin from the TFT LCD module to the SPI clock (SCK) pin of the STM32F103C8. The SPI clock signal synchronizes the data transmission between the microcontroller and the display.
