@@ -102,9 +102,9 @@ void MRCC_voidInitSysClock(void);
  *
  * @param Copy_u8BusId The bus ID of the peripheral to enable.
  *        This parameter can be one of the following values:
- *        - RCC_AHB  : Advanced High-performance Bus
- *        - RCC_APB1 : Advanced Peripheral Bus 1
- *        - RCC_APB2 : Advanced Peripheral Bus 2
+ *        - MRCC_AHB  : Advanced High-performance Bus
+ *        - MRCC_APB1 : Advanced Peripheral Bus 1
+ *        - MRCC_APB2 : Advanced Peripheral Bus 2
  *
  * @param Copy_u8PeriphId The peripheral ID of the peripheral to enable.
  *        This parameter can be one of the following values:

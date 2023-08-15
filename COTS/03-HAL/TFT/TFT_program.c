@@ -176,10 +176,10 @@ static void TFT_SendCommand(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Comma
     /**<  Set CS (Chip Select) pin low to select the TFT display for communication */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin,MGPIO_LOW); 
 
-    SPI_t *spi = SPI_SelectSpiPeripheral(Copy_psTftDisplay->TFT_Spi);
+    SPI_t *Local_pSpi = SPI_SelectSpiPeripheral(Copy_psTftDisplay->TFT_Spi);
 
     /**< Perform SPI data transfer to send the command byte */ 
-    SPI_voidTransfer(spi, &Copy_Command, NULL, 1); 
+    SPI_voidTransfer(Local_pSpi, &Copy_Command, NULL, 1); 
 
     /**< Set CS pin high to release the TFT display */ 
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin,MGPIO_HIGH); 
@@ -194,15 +194,14 @@ static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Data)
     /**< Set CS (Chip Select) pin low to select the TFT display for communication */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin, MGPIO_LOW);
 
-    SPI_t *spi = SPI_SelectSpiPeripheral(Copy_psTftDisplay->TFT_Spi);
+    SPI_t *Local_pSpi = SPI_SelectSpiPeripheral(Copy_psTftDisplay->TFT_Spi);
 
     /**< Perform SPI data transfer to send the data byte */
-    SPI_voidTransfer(spi, &Copy_Data, NULL, 1);
+    SPI_voidTransfer(Local_pSpi, &Copy_Data, NULL, 1);
 
     /**< Set CS pin high to release the TFT display */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin, MGPIO_HIGH);
 }
-
 
 /**
  * @} TFT_Private_Functions

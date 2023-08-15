@@ -105,8 +105,19 @@ typedef enum
  *
  * @attention When using this structure, ensure that the bit-field sizes and arrangement match the hardware configuration.
  */
+
+/**
+ * @brief SPI Configuration Structure.
+ *
+ * This structure holds the configuration options for the SPI peripheral.
+ *
+ * @note The structure's bit-field size and arrangement may vary depending on the hardware and specific SPI module used.
+ *
+ * @attention When using this structure, ensure that the bit-field sizes and arrangement match the hardware configuration.
+ */
 typedef struct 
 {
+  
   u8 BaudRateDIV:6;      /**< SPI Baud Rate Divider.
                              The value determines the SPI clock frequency based on the peripheral's clock source.
                              The Baud Rate Divider is represented by a 6-bit value, allowing a range of possible values.
@@ -122,12 +133,19 @@ typedef struct
                              - 111000: fPCLK/256
                              Adjust the value accordingly to achieve the desired SPI clock frequency. */
   
+ SPI_Peripheral_t SpiPeripheral:2;   /**< SPI Peripheral Selection.
+                                       Select the SPI peripheral to be used for communication.
+                                       Available options are:
+                                       - ::SPI_1: SPI module 1
+                                       - ::SPI_2: SPI module 2
+                                       - ::SPI_3: SPI module 3 */
+
   u8 DataFrame:1;        /**< Data Frame Format.
                              Set this bit to configure the data frame format used by the SPI peripheral.
                              - 0: The SPI peripheral operates in 8-bit data frame format.
                              - 1: The SPI peripheral operates in 16-bit data frame format.
                              The actual data frame format must match the configuration of the connected SPI devices. */
-                             
+
   u8 ClockPolarity:1;    /**< Clock Polarity.
                              Set this bit to define the idle state of the SPI clock.
                              - 0: The clock is low in the idle state (CPOL = 0).
@@ -140,7 +158,7 @@ typedef struct
                              - 1: Data is written on the first clock edge and it is captured on the second clock edge (CPHA = 1).
                              The clock phase setting should match the requirements of the connected devices. */
   
-  u8 FrameFormat:1;       /**< Frame Format.
+  u8 FrameFormat:1;      /**< Frame Format.
                              Set this bit to define the frame format used by the SPI peripheral.
                              - 0: The SPI peripheral uses MSB (Most Significant Bit) first frame format.
                              - 1: The SPI peripheral uses LSB (Least Significant Bit) first frame format.
@@ -241,7 +259,7 @@ void SPI_voidInit(SPI_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
  * This function sends and receives an array of data bytes using the SPI peripheral in full-duplex mode.
  * It sends the data in `Copy_u8pTxData` and simultaneously receives the data in `Copy_u8pRxData`.
  *
- * @param[in] Copy_psSPI Pointer to the SPI peripheral structure to perform the transfer.
+ * @param[in] Copy_SPI The SPI peripheral to perform the transfer.
  * @param[in] Copy_u8pTxData Pointer to the array of data bytes to be transmitted.
  * @param[out] Copy_u8pRxData Pointer to the array where received data bytes will be stored.
  * @param[in] Copy_u16size The number of data bytes to be transmitted and received.
@@ -255,7 +273,7 @@ void SPI_voidInit(SPI_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
  * @note Example Usage:
  * @code
  * /**< Select the SPI peripheral (e.g., SPI2)
- * SPI_t *spi_selected = SPI_SelectSpiPeripheral(SPI2);
+ * SPI_Peripheral_t spi_selected = SPI_2;
  *
  * /**< Data arrays for transmission and reception
  * u8 tx_data[] = {0x01, 0x02, 0x03, 0x04};
@@ -265,7 +283,8 @@ void SPI_voidInit(SPI_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
  * SPI_voidTransfer(spi_selected, tx_data, rx_data, sizeof(tx_data));
  * @endcode
  */
-void SPI_voidTransfer(SPI_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
+void SPI_voidTransfer(SPI_Peripheral_t Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
+
 
 /**
  * @} SPI_Functions

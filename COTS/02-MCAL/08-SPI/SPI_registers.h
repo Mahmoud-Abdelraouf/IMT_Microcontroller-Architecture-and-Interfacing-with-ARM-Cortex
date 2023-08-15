@@ -51,7 +51,7 @@ typedef struct {
  * @note Users can obtain a `SPI_t` pointer using the `SPI_SelectSpi` function by providing
  *       a valid SPI peripheral identifier.
  */
-typedef SPI_RegDef_t SPI_t;
+typedef SPI_RegDef_t        SPI_t;
 
 /**
  * @} SPI_Driver SPI Registers

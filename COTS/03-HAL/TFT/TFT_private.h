@@ -113,30 +113,6 @@ typedef enum {
  */
 
 /**
- * @brief Enumeration for communication interfaces used with the TFT display.
- *
- * This enumeration defines the possible communication interfaces that can be used
- * to communicate with the TFT display.
- */
-typedef enum
-{
-    TFT_COMM_INTERFACE_SPI, /**< SPI communication interface */
-    TFT_COMM_INTERFACE_I2C  /**< I2C communication interface */
-} TFT_CommInterface_t;
-
-/**
- * @brief Structure representing the TFT display controller.
- *
- * This structure defines the configuration settings and control variables for the TFT display controller.
- * It includes members for communication interface, GPIO pins, font, and other necessary settings.
- */
-typedef struct
-{
-    TFT_CommInterface_t CommInterface; /**< Communication interface used for the TFT display */
-    /* Add other members for GPIO pins, font, etc. */
-} TFT_DisplayController_t;
-
-/**
  * @brief Internal function to send commands to the TFT display controller.
  *
  * This function is used internally to send commands to the TFT display controller

@@ -41,61 +41,66 @@ inline SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi)
     }
 }
 
-void SPI_voidInit(SPI_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig)
+void SPI_voidInit(SPI_config_t *Copy_psSPIConfig)
 {
+  SPI_t *Local_pSPI = SPI_SelectSpiPeripheral(Copy_psSPIConfig->SpiPeripheral);
   /* Configure the SPI peripheral */
   /* Set the data frame format */
   if (Copy_psSPIConfig->DataFrame == SPI_DATA_FRAME_8BIT)
   {
-    SET_BIT(Copy_psSPI->CR1, SPI_CR1_DFF);
+    SET_BIT(Local_pSPI->CR1, SPI_CR1_DFF);
   }
   else
   {
-	  CLR_BIT(Copy_psSPI->CR1, SPI_CR1_DFF);
+	  CLR_BIT(Local_pSPI->CR1, SPI_CR1_DFF);
   }
 
   /* Set the frame format */
   if(Copy_psSPIConfig->FrameFormat == SPI_LSB_FIRST)
   {
-    SET_BIT(Copy_psSPI->CR1,SPI_CR1_LSBFIRST);
+    SET_BIT(Local_pSPI->CR1,SPI_CR1_LSBFIRST);
   }
   else
   {
-      CLR_BIT(Copy_psSPI->CR1,SPI_CR1_LSBFIRST);
+      CLR_BIT(Local_pSPI->CR1,SPI_CR1_LSBFIRST);
   }
   /* Set the clock polarity */
   if (Copy_psSPIConfig->ClockPolarity == SPI_CLOCK_POLARITY_HIGH)
   {
-    SET_BIT(Copy_psSPI->CR1, SPI_CR1_CPOL);
+    SET_BIT(Local_pSPI->CR1, SPI_CR1_CPOL);
   }
   else
   {
-	  CLR_BIT(Copy_psSPI->CR1, SPI_CR1_CPOL);
+	  CLR_BIT(Local_pSPI->CR1, SPI_CR1_CPOL);
   }
 
   /* Set the clock phase */
   if (Copy_psSPIConfig->ClockPhase == SPI_CLOCK_PHASE_SECOND_EDGE)
   {
-    SET_BIT(Copy_psSPI->CR1, SPI_CR1_CPHA);
+    SET_BIT(Local_pSPI->CR1, SPI_CR1_CPHA);
   }
   else
   {
-    CLR_BIT(Copy_psSPI->CR1, SPI_CR1_CPHA);
+    CLR_BIT(Local_pSPI->CR1, SPI_CR1_CPHA);
   }
 
   /* Set the clock speed */
-  Copy_psSPI->CR1 &= ~SPI_CR1_BR_MSK;
-  Copy_psSPI->CR1 |= Copy_psSPIConfig->BaudRateDIV;
+  Local_pSPI->CR1 &= ~SPI_CR1_BR_MSK;
+  Local_pSPI->CR1 |= Copy_psSPIConfig->BaudRateDIV;
 
   /* Set the master mode */
-  SET_BIT(Copy_psSPI->CR1, SPI_CR1_MSTR);
+  SET_BIT(Local_pSPI->CR1, SPI_CR1_MSTR);
 
   /* Enable the SPI peripheral */
-  SET_BIT(Copy_psSPI->CR1, SPI_CR1_SPE);
+  SET_BIT(Local_pSPI->CR1, SPI_CR1_SPE);
 }
 
-void SPI_voidTransfer(SPI_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size)
+void SPI_voidTransfer(SPI_Peripheral_t Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size)
 {
+  /* Get the base address of the selected spi peripheral */
+  SPI_t *Local_pSPI = SPI_SelectSpiPeripheral(Copy_SPI);
+  
+  /* Iterator to loop on the data */
   u16 Local_u16Iterator;
 
   /* Set the slave select pin */
@@ -105,14 +110,14 @@ void SPI_voidTransfer(SPI_t *Copy_psSPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData,
   for (Local_u16Iterator = 0; Local_u16Iterator < Copy_u16size; Local_u16Iterator++)
   {
     /* Send the data */
-    SPI_voidSendByte(Copy_psSPI,Copy_u8pTxData[Local_u16Iterator]);
+    SPI_voidSendByte(Local_pSPI,Copy_u8pTxData[Local_u16Iterator]);
 
     /* Receive the data */
-    Copy_u8pRxData[Local_u16Iterator] = SPI_u8ReceiveByte(Copy_psSPI);
+    Copy_u8pRxData[Local_u16Iterator] = SPI_u8ReceiveByte(Local_pSPI);
   }
 
   /* Wait for the transmission to complete */
-  SPI_voidWaitForTransmissionComplete(Copy_psSPI);
+  SPI_voidWaitForTransmissionComplete(Local_pSPI);
 
   /* Clear the slave select pin */
   SPI_voidSetSlaveSelectPin(HIGH);
