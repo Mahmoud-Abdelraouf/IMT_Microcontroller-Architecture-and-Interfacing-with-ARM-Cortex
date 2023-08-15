@@ -16,8 +16,7 @@
 /*****************************< MCAL *****************************/
 /**< GPIO */
 #include "GPIO_interface.h"
-/**< SPI */
-#include "SPI_registers.h"
+/**< MCAL_SPI */
 #include "SPI_interface.h"
 #include "SPI_private.h"
 #include "SPI_config.h"
@@ -42,7 +41,7 @@ inline SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi)
     }
 }
 
-void SPI_voidInit(SPI_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
+void SPI_voidInit(SPI_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig)
 {
   /* Configure the SPI peripheral */
   /* Set the data frame format */
@@ -55,6 +54,15 @@ void SPI_voidInit(SPI_t *Copy_psSPI,SPI_config_t *Copy_psSPIConfig)
 	  CLR_BIT(Copy_psSPI->CR1, SPI_CR1_DFF);
   }
 
+  /* Set the frame format */
+  if(Copy_psSPIConfig->FrameFormat == SPI_LSB_FIRST)
+  {
+    SET_BIT(Copy_psSPI->CR1,SPI_CR1_LSBFIRST);
+  }
+  else
+  {
+      CLR_BIT(Copy_psSPI->CR1,SPI_CR1_LSBFIRST);
+  }
   /* Set the clock polarity */
   if (Copy_psSPIConfig->ClockPolarity == SPI_CLOCK_POLARITY_HIGH)
   {

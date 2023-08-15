@@ -12,6 +12,8 @@
 #ifndef __SPI_INTERFACE_H__
 #define __SPI_INTERFACE_H__
 
+#include "SPI_registers.h"
+
 /**
  * @addtogroup SPI_Configuration_Options
  * @{
@@ -41,6 +43,16 @@ typedef enum
   LOW,                            /**< Logic low voltage level (0V) */
   HIGH = !LOW                     /**< Logic high voltage level (3.3V or 5V, depending on the system) */
 } SPI_Status_t;
+
+/**
+ * @enum SPI_FrameFormat_t
+ * @brief Enumeration for SPI frame format.
+ */
+typedef enum
+{
+    SPI_MSB_FIRST, /**< Most Significant Bit (MSB) first frame format. */
+    SPI_LSB_FIRST  /**< Least Significant Bit (LSB) first frame format. */
+} SPI_FrameFormat_t;
 
 /**
  * @brief Enumeration of valid SPI data frame formats.
@@ -127,6 +139,12 @@ typedef struct
                              - 0: Data is captured on the first clock edge and it is written on the second clock edge (CPHA = 0).
                              - 1: Data is written on the first clock edge and it is captured on the second clock edge (CPHA = 1).
                              The clock phase setting should match the requirements of the connected devices. */
+  
+  u8 FrameFormat:1;       /**< Frame Format.
+                             Set this bit to define the frame format used by the SPI peripheral.
+                             - 0: The SPI peripheral uses MSB (Most Significant Bit) first frame format.
+                             - 1: The SPI peripheral uses LSB (Least Significant Bit) first frame format.
+                             The frame format determines the order in which bits are transmitted and received. */
 } SPI_config_t;
 
 /**

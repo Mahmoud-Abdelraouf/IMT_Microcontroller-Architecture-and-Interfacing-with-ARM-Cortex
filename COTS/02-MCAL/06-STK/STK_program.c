@@ -72,7 +72,6 @@ void MSTK_voidReset(void)
     STK->CTRL &= ~STK_CTRL_COUNTFLAG_MASK;
 }
 
-
 u32 MSTK_u32GetRemainingCounts(void)
 {
     /* Get the current value of the SysTick timer */
@@ -110,7 +109,6 @@ void MSTK_voidSetDelayMs(f32 Copy_u32Milliseconds)
     while (!(STK->CTRL & STK_CTRL_COUNTFLAG_MASK)); /**< Wait until the SysTick timer reach to zero */
     STK->CTRL &= ~STK_CTRL_ENABLE_MASK;             /**< Disable SysTick timer */
 }
-
 
 void MSTK_voidSetIntervalSingle(u32 Copy_u32Microseconds, void (*Copy_pfCallback)(void))
 {

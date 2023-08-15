@@ -26,33 +26,55 @@
 
 /**< HAL */
 #include "TFT_config.h"
-#include "TFT_private.h"
 #include "TFT_interface.h"
+#include "TFT_private.h"
 
-/**
- * @brief Initializes the TFT display module.
- *
- * This function initializes the TFT display by configuring the display controller,
- * setting up the communication interface, and performing any required initialization steps.
- *
- * @param None
- * @retval None
- */
-void TFT_voidInit(SPI_Peripheral_t Copy_Spi, const TFT_Config_t *Copy_psTftDisplay)
-{   
-    /**< Initialization sequence for the TFT display */ 
-    TFT_SendCommand(Copy_Spi, Copy_psTftDisplay, TFT_COMMAND_SOFT_RESET);
-    HAL_Delay(100); // Delay after reset
+
+void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay)
+{
+    /**< Set the Reset (RST) pin to high logic level to release reset signal */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
     
-    TFT_SendCommand(Copy_Spi, Copy_psTftDisplay, TFT_COMMAND_SLEEP_OUT);
-    HAL_Delay(100); // Delay after sleep out
-
-    // Configure display settings, gamma correction, etc.
-    TFT_SendCommand(Copy_Spi, Copy_psTftDisplay, TFT_COMMAND_DISPLAY_ON);
+    /**< Wait for a specified delay before proceeding */
+    MSTK_voidSetBusyWait(100);
     
-    // Additional configuration steps as needed
+    /**< Set the Reset (RST) pin to low logic level to assert reset signal */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_LOW);
+    
+    /**< Wait for a short delay */
+    MSTK_voidSetBusyWait(1);
+    
+    /**< Set the Reset (RST) pin to high logic level to release reset signal */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
+    
+    /**< Wait for a specified delay before proceeding */
+    MSTK_voidSetBusyWait(100);
+    
+    /**< Set the Reset (RST) pin to low logic level to assert reset signal */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_LOW);
+    
+    /**< Wait for a specified delay before proceeding */
+    MSTK_voidSetBusyWait(100);
+    
+    /**< Set the Reset (RST) pin to high logic level to release reset signal */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
+    
+    /**< Wait for a specified delay before proceeding */
+    MSTK_voidSetDelayMs(120);
 
-    // End of initialization
+    /**< Sleep out command */
+    TFT_SendCommand(Copy_psTftDisplay,TFT_EXIT_SLEEP_MODE);
+
+    /**<  */
+    MSTK_voidSetDelayMs(150);
+
+    /**< Set pixel format */
+    TFT_SendCommand(Copy_psTftDisplay,TFT_SET_PIXEL_FORMAT);
+    /**< Set the Control interface color format to RGB565*/
+    TFT_SendData(Copy_psTftDisplay,TFT_DISPLAY_COLORS);
+
+    /**< Display on command */
+    TFT_SendCommand(Copy_psTftDisplay,TFT_SET_DISPLAY_ON);
 }
 
 
@@ -135,18 +157,18 @@ void TFT_voidDisplayImage(u16 x, u16 y, const u16* image, u16 width, u16 height)
  * @param[in] color The color of the text in 16-bit RGB565 format.
  * @retval None
  */
-void TFT_voidDisplayText(u16 x, u16 y, const char* text, const Font_t* font, u16 color)
-{
-    /**< Implement the TFT text display function */
-
-}
+//void TFT_voidDisplayText(u16 x, u16 y, const char* text, const Font_t* font, u16 color)
+//{
+//    /**< Implement the TFT text display function */
+//
+//}
 
 /**
  * @addtogroup TFT_Private_Functions
  * @{
  */
 
-static void TFT_SendCommand(SPI_Peripheral_t Copy_Spi,const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Command)
+static void TFT_SendCommand(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Command)
 {
     /**< Set RS (Register Select) pin low to indicate command mode */ 
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RsPin,MGPIO_LOW); 
@@ -154,7 +176,7 @@ static void TFT_SendCommand(SPI_Peripheral_t Copy_Spi,const TFT_Config_t *Copy_p
     /**<  Set CS (Chip Select) pin low to select the TFT display for communication */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin,MGPIO_LOW); 
 
-    SPI_t *spi = SPI_SelectSpi(Copy_Spi);
+    SPI_t *spi = SPI_SelectSpiPeripheral(Copy_psTftDisplay->TFT_Spi);
 
     /**< Perform SPI data transfer to send the command byte */ 
     SPI_voidTransfer(spi, &Copy_Command, NULL, 1); 
@@ -164,7 +186,7 @@ static void TFT_SendCommand(SPI_Peripheral_t Copy_Spi,const TFT_Config_t *Copy_p
     
 }
 
-static void TFT_SendData(SPI_Peripheral_t Copy_Spi, const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Data)
+static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Data)
 {
     /**< Set RS (Register Select) pin high to indicate data mode */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RsPin, MGPIO_HIGH);
@@ -172,7 +194,7 @@ static void TFT_SendData(SPI_Peripheral_t Copy_Spi, const TFT_Config_t *Copy_psT
     /**< Set CS (Chip Select) pin low to select the TFT display for communication */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin, MGPIO_LOW);
 
-    SPI_t *spi = SPI_SelectSpi(Copy_Spi);
+    SPI_t *spi = SPI_SelectSpiPeripheral(Copy_psTftDisplay->TFT_Spi);
 
     /**< Perform SPI data transfer to send the data byte */
     SPI_voidTransfer(spi, &Copy_Data, NULL, 1);

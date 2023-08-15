@@ -30,7 +30,7 @@
  * This option should be set to the width of the TFT display in pixels.
  * For example, if the display has a resolution of 240x320, WIDTH should be set to 240.
  */
-#define TFT_DISPLAY_WIDTH           240
+#define TFT_DISPLAY_WIDTH           320
 
 /**
  * @brief Defines the TFT display height in pixels.
@@ -38,15 +38,20 @@
  * This option should be set to the height of the TFT display in pixels.
  * For example, if the display has a resolution of 240x320, HEIGHT should be set to 320.
  */
-#define TFT_DISPLAY_HEIGHT          320
+#define TFT_DISPLAY_HEIGHT          480
 
 /**
  * @brief Defines the maximum number of colors supported by the TFT display.
  *
  * This option should be set to the number of colors supported by the TFT display.
- * For example, if the display supports 65,536 colors (16-bit RGB565), COLORS should be set to 65536.
+ * For example, if the display supports 65,536 colors (16-bit RGB565), COLORS should be set to TFT_DISPLAY_COLORS_16BIT.
+ *
+ * Available options:
+ * - @ref _3BIT_PER_PIXEL: Supports 8 colors (RGB111).
+ * - @ref _16BIT_PER_PIXEL: Supports 65,536 colors (RGB565).
+ * - @ref _18BIT_PER_PIXEL: Supports 262,144 colors (RGB666).
  */
-#define TFT_DISPLAY_COLORS          65536
+#define TFT_DISPLAY_COLORS          _16BIT_PER_PIXEL
 
 /**
  * @brief Defines the default background color for the TFT display.
@@ -57,43 +62,34 @@
  */
 #define TFT_DEFAULT_BACKGROUND_COLOR    0x0000
 
-/**
- * @brief Structure representing the font used for rendering text on the TFT display.
- *
- * This option should be set to the default font used for rendering text on the display.
- * The font is defined as a structure that includes the font data and size.
- * For example:
- * 
- * @code{c}
- * typedef struct
- * {
- *   u8 width;              // Width of the font characters in pixels 
- *   u8 height;             // Height of the font characters in pixels 
- *   const u16 *charMap;    // Pointer to the array of character bitmaps in RGB565 format 
- * } Font_t;
- * @endcode
- *
- * @see Font_t for more details on defining the font structure.
- */
-extern const Font_t TFT_DEFAULT_FONT;
+///**
+// * @brief Structure representing the font used for rendering text on the TFT display.
+// *
+// * This option should be set to the default font used for rendering text on the display.
+// * The font is defined as a structure that includes the font data and size.
+// * For example:
+// *
+// * @code{c}
+// * typedef struct
+// * {
+// *   u8 width;              // Width of the font characters in pixels
+// *   u8 height;             // Height of the font characters in pixels
+// *   const u16 *charMap;    // Pointer to the array of character bitmaps in RGB565 format
+// * } Font_t;
+// * @endcode
+// *
+// * @see Font_t for more details on defining the font structure.
+// */
+//extern const Font_t TFT_DEFAULT_FONT;
 
 /**
  * @brief Defines the communication interface used to communicate with the TFT display.
  *
  * This option should be set to the communication interface used to communicate with the TFT display.
- * For example, if the display uses SPI for communication, set TFT_COMM_INTERFACE to TFT_COMM_INTERFACE_SPI.
- * If the display uses I2C, set TFT_COMM_INTERFACE to TFT_COMM_INTERFACE_I2C.
+ * For example, if the display uses SPI for communication, set TFT_COMM_INTERFACE to `TFT_COMM_INTERFACE_SPI`.
+ * If the display uses I2C, set `TFT_COMM_INTERFACE` to TFT_COMM_INTERFACE_I2C.
  */
 #define TFT_COMM_INTERFACE          TFT_COMM_INTERFACE_SPI
-
-/**
- * @brief Defines the GPIO pins used for communication with the TFT display.
- *
- * This option should be set to the GPIO pins used for communication with the TFT display.
- * For example, if SPI is used, set the SPI pins (MOSI, MISO, SCK, and CS) accordingly.
- * If I2C is used, set the I2C pins (SDA and SCL) accordingly.
- */
-/* Add GPIO pin definitions here */
 
 /** @} TFT_Configuration_Options */
 

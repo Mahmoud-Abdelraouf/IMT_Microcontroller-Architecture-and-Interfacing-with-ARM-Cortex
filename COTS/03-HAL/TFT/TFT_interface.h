@@ -59,6 +59,9 @@ typedef enum
     COLOR_SILVER        = 0xC618    /**< Silver color (192, 192, 192) */
 } TFT_Color_t;
 
+
+
+
 /**
  * @struct TFT_Config_t
  * @brief TFT LCD Configuration Structure
@@ -77,18 +80,18 @@ typedef struct {
     u8 TFT_RstPin: 4;                /**< Reset (RST) pin number */
 } TFT_Config_t;
 
-/**
- * @brief Structure representing the font used for rendering text on the TFT display.
- *
- * This structure defines the font size and style used for rendering text on the TFT display.
- * It includes members for the font width, height, and the array of character bitmaps.
- */
-typedef struct
-{
-    u8 width;           /**< Width of the font characters in pixels */
-    u8 height;          /**< Height of the font characters in pixels */
-    const u16 *charMap; /**< Pointer to the array of character bitmaps in RGB565 format */
-} Font_t;
+///**
+// * @brief Structure representing the font used for rendering text on the TFT display.
+// *
+// * This structure defines the font size and style used for rendering text on the TFT display.
+// * It includes members for the font width, height, and the array of character bitmaps.
+// */
+//typedef struct
+//{
+//    u8 width;           /**< Width of the font characters in pixels */
+//    u8 height;          /**< Height of the font characters in pixels */
+//    const u16 *charMap; /**< Pointer to the array of character bitmaps in RGB565 format */
+//} Font_t;
 
 /** @} TFT_Configuration_Options */
 
@@ -99,15 +102,20 @@ typedef struct
  */
 
 /**
- * @brief Initializes the TFT display.
+ * @brief Initialize the TFT display.
  *
- * This function initializes the TFT display by configuring the display controller,
- * setting up the communication interface, and performing any required initialization steps.
+ * This function initializes the TFT display based on the provided configuration.
+ * It performs a series of reset operations and delays to ensure proper initialization
+ * of the display before further communication or operation.
  *
- * @param None
- * @retval None
+ * @param[in] Copy_psTftDisplay Pointer to a TFT_Config_t structure containing display configuration.
+ *
+ * @note The function uses GPIO and SysTick timer functions for controlling the display reset and delays.
+ *       Make sure that the GPIO and SysTick modules are properly initialized before calling this function.
+ *
+ * @warning The delays used in this function are approximate and may need adjustment based on hardware and requirements.
  */
-void TFT_voidInit(void);
+void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay);
 
 /**
  * @brief Clears the display screen.
@@ -172,7 +180,7 @@ void TFT_voidDisplayImage(u16 x, u16 y, const u16* image, u16 width, u16 height)
  * @param[in] color The color of the text in 16-bit RGB565 format.
  * @retval None
  */
-void TFT_voidDisplayText(u16 x, u16 y, const char* text, const Font_t* font, u16 color);
+//void TFT_voidDisplayText(u16 x, u16 y, const char* text, const Font_t* font, u16 color);
 
 /** @} TFT_Functions */
 
