@@ -41,7 +41,7 @@ inline SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi)
     }
 }
 
-void SPI_voidInit(SPI_config_t *Copy_psSPIConfig)
+void SPI_voidInit(const SPI_config_t *Copy_psSPIConfig, SPI_t *Copy_psSelectedSpiAfterInit)
 {
   SPI_t *Local_pSPI = SPI_SelectSpiPeripheral(Copy_psSPIConfig->SpiPeripheral);
   /* Configure the SPI peripheral */
@@ -93,33 +93,33 @@ void SPI_voidInit(SPI_config_t *Copy_psSPIConfig)
 
   /* Enable the SPI peripheral */
   SET_BIT(Local_pSPI->CR1, SPI_CR1_SPE);
+
+  Copy_psSelectedSpiAfterInit = Local_pSPI;
 }
 
-void SPI_voidTransfer(SPI_Peripheral_t Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size)
+void SPI_voidTransfer(SPI_t *Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size)
 {
-  /* Get the base address of the selected spi peripheral */
-  SPI_t *Local_pSPI = SPI_SelectSpiPeripheral(Copy_SPI);
-  
+
   /* Iterator to loop on the data */
   u16 Local_u16Iterator;
 
-  /* Set the slave select pin */
+  /* Clear the slave select pin -> Enable the slave select pin */
   SPI_voidSetSlaveSelectPin(LOW);
 
   /* Send and receive the data */
   for (Local_u16Iterator = 0; Local_u16Iterator < Copy_u16size; Local_u16Iterator++)
   {
     /* Send the data */
-    SPI_voidSendByte(Local_pSPI,Copy_u8pTxData[Local_u16Iterator]);
+    SPI_voidSendByte(Copy_SPI,Copy_u8pTxData[Local_u16Iterator]);
 
     /* Receive the data */
-    Copy_u8pRxData[Local_u16Iterator] = SPI_u8ReceiveByte(Local_pSPI);
+    Copy_u8pRxData[Local_u16Iterator] = SPI_u8ReceiveByte(Copy_SPI);
   }
 
   /* Wait for the transmission to complete */
-  SPI_voidWaitForTransmissionComplete(Local_pSPI);
+  SPI_voidWaitForTransmissionComplete(Copy_SPI);
 
-  /* Clear the slave select pin */
+  /* Set the slave select pin -> Disable the slave select pin */
   SPI_voidSetSlaveSelectPin(HIGH);
 }
 
@@ -182,11 +182,11 @@ static void SPI_voidSetSlaveSelectPin(SPI_Status_t Copy_Status)
   /* Set or clear the slave select pin */
   if (Copy_Status == LOW)
   {
-    MGPIO_voidSetPinValue(MGPIOA,GPIO_PIN4,MGPIO_HIGH);
+    MGPIO_voidSetPinValue(MGPIOA,GPIO_PIN4,MGPIO_LOW);
   }
   else
   {
-    MGPIO_voidSetPinValue(MGPIOA,GPIO_PIN4,MGPIO_LOW);
+    MGPIO_voidSetPinValue(MGPIOA,GPIO_PIN4,MGPIO_HIGH);
   }
 }
 

@@ -30,7 +30,8 @@
 #include "TFT_private.h"
 
 
-void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay)
+
+void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTftUsed)
 {
     /**< Set the Reset (RST) pin to high logic level to release reset signal */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
@@ -61,21 +62,10 @@ void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay)
     
     /**< Wait for a specified delay before proceeding */
     MSTK_voidSetDelayMs(120);
-
-    /**< Sleep out command */
-    TFT_SendCommand(Copy_psTftDisplay,TFT_EXIT_SLEEP_MODE);
-
-    /**<  */
-    MSTK_voidSetDelayMs(150);
-
-    /**< Set pixel format */
-    TFT_SendCommand(Copy_psTftDisplay,TFT_SET_PIXEL_FORMAT);
-    /**< Set the Control interface color format to RGB565*/
-    TFT_SendData(Copy_psTftDisplay,TFT_DISPLAY_COLORS);
-
-    /**< Display on command */
-    TFT_SendCommand(Copy_psTftDisplay,TFT_SET_DISPLAY_ON);
+    
+    TFT_InitController(Copy_psTftDisplay, Copy_psTheSpiTftUsed);
 }
+
 
 
 /**
@@ -168,40 +158,129 @@ void TFT_voidDisplayImage(u16 x, u16 y, const u16* image, u16 width, u16 height)
  * @{
  */
 
-static void TFT_SendCommand(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Command)
+static void TFT_SendCommand(const TFT_Config_t *Copy_psTftDisplay, const SPI_t *Copy_psTheSpiTftUsed, u8 Copy_Command)
 {
+    /**< Temp variable to receive the data in */
+    u8 Local_u8ReceivedData = 0;
+
     /**< Set RS (Register Select) pin low to indicate command mode */ 
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RsPin,MGPIO_LOW); 
 
     /**<  Set CS (Chip Select) pin low to select the TFT display for communication */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin,MGPIO_LOW); 
 
-    SPI_t *Local_pSpi = SPI_SelectSpiPeripheral(Copy_psTftDisplay->TFT_Spi);
-
     /**< Perform SPI data transfer to send the command byte */ 
-    SPI_voidTransfer(Local_pSpi, &Copy_Command, NULL, 1); 
+    SPI_voidTransfer(Copy_psTheSpiTftUsed, &Copy_Command, &Local_u8ReceivedData, 1); 
 
     /**< Set CS pin high to release the TFT display */ 
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin,MGPIO_HIGH); 
-    
 }
 
-static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Data)
+static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, const SPI_t *Copy_psTheSpiTftUsed, u8 Copy_Data)
 {
+    /**< Temp variable to receive the data in */
+    u8 Local_u8ReceivedData = 0;
+
     /**< Set RS (Register Select) pin high to indicate data mode */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RsPin, MGPIO_HIGH);
 
     /**< Set CS (Chip Select) pin low to select the TFT display for communication */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin, MGPIO_LOW);
 
-    SPI_t *Local_pSpi = SPI_SelectSpiPeripheral(Copy_psTftDisplay->TFT_Spi);
-
     /**< Perform SPI data transfer to send the data byte */
-    SPI_voidTransfer(Local_pSpi, &Copy_Data, NULL, 1);
+    SPI_voidTransfer(Copy_psTheSpiTftUsed, &Copy_Data, &Local_u8ReceivedData, 1);
 
     /**< Set CS pin high to release the TFT display */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_CsPin, MGPIO_HIGH);
 }
+
+static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTftUsed)
+{
+    /**< Configure ILI9481 display */ 
+
+    /**< Send command to exit sleep mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, TFT_EXIT_SLEEP_MODE);
+    MSTK_voidSetDelayMs(20);
+
+    /**< Send command to configure power setting */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD0);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x07);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x42);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x18);
+
+    /**< Send command to configure address mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD1);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x07);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x10);
+
+    /**< Send command to configure display mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD2);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x02);
+
+    /**< Send command to configure gamma setting */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC0);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x10);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3B);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x02);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x11);
+
+    /**< Send command to configure frame rate and inversion control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC5);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x03);
+
+    /**< Send command to configure gamma settings */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC8);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x32);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x36);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x45);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x06);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x16);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x37);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x75);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x77);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x54);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x0C);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+
+    /**< Send command to set scroll area */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x36);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x0A);
+
+    //**< Send command to set pixel format */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3A);
+    #if (TFT_DISPLAY_COLORS == _3BIT_PER_PIXEL) || (TFT_DISPLAY_COLORS == _16BIT_PER_PIXEL) || (TFT_DISPLAY_COLORS == _18BIT_PER_PIXEL)
+        TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, TFT_DISPLAY_COLORS);
+    #else
+        TFT_SendCommand(Copy_psTftDisplay, 0x21);
+    #endif
+
+    /**< Send command to set column address */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x2A);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3F);
+
+    /**< Send command to set page address */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x2B);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xDF);
+
+    MSTK_voidSetDelayMs(120);
+    /**< Send command to exit idle mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x29);
+
+    MSTK_voidSetDelayMs(25);
+
+    /**< End of ILI9481 display configuration */
+}
+
 
 /**
  * @} TFT_Private_Functions

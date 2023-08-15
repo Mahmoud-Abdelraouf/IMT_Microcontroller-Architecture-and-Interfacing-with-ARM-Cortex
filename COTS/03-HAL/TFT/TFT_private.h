@@ -56,53 +56,73 @@
  */
 
 /**
- * @brief Enumeration of TFT command codes.
+ * @brief TFT Command Definitions.
  *
- * This enumeration defines the command codes used for communication with the TFT display.
- * Each command corresponds to a specific operation or configuration setting.
+ * This set of `#define` statements defines command values for various operations on the TFT display.
+ * Each command is represented by a corresponding `#define` constant with its associated hexadecimal value.
+ * These constants can be used to send specific commands to the TFT display.
  */
-typedef enum {
-    TFT_NOP = 0x00,                   /**< No operation command. */
-    TFT_SOFT_RESET = 0x01,            /**< Software reset command. */
-    TFT_GET_RED_CHANNEL = 0x06,       /**< Get red channel command. */
-    TFT_GET_GREEN_CHANNEL = 0x07,     /**< Get green channel command. */
-    TFT_GET_BLUE_CHANNEL = 0x08,      /**< Get blue channel command. */
-    TFT_GET_POWER_MODE = 0x0A,        /**< Get power mode command. */
-    TFT_GET_ADDRESS_MODE = 0x0B,      /**< Get address mode command. */
-    TFT_GET_PIXEL_FORMAT = 0x0C,      /**< Get pixel format command. */
-    TFT_GET_DISPLAY_MODE = 0x0D,      /**< Get display mode command. */
-    TFT_GET_SIGNAL_MODE = 0x0E,       /**< Get signal mode command. */
-    TFT_GET_DIAGNOSTIC_RESULT = 0x0F, /**< Get diagnostic result command. */
-    TFT_ENTER_SLEEP_MODE = 0x10,      /**< Enter sleep mode command. */
-    TFT_EXIT_SLEEP_MODE = 0x11,       /**< Exit sleep mode command. */
-    TFT_ENTER_PARTIAL_MODE = 0x12,    /**< Enter partial mode command. */
-    TFT_ENTER_NORMAL_MODE = 0x13,     /**< Enter normal mode command. */
-    TFT_EXIT_INVERT_MODE = 0x20,      /**< Exit invert mode command. */
-    TFT_ENTER_INVERT_MODE = 0x21,     /**< Enter invert mode command. */
-    TFT_SET_GAMMA_CURVE = 0x26,       /**< Set gamma curve command. */
-    TFT_SET_DISPLAY_OFF = 0x28,       /**< Set display off command. */
-    TFT_SET_DISPLAY_ON = 0x29,        /**< Set display on command. */
-    TFT_SET_COLUMN_ADDRESS = 0x2A,    /**< Set column address command. */
-    TFT_SET_PAGE_ADDRESS = 0x2B,      /**< Set page address command. */
-    TFT_WRITE_MEMORY_START = 0x2C,    /**< Write memory start command. */
-    TFT_WRITE_LUT = 0x2D,             /**< Write look-up table command. */
-    TFT_READ_MEMORY_START = 0x2E,     /**< Read memory start command. */
-    TFT_SET_PARTIAL_AREA = 0x30,      /**< Set partial area command. */
-    TFT_SET_SCROLL_AREA = 0x33,       /**< Set scroll area command. */
-    TFT_SET_TEAR_OFF = 0x34,          /**< Set tear off command. */
-    TFT_SET_TEAR_ON = 0x35,           /**< Set tear on command. */
-    TFT_SET_ADDRESS_MODE = 0x36,      /**< Set address mode command. */
-    TFT_SET_SCROLL_START = 0x37,      /**< Set scroll start command. */
-    TFT_EXIT_IDLE_MODE = 0x38,        /**< Exit idle mode command. */
-    TFT_ENTER_IDLE_MODE = 0x39,       /**< Enter idle mode command. */
-    TFT_SET_PIXEL_FORMAT = 0x3A,      /**< Set pixel format command. */
-    TFT_WRITE_MEMORY_CONTINUE = 0x3C, /**< Write memory continue command. */
-    TFT_READ_MEMORY_CONTINUE = 0x3E,  /**< Read memory continue command. */
-    TFT_SET_TEAR_SCANLINE = 0x44,     /**< Set tear scanline command. */
-    TFT_GET_SCANLINE = 0x45,          /**< Get scanline command. */
-    TFT_READ_DDB_START = 0xA1,       /**< Read DDB start command. */
-    TFT_READ_DDB_CONTINUE = 0xA8     /**< Read DDB continue command. */
-} TFT_Command_t;
+#define TFT_NOP                         0x00         /**< No operation command. */
+#define TFT_SOFT_RESET                  0x01         /**< Software reset command. */
+#define TFT_GET_RED_CHANNEL             0x06         /**< Get red channel command. */
+#define TFT_GET_GREEN_CHANNEL           0x07         /**< Get green channel command. */
+#define TFT_GET_BLUE_CHANNEL            0x08         /**< Get blue channel command. */
+#define TFT_GET_POWER_MODE              0x0A         /**< Get power mode command. */
+#define TFT_GET_ADDRESS_MODE            0x0B         /**< Get address mode command. */
+#define TFT_GET_PIXEL_FORMAT            0x0C         /**< Get pixel format command. */
+#define TFT_GET_DISPLAY_MODE            0x0D         /**< Get display mode command. */
+#define TFT_GET_SIGNAL_MODE             0x0E         /**< Get signal mode command. */
+#define TFT_GET_DIAGNOSTIC_RESULT       0x0F         /**< Get diagnostic result command. */
+#define TFT_ENTER_SLEEP_MODE            0x10         /**< Enter sleep mode command. */
+#define TFT_EXIT_SLEEP_MODE             0x11         /**< Exit sleep mode command. */
+#define TFT_ENTER_PARTIAL_MODE          0x12         /**< Enter partial mode command. */
+#define TFT_ENTER_NORMAL_MODE           0x13         /**< Enter normal mode command. */
+#define TFT_EXIT_INVERT_MODE            0x20         /**< Exit invert mode command. */
+#define TFT_ENTER_INVERT_MODE           0x21         /**< Enter invert mode command. */
+#define TFT_SET_GAMMA_CURVE             0x26         /**< Set gamma curve command. */
+#define TFT_SET_DISPLAY_OFF             0x28         /**< Set display off command. */
+#define TFT_SET_DISPLAY_ON              0x29         /**< Set display on command. */
+#define TFT_SET_COLUMN_ADDRESS          0x2A         /**< Set column address command. */
+#define TFT_SET_PAGE_ADDRESS            0x2B         /**< Set page address command. */
+#define TFT_WRITE_MEMORY_START          0x2C         /**< Write memory start command. */
+#define TFT_WRITE_LUT                   0x2D         /**< Write look-up table command. */
+#define TFT_READ_MEMORY_START           0x2E         /**< Read memory start command. */
+#define TFT_SET_PARTIAL_AREA            0x30         /**< Set partial area command. */
+#define TFT_SET_SCROLL_AREA             0x33         /**< Set scroll area command. */
+#define TFT_SET_TEAR_OFF                0x34         /**< Set tear off command. */
+#define TFT_SET_TEAR_ON                 0x35         /**< Set tear on command. */
+#define TFT_SET_ADDRESS_MODE            0x36         /**< Set address mode command. */
+#define TFT_SET_SCROLL_START            0x37         /**< Set scroll start command. */
+#define TFT_EXIT_IDLE_MODE              0x38         /**< Exit idle mode command. */
+#define TFT_ENTER_IDLE_MODE             0x39         /**< Enter idle mode command. */
+#define TFT_SET_PIXEL_FORMAT            0x3A         /**< Set pixel format command. */
+#define TFT_WRITE_MEMORY_CONTINUE       0x3C         /**< Write memory continue command. */
+#define TFT_READ_MEMORY_CONTINUE        0x3E         /**< Read memory continue command. */
+#define TFT_SET_TEAR_SCANLINE           0x44         /**< Set tear scanline command. */
+#define TFT_GET_SCANLINE                0x45         /**< Get scanline command. */
+#define TFT_READ_DDB_START              0xA1         /**< Read DDB start command. */
+#define TFT_READ_DDB_CONTINUE           0xA8         /**< Read DDB continue command. */
+#define TFT_COMMAND_ACCESS_PROTECT      0xB0         /**< Command Access Protect command. */
+#define TFT_LOW_POWER_MODE_CONTROL      0xB1         /**< Low Power Mode Control command. */
+#define TFT_FRAME_MEMORY_ACCESS         0xB3         /**< Frame Memory Access and Interface setting command. */
+#define TFT_DISPLAY_MODE_SETTING        0xB4         /**< Display Mode and Frame Memory Write Mode setting command. */
+#define TFT_DEVICE_CODE_READ            0xBF         /**< Device code read command. */
+#define TFT_PANEL_DRIVING_SETTING       0xC0         /**< Panel Driving Setting command. */
+#define TFT_DISPLAY_TIMING_NORMAL       0xC1         /**< Display Timing Setting for Normal Mode command. */
+#define TFT_DISPLAY_TIMING_PARTIAL      0xC2         /**< Display Timing Setting for Partial Mode command. */
+#define TFT_DISPLAY_TIMING_IDLE         0xC3         /**< Display Timing Setting for Idle Mode command. */
+#define TFT_FRAME_RATE_INVERSION        0xC5         /**< Frame rate and Inversion Control command. */
+#define TFT_INTERFACE_CONTROL           0xC6         /**< Interface Control command. */
+#define TFT_GAMMA_SETTING               0xC8         /**< Gamma Setting command. */
+#define TFT_POWER_SETTING               0xD0         /**< Power Setting command. */
+#define TFT_VCOM_CONTROL                0xD1         /**< VCOM Control command. */
+#define TFT_POWER_SETTING_NORMAL        0xD2         /**< Power Setting for Normal Mode command. */
+#define TFT_POWER_SETTING_PARTIAL       0xD3         /**< Power Setting for Partial Mode command. */
+#define TFT_POWER_SETTING_IDLE          0xD4         /**< Power Setting for Idle Mode command. */
+#define TFT_NV_MEMORY_WRITE             0xE0         /**< NV Memory Write command. */
+#define TFT_NV_MEMORY_CONTROL           0xE1         /**< NV Memory Control command. */
+#define TFT_NV_MEMORY_STATUS            0xE2         /**< NV Memory Status command. */
+#define TFT_NV_MEMORY_PROTECTION        0xE3         /**< NV Memory Protection command. */
 
 /** @} TFT_Command_and_Some_Macros_Private */
 
@@ -120,7 +140,7 @@ typedef enum {
  *
  * @param command The command byte to be sent.
  */
-static void TFT_SendCommand(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Command);
+static void TFT_SendCommand(const TFT_Config_t *Copy_psTftDisplay, const SPI_t *Copy_psTheSpiTftUsed, u8 Copy_Command);
 
 /**
  * @brief Send data to the TFT display using SPI communication.
@@ -155,8 +175,7 @@ static void TFT_SendCommand(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Comma
  * TFT_SendData(spiPeripheral, &tftConfig, 0x55);
  * @endcode
  */
-static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Data);
-
+static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, const SPI_t *Copy_psTheSpiTftUsed, u8 Copy_Data);
 
 /**
  * @brief Internal function to initialize the TFT display controller.
@@ -164,7 +183,7 @@ static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, u8 Copy_Data);
  * This function is used internally to initialize the TFT display controller
  * based on the configuration settings provided in the TFT_DisplayController_t structure.
  */
-static void TFT_InitController(void);
+static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTftUsed);
 
 /**
  * @brief Internal function to draw a pixel on the TFT display.

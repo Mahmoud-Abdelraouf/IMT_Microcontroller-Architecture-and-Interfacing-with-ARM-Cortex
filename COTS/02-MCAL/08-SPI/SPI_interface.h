@@ -208,9 +208,12 @@ inline SPI_RegDef_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
  *
  * This function initializes the SPI peripheral with the specified configuration.
  *
- * @param[in] Copy_psSPI Pointer to the SPI peripheral structure.
  * @param[in] Copy_psSPIConfig Pointer to the SPI configuration structure that holds the configuration options.
  *                            The structure must contain the following fields:
+ *                            - SpiPeripheral : The spi peripheral selected to use. Must be one of the following:
+ *                                          - SPI_1: SPI module 1
+ *                                          - SPI_2: SPI module 2
+ *                                          - SPI_3: SPI module 3
  *                            - DataFrame: The data frame format to use. Must be one of the following:
  *                                          - SPI_DATA_FRAME_8BIT: 8-bit data frame.
  *                                          - SPI_DATA_FRAME_16BIT: 16-bit data frame.
@@ -229,6 +232,9 @@ inline SPI_RegDef_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
  *                                          - SPI_BAUD_RATE_DIV64: Baud rate divider of 64.
  *                                          - SPI_BAUD_RATE_DIV128: Baud rate divider of 128.
  *                                          - SPI_BAUD_RATE_DIV256: Baud rate divider of 256.
+ *                            - FrameFormat: The frame format to use. Must be one of the following:
+ *                                          - SPI_MSB_FIRST: Most Significant Bit (MSB) first frame format. 
+ *                                          - SPI_LSB_FIRST: Least Significant Bit (LSB) first frame format. 
  *
  * @retval None
  *
@@ -241,17 +247,18 @@ inline SPI_RegDef_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
  * spi_config.ClockPhase = SPI_CLOCK_PHASE_FIRST_EDGE;
  * spi_config.BaudRateDIV = SPI_BAUD_RATE_DIV32;
  *
- * /**< Select the SPI peripheral (e.g., SPI1)
- * SPI_t *spi_selected = SPI_SelectSpiPeripheral(SPI1);
+ * /**< Select the SPI peripheral (e.g., SPI_1)
+ * 	SPI_config_t Local_Spi1 = { .BaudRateDIV = SPI_BAUD_RATE_DIV2, .SpiPeripheral = SPI_1,
+ *							                .DataFrame = SPI_DATA_FRAME_8BIT, .ClockPolarity = SPI_CLOCK_POLARITY_HIGH,
+ *							                .ClockPhase = SPI_CLOCK_PHASE_SECOND_EDGE,.FrameFormat = SPI_MSB_FIRST};
  *
  * /**< Initialize the SPI peripheral using the SPI_voidInit function
- * SPI_voidInit(spi_selected, &spi_config);
+ * SPI_voidInit(&Local_Spi1);
  *
  * /**< Now the SPI peripheral is initialized and ready to use for communication.
  * @endcode
  */
-void SPI_voidInit(SPI_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
-
+void SPI_voidInit(const SPI_config_t *Copy_psSPIConfig, SPI_t *Copy_psSelectedSpiAfterInit);
       
 /**
  * @brief Perform a full-duplex SPI data transfer.
@@ -283,8 +290,7 @@ void SPI_voidInit(SPI_t *Copy_psSPI, SPI_config_t *Copy_psSPIConfig);
  * SPI_voidTransfer(spi_selected, tx_data, rx_data, sizeof(tx_data));
  * @endcode
  */
-void SPI_voidTransfer(SPI_Peripheral_t Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
-
+void SPI_voidTransfer(SPI_t *Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
 
 /**
  * @} SPI_Functions

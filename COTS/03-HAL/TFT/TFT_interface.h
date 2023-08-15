@@ -72,7 +72,6 @@ typedef enum
  */
 typedef struct {
     /**< u32 TFT_SpiClkSpeed;        /**< SPI clock speed */
-    SPI_Peripheral_t TFT_Spi: 2;     /**< SPI peripheral to be used for communication */
     u8 TFT_Port  : 3;                /**< GPIO port index for TFT signals */
     u8 TFT_CsPin : 4;                /**< Chip Select (CS) pin number */
     u8 TFT_RsPin : 4;                /**< Register Select (RS) pin number */
@@ -102,20 +101,17 @@ typedef struct {
  */
 
 /**
- * @brief Initialize the TFT display.
+ * @brief Initialize the TFT display using ILI9481 commands.
  *
- * This function initializes the TFT display based on the provided configuration.
- * It performs a series of reset operations and delays to ensure proper initialization
- * of the display before further communication or operation.
+ * This function initializes the TFT display using ILI9481 commands. It configures various parameters
+ * and settings to properly initialize the display.
  *
- * @param[in] Copy_psTftDisplay Pointer to a TFT_Config_t structure containing display configuration.
+ * @param Copy_psTftDisplay Pointer to the TFT configuration structure.
+ * @param Copy_psTheSpiTftUsed Pointer to the SPI peripheral used for communication with the TFT.
  *
- * @note The function uses GPIO and SysTick timer functions for controlling the display reset and delays.
- *       Make sure that the GPIO and SysTick modules are properly initialized before calling this function.
- *
- * @warning The delays used in this function are approximate and may need adjustment based on hardware and requirements.
+ * @note This function sends a series of commands to configure the TFT display.
  */
-void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay);
+void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTftUsed);
 
 /**
  * @brief Clears the display screen.
