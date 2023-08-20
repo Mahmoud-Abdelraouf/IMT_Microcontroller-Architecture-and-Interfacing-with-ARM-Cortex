@@ -177,7 +177,7 @@ typedef struct
  * /**< ... (add your UART configuration code here)
  * @endcode
  */
-inline USART_RegDef_t *UART_GetUSARTBaseAddress(USART_Selection_t usart);
+USART_RegDef_t *UART_GetUSARTBaseAddress(USART_Selection_t usart);
 
 /**
  * @brief Configure the UART peripheral.

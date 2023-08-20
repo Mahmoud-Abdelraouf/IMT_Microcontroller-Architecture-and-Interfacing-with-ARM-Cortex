@@ -37,31 +37,19 @@ void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTft
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
     
     /**< Wait for a specified delay before proceeding */
-    MSTK_voidSetBusyWait(100);
+    MSTK_voidSetDelayMs(5);
     
     /**< Set the Reset (RST) pin to low logic level to assert reset signal */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_LOW);
     
     /**< Wait for a short delay */
-    MSTK_voidSetBusyWait(1);
+    MSTK_voidSetDelayMs(20);
     
     /**< Set the Reset (RST) pin to high logic level to release reset signal */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
     
     /**< Wait for a specified delay before proceeding */
-    MSTK_voidSetBusyWait(100);
-    
-    /**< Set the Reset (RST) pin to low logic level to assert reset signal */
-    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_LOW);
-    
-    /**< Wait for a specified delay before proceeding */
-    MSTK_voidSetBusyWait(100);
-    
-    /**< Set the Reset (RST) pin to high logic level to release reset signal */
-    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
-    
-    /**< Wait for a specified delay before proceeding */
-    MSTK_voidSetDelayMs(120);
+    MSTK_voidSetDelayMs(150);
     
     TFT_InitController(Copy_psTftDisplay, Copy_psTheSpiTftUsed);
 }

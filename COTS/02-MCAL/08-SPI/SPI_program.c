@@ -26,75 +26,73 @@
  * @{
  */
 
-inline SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi)
+SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi)
 {
     switch (spi)
     {
     case SPI_1:
-        return (SPI_RegDef_t *)SPI1_BASE_ADDRESS;
+        return (SPI_t *)SPI1_BASE_ADDRESS;
     case SPI_2:
-        return (SPI_RegDef_t *)SPI2_BASE_ADDRESS;
+        return (SPI_t *)SPI2_BASE_ADDRESS;
     case SPI_3:
-        return (SPI_RegDef_t *)SPI3_BASE_ADDRESS;
+        return (SPI_t *)SPI3_BASE_ADDRESS;
     default:
         return NULL;
     }
 }
 
-void SPI_voidInit(const SPI_config_t *Copy_psSPIConfig, SPI_t *Copy_psSelectedSpiAfterInit)
+void SPI_voidInit(SPI_t *Copy_psBaseAddressOfSelectedSpi, const SPI_config_t *Copy_psSPIConfig)
 {
-  SPI_t *Local_pSPI = SPI_SelectSpiPeripheral(Copy_psSPIConfig->SpiPeripheral);
   /* Configure the SPI peripheral */
   /* Set the data frame format */
   if (Copy_psSPIConfig->DataFrame == SPI_DATA_FRAME_8BIT)
   {
-    SET_BIT(Local_pSPI->CR1, SPI_CR1_DFF);
+    SET_BIT(Copy_psBaseAddressOfSelectedSpi->CR1, SPI_CR1_DFF);
   }
   else
   {
-	  CLR_BIT(Local_pSPI->CR1, SPI_CR1_DFF);
+	  CLR_BIT(Copy_psBaseAddressOfSelectedSpi->CR1, SPI_CR1_DFF);
   }
 
   /* Set the frame format */
   if(Copy_psSPIConfig->FrameFormat == SPI_LSB_FIRST)
   {
-    SET_BIT(Local_pSPI->CR1,SPI_CR1_LSBFIRST);
+    SET_BIT(Copy_psBaseAddressOfSelectedSpi->CR1,SPI_CR1_LSBFIRST);
   }
   else
   {
-      CLR_BIT(Local_pSPI->CR1,SPI_CR1_LSBFIRST);
+      CLR_BIT(Copy_psBaseAddressOfSelectedSpi->CR1,SPI_CR1_LSBFIRST);
   }
   /* Set the clock polarity */
   if (Copy_psSPIConfig->ClockPolarity == SPI_CLOCK_POLARITY_HIGH)
   {
-    SET_BIT(Local_pSPI->CR1, SPI_CR1_CPOL);
+    SET_BIT(Copy_psBaseAddressOfSelectedSpi->CR1, SPI_CR1_CPOL);
   }
   else
   {
-	  CLR_BIT(Local_pSPI->CR1, SPI_CR1_CPOL);
+	  CLR_BIT(Copy_psBaseAddressOfSelectedSpi->CR1, SPI_CR1_CPOL);
   }
 
   /* Set the clock phase */
   if (Copy_psSPIConfig->ClockPhase == SPI_CLOCK_PHASE_SECOND_EDGE)
   {
-    SET_BIT(Local_pSPI->CR1, SPI_CR1_CPHA);
+    SET_BIT(Copy_psBaseAddressOfSelectedSpi->CR1, SPI_CR1_CPHA);
   }
   else
   {
-    CLR_BIT(Local_pSPI->CR1, SPI_CR1_CPHA);
+    CLR_BIT(Copy_psBaseAddressOfSelectedSpi->CR1, SPI_CR1_CPHA);
   }
 
   /* Set the clock speed */
-  Local_pSPI->CR1 &= ~SPI_CR1_BR_MSK;
-  Local_pSPI->CR1 |= Copy_psSPIConfig->BaudRateDIV;
+  Copy_psBaseAddressOfSelectedSpi->CR1 &= ~SPI_CR1_BR_MSK;
+  Copy_psBaseAddressOfSelectedSpi->CR1 |= Copy_psSPIConfig->BaudRateDIV;
 
   /* Set the master mode */
-  SET_BIT(Local_pSPI->CR1, SPI_CR1_MSTR);
+  SET_BIT(Copy_psBaseAddressOfSelectedSpi->CR1, SPI_CR1_MSTR);
 
   /* Enable the SPI peripheral */
-  SET_BIT(Local_pSPI->CR1, SPI_CR1_SPE);
+  SET_BIT(Copy_psBaseAddressOfSelectedSpi->CR1, SPI_CR1_SPE);
 
-  Copy_psSelectedSpiAfterInit = Local_pSPI;
 }
 
 void SPI_voidTransfer(SPI_t *Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size)

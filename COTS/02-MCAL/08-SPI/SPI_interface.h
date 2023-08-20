@@ -133,13 +133,6 @@ typedef struct
                              - 111000: fPCLK/256
                              Adjust the value accordingly to achieve the desired SPI clock frequency. */
   
- SPI_Peripheral_t SpiPeripheral:2;   /**< SPI Peripheral Selection.
-                                       Select the SPI peripheral to be used for communication.
-                                       Available options are:
-                                       - ::SPI_1: SPI module 1
-                                       - ::SPI_2: SPI module 2
-                                       - ::SPI_3: SPI module 3 */
-
   u8 DataFrame:1;        /**< Data Frame Format.
                              Set this bit to configure the data frame format used by the SPI peripheral.
                              - 0: The SPI peripheral operates in 8-bit data frame format.
@@ -201,7 +194,7 @@ typedef struct
  * /**< ... (add your SPI configuration code here)
  * @endcode
  */
-inline SPI_RegDef_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
+SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
 
 /**
  * @brief Initialize the SPI peripheral.
@@ -258,7 +251,7 @@ inline SPI_RegDef_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
  * /**< Now the SPI peripheral is initialized and ready to use for communication.
  * @endcode
  */
-void SPI_voidInit(const SPI_config_t *Copy_psSPIConfig, SPI_t *Copy_psSelectedSpiAfterInit);
+void SPI_voidInit(SPI_t *Copy_psBaseAddressOfSelectedSpi, const SPI_config_t *Copy_psSPIConfig);
       
 /**
  * @brief Perform a full-duplex SPI data transfer.
