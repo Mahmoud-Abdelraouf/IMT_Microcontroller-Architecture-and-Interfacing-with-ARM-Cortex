@@ -117,7 +117,7 @@ void MSTK_voidSetBusyWait(u32 Copy_u32Microseconds);
  *
  * @return None.
  */
-void MSTK_voidSetDelayMs(f32 Copy_u32Milliseconds);
+void MSTK_voidSetDelay(f32 Copy_u32Milliseconds);
 
 
 /**

@@ -98,7 +98,7 @@ void MSTK_voidSetBusyWait(u32 Copy_u32Microseconds)
     STK->CTRL &= ~STK_CTRL_ENABLE_MASK;             /**< Disable SysTick timer */
 }
 
-void MSTK_voidSetDelayMs(f32 Copy_u32Milliseconds)
+void MSTK_voidSetDelay(f32 Copy_u32Milliseconds)
 {
     /**< Calculate the number of ticks required to wait for the specified number of microseconds */
     u32 Local_u32Ticks = (Copy_u32Milliseconds * STK_AHB_CLK) / 1000.0;

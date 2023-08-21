@@ -37,19 +37,19 @@ void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTft
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
     
     /**< Wait for a specified delay before proceeding */
-    MSTK_voidSetDelayMs(5);
+    MSTK_voidSetDelay(5);
     
     /**< Set the Reset (RST) pin to low logic level to assert reset signal */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_LOW);
     
     /**< Wait for a short delay */
-    MSTK_voidSetDelayMs(20);
+    MSTK_voidSetDelay(15);
     
     /**< Set the Reset (RST) pin to high logic level to release reset signal */
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
     
     /**< Wait for a specified delay before proceeding */
-    MSTK_voidSetDelayMs(150);
+    MSTK_voidSetDelay(15);
     
     TFT_InitController(Copy_psTftDisplay, Copy_psTheSpiTftUsed);
 }
@@ -187,8 +187,8 @@ static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Cop
     /**< Configure ILI9481 display */ 
 
     /**< Send command to exit sleep mode */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, TFT_EXIT_SLEEP_MODE);
-    MSTK_voidSetDelayMs(20);
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x11);
+    MSTK_voidSetDelay(20);
 
     /**< Send command to configure power setting */
     TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD0);
@@ -238,7 +238,7 @@ static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Cop
     TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x36);
     TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x0A);
 
-    //**< Send command to set pixel format */
+    /**< Send command to set pixel format */
     TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3A);
     #if (TFT_DISPLAY_COLORS == _3BIT_PER_PIXEL) || (TFT_DISPLAY_COLORS == _16BIT_PER_PIXEL) || (TFT_DISPLAY_COLORS == _18BIT_PER_PIXEL)
         TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, TFT_DISPLAY_COLORS);
@@ -258,13 +258,11 @@ static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Cop
     TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
     TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
     TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xDF);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xE0);
 
-    MSTK_voidSetDelayMs(120);
+    MSTK_voidSetDelay(120);
     /**< Send command to exit idle mode */
     TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x29);
-
-    MSTK_voidSetDelayMs(25);
 
     /**< End of ILI9481 display configuration */
 }

@@ -17,25 +17,63 @@
 #define __SPI_PRIVATE_H__
 
 /**
+ * @defgroup SPI_DEFAULT_OPTIONS 
+ * @brief This group contains private macros used defined in the user region @ref SPI_config.h file.
+ * @{
+ */
+
+/** 
+ * @brief SPI Peripheral Options
+ 
+ * Users can choose from the following SPI peripheral options:
+ * - SPI1: SPI module 1
+ * - SPI2: SPI module 2
+ * - SPI3: SPI module 3
+ * 
+ * These options determine which SPI peripheral will be used for communication.
+ */
+#define SPI_1           ((SPI_t)SPI1_BASE_ADDRESS)
+#define SPI_2           ((SPI_t)SPI2_BASE_ADDRESS)
+#define SPI_3           ((SPI_t)SPI3_BASE_ADDRESS)
+
+/**
+ * @}
+ */
+
+/**
  * @defgroup SPI_Private_Macros Private Macros
  * @brief This group contains private macros used internally by the SPI driver.
  * @{
  */
 
 /**
+ * @brief SPI master mode selection.
+ * 
+ * This definition indicates whether the microcontroller operates as an SPI master.
+ */
+#define SPI_MASTER_MODE             1
+
+/**
+ * @brief SPI slave mode selection.
+ * 
+ * This definition indicates whether the microcontroller operates as an SPI slave.
+ */
+#define SPI_SLAVE_MODE              0
+
+/**
  * @brief SPI_SR_RXNE bit position.
  */
-#define SPI_SR_RXNE         0
+#define SPI_SR_RXNE                 0
 
 /**
  * @brief SPI_SR_TXE bit position.
  */
-#define SPI_SR_TXE          1
+#define SPI_SR_TXE                  1
 
 /**
  * @brief SPI_SR_BSY bit position.
  */
-#define SPI_SR_BSY          7
+#define SPI_SR_BSY                  7
 
 /**
  * @brief Mask to clear the baud rate control bits in the SPI_CR1 register.
@@ -122,6 +160,8 @@
 #define SPI_CR1_MSTR            2   /**< The Master Selection bit. */
 #define SPI_CR1_SPE             6   /**< The SPI Enable bit. */
 #define SPI_CR1_LSBFIRST        7   /**< The Frame format bit */
+#define SPI_CR1_SSI             8   /**< The Internal slave select bit */
+#define SPI_CR1_SSM             9   /**< The Software slave management bit */
 #define SPI_CR1_DFF             11  /**< The Data Frame Format bit. */
 
 /**
@@ -150,10 +190,10 @@
  *
  * @note Example Usage:
  * @code
- * /**< Select the SPI peripheral (e.g., SPI3)
+ * /// Select the SPI peripheral (e.g., SPI3)
  * SPI_RegDef_t *spi_selected = SPI_SelectSpiPeripheral(SPI3);
  *
- * /**< Send a byte of data through the SPI peripheral
+ * /// Send a byte of data through the SPI peripheral
  * u8 data_to_send = 0xAB;
  * SPI_voidSendByte(spi_selected, data_to_send);
  * @endcode
@@ -176,10 +216,10 @@ static void SPI_voidSendByte(SPI_RegDef_t *Copy_psSPI, u8 Copy_u8Data);
  *
  * @note Example Usage:
  * @code
- * /**< Select the SPI peripheral (e.g., SPI1)
+ * /// Select the SPI peripheral (e.g., SPI1)
  * SPI_RegDef_t *spi_selected = SPI_GetBaseAddress(SPI1);
  *
- * /**< Receive a byte of data from the SPI peripheral
+ * /// Receive a byte of data from the SPI peripheral
  * u8 received_data = SPI_u8ReceiveByte(spi_selected);
  * @endcode
  */
@@ -201,10 +241,10 @@ static u8 SPI_u8ReceiveByte(SPI_RegDef_t *Copy_psSPI);
  *
  * @note Example Usage:
  * @code
- * /**< Select the SPI peripheral (e.g., SPI2)
+ * /// Select the SPI peripheral (e.g., SPI2)
  * SPI_RegDef_t *spi_selected = SPI_GetBaseAddress(SPI2);
  *
- * /**< Perform SPI transmission and wait for completion
+ * /// Perform SPI transmission and wait for completion
  * SPI_voidTransmit(spi_selected, data_buffer, data_size);
  * SPI_voidWaitForTransmissionComplete(spi_selected);
  * @endcode
@@ -212,15 +252,25 @@ static u8 SPI_u8ReceiveByte(SPI_RegDef_t *Copy_psSPI);
 static void SPI_voidWaitForTransmissionComplete(SPI_RegDef_t *Copy_psSPI);
 
 /**
- * @brief Set the SPI slave select pin.
+ * @brief Initializes the SPI peripheral with default settings.
  * 
- * This function sets the SPI slave select pin.
+ * This function configures the SPI peripheral with the following default settings:
+ * - 8-bit data frame format
+ * - LSB first frame format
+ * - Clock polarity high at idle state
+ * - Clock phase set for write then read
+ * - Clock speed divided by two
+ * - Master mode enabled/Slave mode enable
+ * - Software slave management enabled
+ * - Master mode selected
+ * - SPI peripheral enabled
  * 
- * @param[in] status The status to set the slave select pin to (HIGH or LOW).
+ * @note This function assumes that the SPI_Default pointer points to the base address of the SPI peripheral.
  * 
- * @note This function is for internal use only.
+ * @param None
+ * @return None
  */
-static void SPI_voidSetSlaveSelectPin(SPI_Status_t Copy_Status);
+static void SPI_DefaultInitiation(void);
 
 /**
  * @}

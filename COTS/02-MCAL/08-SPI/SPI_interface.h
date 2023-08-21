@@ -27,9 +27,9 @@
  */
 typedef enum
 {
-  SPI_1,     /**< SPI module 1 */
-  SPI_2,     /**< SPI module 2 */
-  SPI_3      /**< SPI module 3 */
+  SPI1,     /**< SPI module 1 */
+  SPI2,     /**< SPI module 2 */
+  SPI3      /**< SPI module 3 */
 } SPI_Peripheral_t;
 
 /**
@@ -40,8 +40,8 @@ typedef enum
  */
 typedef enum
 {
-  LOW,                            /**< Logic low voltage level (0V) */
-  HIGH = !LOW                     /**< Logic high voltage level (3.3V or 5V, depending on the system) */
+  SPI_LOW,                            /**< Logic low voltage level (0V) */
+  SPI_HIGH = !SPI_LOW                     /**< Logic high voltage level (3.3V or 5V, depending on the system) */
 } SPI_Status_t;
 
 /**
@@ -77,8 +77,8 @@ typedef enum
  */
 typedef enum
 {
-  SPI_CLOCK_PHASE_FIRST_EDGE,     /**< data is captured on the first clock edge ==> Read then Write */
-  SPI_CLOCK_PHASE_SECOND_EDGE     /**< data is captured on the second clock edge ==> Write then Read */
+  SPI_READ_WRITE,       /**< data is captured on the first clock edge ==> Read then Write */
+  SPI_WRITE_READ        /**< data is captured on the second clock edge ==> Write then Read */
 } SPI_ClockPhase_t;
 
 /**
@@ -182,19 +182,19 @@ typedef struct
  *
  * @note Example Usage:
  * @code
- * /**< Choose the SPI peripheral you want to use (in this case, SPI1)
+ * /// Choose the SPI peripheral you want to use (in this case, SPI1)
  * SPI_Peripheral_t spi_selected = SPI1;
  *
- * /**< Get the base address of SPI1 using the SPI_GetBaseAddress function
+ * /// Get the base address of SPI1 using the SPI_GetBaseAddress function
  * SPI_RegDef_t *spi1_base_address = SPI_GetBaseAddress(spi_selected);
  *
- * /**< Now you can access SPI1 registers and configure the SPI communication
- * /**< For example, you can configure data frame format, clock polarity, etc.
+ * /// Now you can access SPI1 registers and configure the SPI communication
+ * /// For example, you can configure data frame format, clock polarity, etc.
  *
- * /**< ... (add your SPI configuration code here)
+ * /// ... (add your SPI configuration code here)
  * @endcode
  */
-SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
+SPI_t SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
 
 /**
  * @brief Initialize the SPI peripheral.
@@ -214,8 +214,8 @@ SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
  *                                          - SPI_CLOCK_POLARITY_LOW: Clock is low when idle (leading edge is rising).
  *                                          - SPI_CLOCK_POLARITY_HIGH: Clock is high when idle (leading edge is falling).
  *                            - ClockPhase: The clock phase to use. Must be one of the following:
- *                                          - SPI_CLOCK_PHASE_FIRST_EDGE: Data is captured on the first clock edge (read then write).
- *                                          - SPI_CLOCK_PHASE_SECOND_EDGE: Data is captured on the second clock edge (write then read).
+ *                                          - SPI_READ_WRITE: Data is captured on the first clock edge (read then write).
+ *                                          - SPI_WRITE_READ: Data is captured on the second clock edge (write then read).
  *                            - BaudRateDIV: The clock speed to use. Must be one of the following:
  *                                          - SPI_BAUD_RATE_DIV2: Baud rate divider of 2.
  *                                          - SPI_BAUD_RATE_DIV4: Baud rate divider of 4.
@@ -233,25 +233,30 @@ SPI_t *SPI_SelectSpiPeripheral(SPI_Peripheral_t spi);
  *
  * @note Example Usage:
  * @code
- * /**< Create an SPI configuration structure and set the desired options
+ * /// Choose the SPI peripheral you want to use (in this case, SPI1)
+ * SPI_t SPI_1 = SPI_SelectSpiPeripheral(SPI1);
+ * 
+ * /// Create an SPI configuration structure and set the desired options
  * SPI_config_t spi_config;
  * spi_config.DataFrame = SPI_DATA_FRAME_8BIT;
  * spi_config.ClockPolarity = SPI_CLOCK_POLARITY_LOW;
- * spi_config.ClockPhase = SPI_CLOCK_PHASE_FIRST_EDGE;
+ * spi_config.ClockPhase = SPI_WRITE_READ;
  * spi_config.BaudRateDIV = SPI_BAUD_RATE_DIV32;
- *
- * /**< Select the SPI peripheral (e.g., SPI_1)
+ * 
+ * OR
+ * 
+ * /// Select the SPI peripheral (e.g., SPI_1)
  * 	SPI_config_t Local_Spi1 = { .BaudRateDIV = SPI_BAUD_RATE_DIV2, .SpiPeripheral = SPI_1,
  *							                .DataFrame = SPI_DATA_FRAME_8BIT, .ClockPolarity = SPI_CLOCK_POLARITY_HIGH,
  *							                .ClockPhase = SPI_CLOCK_PHASE_SECOND_EDGE,.FrameFormat = SPI_MSB_FIRST};
  *
- * /**< Initialize the SPI peripheral using the SPI_voidInit function
- * SPI_voidInit(&Local_Spi1);
+ * /// Initialize the SPI peripheral using the SPI_voidInit function
+ * SPI_voidInit(SPI_1,&Local_Spi1);
  *
- * /**< Now the SPI peripheral is initialized and ready to use for communication.
+ * /// Now the SPI peripheral is initialized and ready to use for communication.
  * @endcode
  */
-void SPI_voidInit(SPI_t *Copy_psBaseAddressOfSelectedSpi, const SPI_config_t *Copy_psSPIConfig);
+void SPI_voidInit(SPI_t Copy_psfSelectedSpi, const SPI_config_t *Copy_psSPIConfig);
       
 /**
  * @brief Perform a full-duplex SPI data transfer.
@@ -272,18 +277,18 @@ void SPI_voidInit(SPI_t *Copy_psBaseAddressOfSelectedSpi, const SPI_config_t *Co
  *
  * @note Example Usage:
  * @code
- * /**< Select the SPI peripheral (e.g., SPI2)
- * SPI_Peripheral_t spi_selected = SPI_2;
+ * /// Select the SPI peripheral (e.g., SPI2)
+ * SPI_t spi_selected = SPI_SelectSpiPeripheral(SPI_2);
  *
- * /**< Data arrays for transmission and reception
+ * /// Data arrays for transmission and reception
  * u8 tx_data[] = {0x01, 0x02, 0x03, 0x04};
  * u8 rx_data[4];
  *
- * /**< Perform the SPI data transfer
+ * /// Perform the SPI data transfer
  * SPI_voidTransfer(spi_selected, tx_data, rx_data, sizeof(tx_data));
  * @endcode
  */
-void SPI_voidTransfer(SPI_t *Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
+void SPI_voidTransfer(SPI_t Copy_SPI, u8 *Copy_u8pTxData, u8 *Copy_u8pRxData, u16 Copy_u16size);
 
 /**
  * @} SPI_Functions
