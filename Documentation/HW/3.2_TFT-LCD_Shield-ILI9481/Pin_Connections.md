@@ -76,11 +76,123 @@ b. Command/Data Mode: Set the D/CX pin to the appropriate level based on whether
 c. Send Data: Utilize the SPI peripheral to send bytes of data to the LCD module. Each byte may consist of multiple write cycles, and the clock signal (SCL) synchronizes the transmission.
 d. End Sequence: Raise the CSX pin to signal the end of the write sequence.
 
-### Step 5: Data and Command Handling
+### step 5: Initialization of the ILI9481 TFT Microcontroller
+
+```c
+void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTftUsed)
+{
+    /**< Set the Reset (RST) pin to high logic level to release reset signal */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
+    
+    /**< Wait for a specified delay before proceeding */
+    MSTK_voidSetDelay(5);
+    
+    /**< Set the Reset (RST) pin to low logic level to assert reset signal */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_LOW);
+    
+    /**< Wait for a short delay */
+    MSTK_voidSetDelay(15);
+    
+    /**< Set the Reset (RST) pin to high logic level to release reset signal */
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
+    
+    /**< Wait for a specified delay before proceeding */
+    MSTK_voidSetDelay(15);
+    
+    TFT_InitController(Copy_psTftDisplay, Copy_psTheSpiTftUsed);
+}
+
+static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTftUsed)
+{
+    /**< Configure ILI9481 display */ 
+
+    /**< Send command to exit sleep mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x11);
+    MSTK_voidSetDelay(20);
+
+    /**< Send command to configure power setting */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD0);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x07);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x42);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x18);
+
+    /**< Send command to configure address mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD1);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x07);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x10);
+
+    /**< Send command to configure display mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD2);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x02);
+
+    /**< Send command to configure gamma setting */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC0);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x10);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3B);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x02);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x11);
+
+    /**< Send command to configure frame rate and inversion control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC5);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x03);
+
+    /**< Send command to configure gamma settings */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC8);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x32);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x36);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x45);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x06);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x16);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x37);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x75);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x77);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x54);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x0C);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+
+    /**< Send command to set scroll area */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x36);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x0A);
+
+    /**< Send command to set pixel format */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3A);
+    #if (TFT_DISPLAY_COLORS == _3BIT_PER_PIXEL) || (TFT_DISPLAY_COLORS == _16BIT_PER_PIXEL) || (TFT_DISPLAY_COLORS == _18BIT_PER_PIXEL)
+        TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, TFT_DISPLAY_COLORS);
+    #else
+        TFT_SendCommand(Copy_psTftDisplay, 0x21);
+    #endif
+
+    /**< Send command to set column address */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x2A);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3F);
+
+    /**< Send command to set page address */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x2B);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xE0);
+
+    MSTK_voidSetDelay(120);
+    /**< Send command to exit idle mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x29);
+
+    /**< End of ILI9481 display configuration */
+}
+```
+
+### Step 6: Data and Command Handling
 
 Manage the D/CX pin based on your LCD module's specifications to indicate whether you are sending a command or data. This step ensures that the LCD module correctly interprets the type of information being transmitted.
 
-### Step 6: Example Code
+### Step 7: Example Code
 
 Below is an example of how you can structure your C code for interfacing with the TFT LCD module:
 
@@ -247,7 +359,7 @@ D_CX_HIGH(); // If data information
 - **LCD_WR:** Controls write operation for display.
 - **LCD_RST:** Reset control signal for display.
 - **GND:** Ground connection between display and microcontroller.
-
+- 
 Please remember to connect the necessary power supply pins (5V) and potentially the backlight control pin (LED), depending on the specific requirements of your TFT LCD module. This will ensure proper functionality and illumination.
 
 Additionally, make sure to correctly configure and initialize the
