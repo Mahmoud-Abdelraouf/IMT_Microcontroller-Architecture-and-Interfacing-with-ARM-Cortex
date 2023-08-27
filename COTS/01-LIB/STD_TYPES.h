@@ -2,7 +2,7 @@
 /***** Author    : Mahmoud Abdelraouf Mahmoud   ********/
 /***** Date		 : 20 Feb 2022                  ********/
 /***** Version   : V01                          ********/
-/***** Module    : STD_TYPES                    ********/
+/***** Module    : STD_TYPES.h                  ********/
 /*******************************************************/
 #ifndef __STD_TYPES_H__
 #define __STD_TYPES_H__

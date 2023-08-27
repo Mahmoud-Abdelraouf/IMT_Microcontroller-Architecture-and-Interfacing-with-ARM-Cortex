@@ -30,13 +30,13 @@ SPI_t SPI_SelectSpiPeripheral(SPI_Peripheral_t spi)
 {
     switch (spi)
     {
-    case SPI1:
+      case SPI1:
         return ((SPI_t)SPI1_BASE_ADDRESS);
-    case SPI2:
+      case SPI2:
         return ((SPI_t)SPI2_BASE_ADDRESS);
-    case SPI3:
+      case SPI3:
         return ((SPI_t)SPI3_BASE_ADDRESS);
-    default:
+      default:
         return NULL;
     }
 }
