@@ -13,8 +13,8 @@
  * the specific TFT display used and the microcontroller's capabilities.
  */
 
-#ifndef __TFT_HX8357B_DISPLAYS_CONFIG_H__
-#define __TFT_HX8357B_DISPLAYS_CONFIG_H__
+#ifndef __TFT_ILI9481_DISPLAYS_CONFIG_H__
+#define __TFT_ILI9481_DISPLAYS_CONFIG_H__
 
 
 
@@ -93,4 +93,4 @@
 
 /** @} TFT_Configuration_Options */
 
-#endif /**< __TFT_HX8357B_DISPLAYS_CONFIG_H__ */
+#endif /**< __TFT_ILI9481_DISPLAYS_CONFIG_H__ */

@@ -25,9 +25,9 @@
 #include "STK_interface.h"
 
 /**< HAL */
-#include "TFT_HX8357B_config.h"
-#include "TFT_HX8357B_interface.h"
-#include "TFT_HX8357B_private.h"
+#include "TFT_ILI9481_config.h"
+#include "TFT_ILI9481_interface.h"
+#include "TFT_ILI9481_private.h"
 
 
 

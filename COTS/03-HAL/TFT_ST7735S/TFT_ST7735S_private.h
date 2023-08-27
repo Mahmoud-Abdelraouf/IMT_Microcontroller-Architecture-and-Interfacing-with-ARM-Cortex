@@ -30,7 +30,7 @@
  * This format represents each pixel using 3 bits for red, green, and blue components,
  * allowing a total of 8 different colors.
  */
-#define _3BIT_PER_PIXEL           0x11      /**< RGB111 */
+#define _3BIT_PER_PIXEL           0x01      /**< RGB111 */
 
 /**
  * @brief 16-bit per pixel RGB color format (RGB565).
@@ -38,7 +38,7 @@
  * This format represents each pixel using 16 bits, with 5 bits for red, 6 bits for green,
  * and 5 bits for blue components, providing a total of 65,536 different colors.
  */
-#define _16BIT_PER_PIXEL          0x55      /**< RGB565 */
+#define _16BIT_PER_PIXEL          0x05      /**< RGB565 */
 
 /**
  * @brief 18-bit per pixel RGB color format (RGB666).
@@ -46,7 +46,7 @@
  * This format represents each pixel using 18 bits, with 6 bits for red, green, and blue components,
  * allowing a total of 262,144 different colors.
  */
-#define _18BIT_PER_PIXEL          0x66      /**< RGB666 */
+#define _18BIT_PER_PIXEL          0x06      /**< RGB666 */
 
 /** @} TFT_ColorFormats */
 
@@ -172,7 +172,7 @@ static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, const SPI_t Copy
  * This function is used internally to initialize the TFT display controller
  * based on the configuration settings provided in the TFT_DisplayController_t structure.
  */
-static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t *Copy_psTheSpiTftUsed);
+static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheUsedSpi);
 
 /**
  * @brief Internal function to draw a pixel on the TFT display.

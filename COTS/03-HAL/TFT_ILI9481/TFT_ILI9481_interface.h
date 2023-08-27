@@ -22,8 +22,8 @@
  * @see TFT_Functions for available functions.
  */
 
-#ifndef __TFT_HX8357B_DISPLAYS_INTERFACE_H__
-#define __TFT_HX8357B_DISPLAYS_INTERFACE_H__
+#ifndef __TFT_ILI9481_DISPLAYS_INTERFACE_H__
+#define __TFT_ILI9481_DISPLAYS_INTERFACE_H__
 
 
 /**
@@ -182,4 +182,4 @@ void TFT_voidDisplayImage(u16 x, u16 y, const u16* image, u16 width, u16 height)
 
 /** @} TFT_Displays_Module */
 
-#endif /**< __TFT_HX8357B_DISPLAYS_INTERFACE_H__ */
+#endif /**< __TFT_ILI9481_DISPLAYS_INTERFACE_H__ */

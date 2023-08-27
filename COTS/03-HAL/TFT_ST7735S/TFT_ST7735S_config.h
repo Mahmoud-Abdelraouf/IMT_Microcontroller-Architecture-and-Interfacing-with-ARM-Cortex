@@ -30,7 +30,7 @@
  * This option should be set to the width of the TFT display in pixels.
  * For example, if the display has a resolution of 240x320, WIDTH should be set to 240.
  */
-#define TFT_DISPLAY_WIDTH           320
+#define TFT_DISPLAY_WIDTH           128
 
 /**
  * @brief Defines the TFT display height in pixels.
@@ -38,7 +38,7 @@
  * This option should be set to the height of the TFT display in pixels.
  * For example, if the display has a resolution of 240x320, HEIGHT should be set to 320.
  */
-#define TFT_DISPLAY_HEIGHT          480
+#define TFT_DISPLAY_HEIGHT          160
 
 /**
  * @brief Defines the maximum number of colors supported by the TFT display.

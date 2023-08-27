@@ -11,8 +11,8 @@
  * definitions as they are intended for internal use only.
  */
 
-#ifndef __TFT_HX8357B_DISPLAYS_PRIVATE_H__
-#define __TFT_HX8357B_DISPLAYS_PRIVATE_H__
+#ifndef __TFT_ILI9481_DISPLAYS_PRIVATE_H__
+#define __TFT_ILI9481_DISPLAYS_PRIVATE_H__
 
 /**
  * @defgroup TFT_ColorFormats TFT Display Color Formats
@@ -205,4 +205,4 @@ static void TFT_DrawPixel(u16 x, u16 y, u16 color);
 
 /** @} TFT_Private_Functions */
 
-#endif /**< __TFT_HX8357B_DISPLAYS_PRIVATE_H__ */
+#endif /**< __TFT_ILI9481_DISPLAYS_PRIVATE_H__ */

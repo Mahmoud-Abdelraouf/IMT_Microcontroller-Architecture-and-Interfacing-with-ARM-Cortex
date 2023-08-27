@@ -30,27 +30,27 @@
 #include "TFT_ST7735S_private.h"
 
 
-void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheSpiTftUsed)
+void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheUsedSpi)
 {
     /**< Set the Reset (RST) pin to high logic level to release reset signal */
-    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_RESPin.TFT_Port, Copy_psTftDisplay->TFT_RESPin.TFT_Pin, GPIO_HIGH);
     
     /**< Wait for a specified delay before proceeding */
     MSTK_voidSetDelay(5);
     
     /**< Set the Reset (RST) pin to low logic level to assert reset signal */
-    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_LOW);
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_RESPin.TFT_Port, Copy_psTftDisplay->TFT_RESPin.TFT_Pin, GPIO_LOW);
     
     /**< Wait for a short delay */
     MSTK_voidSetDelay(15);
     
     /**< Set the Reset (RST) pin to high logic level to release reset signal */
-    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_Port, Copy_psTftDisplay->TFT_RstPin, GPIO_HIGH);
+    MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_RESPin.TFT_Port, Copy_psTftDisplay->TFT_RESPin.TFT_Pin, GPIO_HIGH);
     
     /**< Wait for a specified delay before proceeding */
     MSTK_voidSetDelay(15);
     
-    TFT_InitController(Copy_psTftDisplay, Copy_psTheSpiTftUsed);
+    TFT_InitController(Copy_psTftDisplay, Copy_psTheUsedSpi);
 }
 
 /**
@@ -179,91 +179,149 @@ static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, const SPI_t Copy
     MGPIO_voidSetPinValue(Copy_psTftDisplay->TFT_CSPin.TFT_Port, Copy_psTftDisplay->TFT_CSPin.TFT_Pin,MGPIO_HIGH); 
 }
 
-static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheSpiTftUsed)
+static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheUsedSpi)
 {
     /**< Configure ST7735S display */ 
 
+    /**< Send command for software reset */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x01);
+    MSTK_voidSetDelay(150);
+
     /**< Send command to exit sleep mode */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x11);
-    MSTK_voidSetDelay(20);
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x11);
+    MSTK_voidSetDelay(500);
 
-    /**< Send command to configure power setting */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD0);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x07);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x42);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x18);
+    /**< Send command to configure frame rate control - normal mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xB1);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2C);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2D);
 
-    /**< Send command to configure address mode */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD1);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x07);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x10);
+    /**< Send command to configure frame rate control - idle mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xB2);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2C);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2D);
 
-    /**< Send command to configure display mode */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xD2);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x02);
+    /**< Send command to configure frame rate control - partial mode */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xB3);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2C);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2D);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2C);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2D);
 
-    /**< Send command to configure gamma setting */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC0);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x10);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3B);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x02);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x11);
+    /**< Send command to configure display inversion control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xB4);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x07);
 
-    /**< Send command to configure frame rate and inversion control */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC5);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x03);
+    /**< Send command to configure power control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xC0);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xA2);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x02);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x84);
 
-    /**< Send command to configure gamma settings */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xC8);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x32);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x36);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x45);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x06);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x16);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x37);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x75);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x77);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x54);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x0C);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
+    /**< Send command to configure power control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xC1);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xC5);
 
-    /**< Send command to set scroll area */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x36);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x0A);
+    /**< Send command to configure power control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xC2);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x0A);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+
+    /**< Send command to configure power control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xC3);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x8A);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2A);
+
+    /**< Send command to configure power control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xC4);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x8A);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xEE);
+
+    /**< Send command to configure power control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xC5);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x0E);
+
+    /**< Send command to disable display inversion */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x20);
+
+    /**< Send command to configure memory access control */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x36);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xC0);
 
     /**< Send command to set pixel format */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3A);
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x3A);
     #if (TFT_DISPLAY_COLORS == _3BIT_PER_PIXEL) || (TFT_DISPLAY_COLORS == _16BIT_PER_PIXEL) || (TFT_DISPLAY_COLORS == _18BIT_PER_PIXEL)
-        TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, TFT_DISPLAY_COLORS);
+        TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, TFT_DISPLAY_COLORS);
     #else
         TFT_SendCommand(Copy_psTftDisplay, 0x21);
     #endif
 
-    /**< Send command to set column address */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x2A);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x3F);
+    /**< Set column address */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2A);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x7F);
 
-    /**< Send command to set page address */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x2B);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x00);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x01);
-    TFT_SendData(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0xE0);
+    /**< Set row address */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2B);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x7F);
 
-    MSTK_voidSetDelay(120);
-    /**< Send command to exit idle mode */
-    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheSpiTftUsed, 0x29);
+    /**< Configure magical unicorn dust settings - Part 1 */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xE0);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x02);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x1C);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x07);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x12);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x37);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x32);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x29);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2D);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x29);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x25);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2B);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x39);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x01);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x03);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x10);
+
+    /**< Configure sparkles and rainbows settings - Part 1 */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0xE1);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x03);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x1D);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x07);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x06);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2E);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2C);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x29);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2D);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2E);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x2E);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x37);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x3F);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x00);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x02);
+    TFT_SendData(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x10);
+
+    /**< Turn off inversion */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x13);
+    MSTK_voidSetDelay(10);
+
+    /**< Turn on display */
+    TFT_SendCommand(Copy_psTftDisplay, Copy_psTheUsedSpi, 0x29);
+    MSTK_voidSetDelay(100);
 
     /**< End of ILI9481 display configuration */
 }
-
 
 /**
  * @} TFT_Private_Functions
