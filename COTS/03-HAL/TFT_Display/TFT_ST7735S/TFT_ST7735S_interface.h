@@ -82,7 +82,6 @@ typedef struct {
 typedef struct {
     TFT_PinPairs TFT_CSPin;     /**< Chip Select (CS) pin configuration. */
     TFT_PinPairs TFT_DCPin;     /**< Data/Command Control (DC) pin configuration. */
-    TFT_PinPairs TFT_SCLPin;    /**< Serial Clock (SCL) pin configuration. */
     TFT_PinPairs TFT_SDAPin;    /**< Serial Data Input (SDA) pin configuration. */
     TFT_PinPairs TFT_RESPin;    /**< LCM Reset (RES) pin configuration. */
 } TFT_Config_t;

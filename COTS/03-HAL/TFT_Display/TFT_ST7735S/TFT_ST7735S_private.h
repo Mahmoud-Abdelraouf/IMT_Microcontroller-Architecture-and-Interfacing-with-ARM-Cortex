@@ -62,33 +62,24 @@
  * Each command is represented by a corresponding "#define" constant with its associated hexadecimal value.
  * These constants can be used to send specific commands to the TFT display.
  */
+/*******************************************< System Function Command List and Description *******************************************/
+/**< Initialization and Reset Commands */ 
 #define TFT_NOP              0x00   /**< No Operation */
 #define TFT_SWRESET          0x01   /**< Software Reset */
 #define TFT_RDDID            0x04   /**< Read Display ID */
 #define TFT_RDDID_DUMMY      0x1F   /**< Dummy Read */
 #define TFT_RDDID_PARAM      0x1C   /**< Read ID Parameters */
-#define TFT_RDDST            0x09   /**< Read Display Status */
-#define TFT_RDDST_DUMMY      0x1F   /**< Dummy Read */
-#define TFT_RDDST_PARAMS     0x3F   /**< Display Status Parameters */
-#define TFT_RDDPM            0x0A   /**< Read Display Power Mode */
-#define TFT_RDDPM_DUMMY      0x1F   /**< Dummy Read */
-#define TFT_RDDPM_PARAMS     0x0F   /**< Display Power Mode Parameters */
-#define TFT_RDDMADCTL        0x0B   /**< Read MADCTL Display */
-#define TFT_RDDMADCTL_DUMMY  0x1F   /**< Dummy Read */
-#define TFT_RDDMADCTL_PARAMS 0xFF  /**< MADCTL Display Parameters */
-#define TFT_RDDCOLMOD        0x0C   /**< Read Format/Display Pixel */
-#define TFT_RDDCOLMOD_DUMMY  0x1F   /**< Dummy Read */
-#define TFT_RDDCOLMOD_PARAMS 0x03  /**< Display Pixel Parameters */
-#define TFT_RDDIM            0x0D   /**< Read Display Image Mode */
-#define TFT_RDDIM_DUMMY      0x1F   /**< Dummy Read */
-#define TFT_RDDIM_PARAMS     0x05   /**< Display Image Mode Parameters */
-#define TFT_RDDSM            0x0E   /**< Read Display Signal Mode */
-#define TFT_RDDSM_DUMMY      0x1F   /**< Dummy Read */
-#define TFT_RDDSM_PARAMS     0x03   /**< Display Signal Mode Parameters */
-#define TFT_RDDSDR           0x0F   /**< Read Self-diagnostic Display result */
-#define TFT_RDDSDR_DUMMY     0x1F   /**< Dummy Read */
-#define TFT_RDDSDR_PARAMS    0x0F   /**< Self-diagnostic Display Parameters */
+#define TFT_RDID1            0xDA   /**< Read ID1 */
+#define TFT_RDID1_DUMMY      0x1F   /**< Dummy Read */
+#define TFT_RDID1_PARAMS     0x7E   /**< Read ID1 Parameters */
+#define TFT_RDID2            0xDB   /**< Read ID2 */
+#define TFT_RDID2_DUMMY      0x1F   /**< Dummy Read */
+#define TFT_RDID2_PARAMS     0x07   /**< Read ID2 Parameters */
+#define TFT_RDID3            0xDC   /**< Read ID3 */
+#define TFT_RDID3_DUMMY      0x1F   /**< Dummy Read */
+#define TFT_RDID3_PARAMS     0x1F   /**< Read ID3 Parameters */
 
+/**< Power Control and Display Control Commands */
 #define TFT_SLPIN            0x10   /**< Sleep In & Booster Off */
 #define TFT_SLPOUT           0x11   /**< Sleep Out & Booster On */
 #define TFT_PTLON            0x12   /**< Partial Mode On */
@@ -98,6 +89,8 @@
 #define TFT_GAMSET           0x26   /**< Gamma Curve Select */
 #define TFT_DISPOFF          0x28   /**< Display Off */
 #define TFT_DISPON           0x29   /**< Display On */
+
+/**< Memory Access Control and Address Setting Commands */
 #define TFT_CASET            0x2A   /**< Column Address Set */
 #define TFT_RASET            0x2B   /**< Row Address Set */
 #define TFT_RAMWR            0x2C   /**< Memory Write */
@@ -109,18 +102,77 @@
 #define TFT_TEON             0x35   /**< Tearing Effect Mode Set & On */
 #define TFT_MADCTL           0x36   /**< Memory Control Data Access */
 #define TFT_VSCSAD           0x37   /**< Scroll RAM Start Address of SSA */
-#define TFT_IDMOFF           0x38   /**< Idle Mode Off */
-#define TFT_IDMON            0x39   /**< Idle Mode On */
+
+/**< Interface Pixel Format and Self-diagnostic Commands */
 #define TFT_COLMOD           0x3A   /**< Interface Pixel Format */
-#define TFT_RDID1            0xDA   /**< Read ID1 */
-#define TFT_RDID1_DUMMY      0x1F   /**< Dummy Read */
-#define TFT_RDID1_PARAMS     0x7E   /**< Read ID1 Parameters */
-#define TFT_RDID2            0xDB   /**< Read ID2 */
-#define TFT_RDID2_DUMMY      0x1F   /**< Dummy Read */
-#define TFT_RDID2_PARAMS     0x07   /**< Read ID2 Parameters */
-#define TFT_RDID3            0xDC   /**< Read ID3 */
-#define TFT_RDID3_DUMMY      0x1F   /**< Dummy Read */
-#define TFT_RDID3_PARAMS     0x1F   /**< Read ID3 Parameters */
+#define TFT_RDDMADCTL        0x0B   /**< Read MADCTL Display */
+#define TFT_RDDMADCTL_DUMMY  0x1F   /**< Dummy Read */
+#define TFT_RDDMADCTL_PARAMS 0xFF   /**< MADCTL Display Parameters */
+#define TFT_RDDSDR           0x0F   /**< Read Self-diagnostic Display result */
+#define TFT_RDDSDR_DUMMY     0x1F   /**< Dummy Read */
+#define TFT_RDDSDR_PARAMS    0x0F   /**< Self-diagnostic Display Parameters */
+
+/**< Display Status and Signal Mode Commands */
+#define TFT_RDDST            0x09   /**< Read Display Status */
+#define TFT_RDDST_DUMMY      0x1F   /**< Dummy Read */
+#define TFT_RDDST_PARAMS     0x3F   /**< Display Status Parameters */
+#define TFT_RDDPM            0x0A   /**< Read Display Power Mode */
+#define TFT_RDDPM_DUMMY      0x1F   /**< Dummy Read */
+#define TFT_RDDPM_PARAMS     0x0F   /**< Display Power Mode Parameters */
+#define TFT_RDDIM            0x0D   /**< Read Display Image Mode */
+#define TFT_RDDIM_DUMMY      0x1F   /**< Dummy Read */
+#define TFT_RDDIM_PARAMS     0x05   /**< Display Image Mode Parameters */
+#define TFT_RDDSM            0x0E   /**< Read Display Signal Mode */
+#define TFT_RDDSM_DUMMY      0x1F   /**< Dummy Read */
+#define TFT_RDDSM_PARAMS     0x03   /**< Display Signal Mode Parameters */
+
+/*******************************************< Panel Function Command List and Description *******************************************/
+/**< Frame Rate Control (Normal Mode) */ 
+#define TFT_FRMCTR1          0xB1   /**< Frame Rate Control (Normal Mode) */
+#define TFT_FRMCTR2          0xB2   /**< Frame Rate Control (Idle Mode) */
+#define TFT_FRMCTR3          0xB3   /**< Frame Rate Control (Partial Mode + Full Colors) */
+
+/**< Display Inversion Control */
+#define TFT_INVCTR           0xB4   /**< Display Inversion Control */
+
+/**< Power Control Setting */ 
+#define TFT_PWCTR1           0xC0   /**< Power Control Setting */
+#define TFT_PWCTR2           0xC1   /**< Power Control Setting */
+#define TFT_PWCTR3           0xC2   /**< Power Control Setting */
+#define TFT_PWCTR4           0xC3   /**< Power Control Setting */
+#define TFT_PWCTR5           0xC4   /**< Power Control Setting */
+
+/**< VCOM Control 1 */
+#define TFT_VMCTR1           0xC5   /**< VCOM Control 1 */
+
+/**< Set VCOM Offset Control */
+#define TFT_VMOFCTR          0xC7   /**< Set VCOM Offset Control */
+
+/**< Set LCM Version Code */ 
+#define TFT_WRID2            0xD1   /**< Set LCM Version Code */
+
+/**< Customer Project Code */ 
+#define TFT_WRID3            0xD2   /**< Customer Project Code */
+
+// NVM Control
+#define TFT_NVCTR1           0xD9   /**< NVM Control */
+#define TFT_NVCTR2           0xDE   /**< NVM Read Command */
+#define TFT_NVCTR3           0xDF   /**< NVM Write Command */
+
+/**< Gamma Adjustment (+ Polarity) */
+#define TFT_GAMCTRP1         0xE0   /**< Gamma Adjustment (+ Polarity) */
+
+/**< Gamma Adjustment (- Polarity) */ 
+#define TFT_GAMCTRN1         0xE1   /**< Gamma Adjustment (- Polarity) */
+
+/**< Gate Clock */
+#define TFT_GCV              0xFC   /**< Gate Clock */
+
+/**< Individual command parameters */ 
+#define TFT_INVOFF           0x20   /**< Display Inversion Off (Normal) */
+#define TFT_INVON            0x21   /**< Display Inversion On */
+#define TFT_GAMSET           0x26   /**< Gamma Curve Select */
+#define TFT_DISPOFF          0x28   /**< Display Off */
 
 /** @} TFT_Command_and_Some_Macros_Private */
 
@@ -158,30 +210,22 @@ static void TFT_SendCommand(const TFT_Config_t *Copy_psTftDisplay, const SPI_t C
  *
  * @note Example Usage:
  * @code
- * /**< Create a TFT display configuration structure
+ * /// Create a TFT display configuration structure
  * TFT_Config_t tftConfig = {
  *     .TFT_Port = PORTA_INDEX,
  *     .TFT_CsPin = GPIO_PIN0,
  *     .TFT_RsPin = GPIO_PIN1,
- *     /**< ... other configuration settings ...
+ *     /// ... other configuration settings ...
  * };
  *
- * /**< Select the SPI peripheral (e.g., SPI_1)
+ * /// Select the SPI peripheral (e.g., SPI_1)
  * SPI_Peripheral_t spiPeripheral = SPI_1;
  *
- * /**< Send data (e.g., 0x55) to the TFT display
+ * /// Send data (e.g., 0x55) to the TFT display
  * TFT_SendData(spiPeripheral, &tftConfig, 0x55);
  * @endcode
  */
 static void TFT_SendData(const TFT_Config_t *Copy_psTftDisplay, const SPI_t Copy_psTheSpiTftUsed, u8 Copy_Data);
-
-/**
- * @brief Internal function to initialize the TFT display controller.
- *
- * This function is used internally to initialize the TFT display controller
- * based on the configuration settings provided in the TFT_DisplayController_t structure.
- */
-static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheUsedSpi);
 
 /**
  * @brief Internal function to draw a pixel on the TFT display.
@@ -194,6 +238,14 @@ static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy
  * @param color The color of the pixel in 16-bit RGB565 format.
  */
 static void TFT_DrawPixel(u16 x, u16 y, u16 color);
+
+/**
+ * @brief Internal function to initialize the TFT display controller.
+ *
+ * This function is used internally to initialize the TFT display controller
+ * based on the configuration settings provided in the TFT_DisplayController_t structure.
+ */
+static void TFT_InitController(const TFT_Config_t *Copy_psTftDisplay, const SPI_t Copy_psTheUsedSpi);
 
 /**
  * @brief Internal function to draw a character on the TFT display.
