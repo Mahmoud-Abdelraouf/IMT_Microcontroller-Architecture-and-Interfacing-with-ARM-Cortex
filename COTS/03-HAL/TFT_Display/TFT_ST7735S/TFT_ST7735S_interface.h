@@ -42,21 +42,21 @@
  */
 typedef enum
 {
-    COLOR_BLACK         = 0x0000,   /**< Black color (0, 0, 0) */
-    COLOR_WHITE         = 0xFFFF,   /**< White color (255, 255, 255) */
-    COLOR_RED           = 0xF800,   /**< Red color (255, 0, 0) */
-    COLOR_GREEN         = 0x07E0,   /**< Green color (0, 255, 0) */
-    COLOR_BLUE          = 0x001F,   /**< Blue color (0, 0, 255) */
-    COLOR_YELLOW        = 0xFFE0,   /**< Yellow color (255, 255, 0) */
-    COLOR_MAGENTA       = 0xF81F,   /**< Magenta color (255, 0, 255) */
-    COLOR_CYAN          = 0x07FF,   /**< Cyan color (0, 255, 255) */
-    COLOR_GRAY          = 0x7BEF,   /**< Gray color (128, 128, 128) */
-    COLOR_ORANGE        = 0xFD20,   /**< Orange color (255, 165, 0) */
-    COLOR_PINK          = 0xFC18,   /**< Pink color (255, 192, 203) */
-    COLOR_PURPLE        = 0x8010,   /**< Purple color (128, 0, 128) */
-    COLOR_BROWN         = 0xA145,   /**< Brown color (165, 42, 42) */
-    COLOR_GOLD          = 0xFEA0,   /**< Gold color (255, 215, 0) */
-    COLOR_SILVER        = 0xC618    /**< Silver color (192, 192, 192) */
+    TFT_COLOR_BLACK         = 0x0000,   /**< Black color (0, 0, 0) */
+    TFT_COLOR_WHITE         = 0xFFFF,   /**< White color (255, 255, 255) */
+    TFT_COLOR_RED           = 0xF800,   /**< Red color (255, 0, 0) */
+    TFT_COLOR_GREEN         = 0x07E0,   /**< Green color (0, 255, 0) */
+    TFT_COLOR_BLUE          = 0x001F,   /**< Blue color (0, 0, 255) */
+    TFT_COLOR_YELLOW        = 0xFFE0,   /**< Yellow color (255, 255, 0) */
+    TFT_COLOR_MAGENTA       = 0xF81F,   /**< Magenta color (255, 0, 255) */
+    TFT_COLOR_CYAN          = 0x07FF,   /**< Cyan color (0, 255, 255) */
+    TFT_COLOR_GRAY          = 0x7BEF,   /**< Gray color (128, 128, 128) */
+    TFT_COLOR_ORANGE        = 0xFD20,   /**< Orange color (255, 165, 0) */
+    TFT_COLOR_PINK          = 0xFC18,   /**< Pink color (255, 192, 203) */
+    TFT_COLOR_PURPLE        = 0x8010,   /**< Purple color (128, 0, 128) */
+    TFT_COLOR_BROWN         = 0xA145,   /**< Brown color (165, 42, 42) */
+    TFT_COLOR_GOLD          = 0xFEA0,   /**< Gold color (255, 215, 0) */
+    TFT_COLOR_SILVER        = 0xC618    /**< Silver color (192, 192, 192) */
 } TFT_Color_t;
 
 /**
@@ -114,33 +114,22 @@ typedef struct {
  * and settings to properly initialize the display.
  *
  * @param Copy_psTftDisplay Pointer to the TFT configuration structure.
- * @param Copy_psTheSpiTftUsed Pointer to the SPI peripheral used for communication with the TFT.
+ * @param Copy_psSpiPeripheral Pointer to the SPI peripheral used for communication with the TFT.
  *
  * @note This function sends a series of commands to configure the TFT display.
  */
-void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheSpiTftUsed);
+void TFT_voidInit(const TFT_Config_t *Copy_TftDisplay, SPI_t Copy_SpiPeripheral);
 
 /**
- * @brief Clears the display screen.
+ * @brief Clears the TFT screen by filling it with the default background color.
  *
- * This function clears the entire display screen and sets all pixels to the background color.
+ * This function clears the entire TFT screen by filling it with the default background color.
  *
- * @param None
+ * @param[in] Copy_TftDisplay Pointer to the TFT display configuration structure.
+ * @param[in] Copy_SpiPeripheral The SPI peripheral to be used for communication.
  * @retval None
  */
-void TFT_voidClearScreen(void);
-
-/**
- * @brief Draws a pixel at the specified coordinates with the given color.
- *
- * This function draws a single pixel at the specified (x, y) coordinates with the specified color.
- *
- * @param[in] x The X-coordinate of the pixel.
- * @param[in] y The Y-coordinate of the pixel.
- * @param[in] color The color of the pixel in 16-bit RGB565 format.
- * @retval None
- */
-void TFT_voidDrawPixel(u16 x, u16 y, u16 color);
+void TFT_voidClearScreen(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral);
 
 /**
  * @brief Draws a line between two points with the given color.
@@ -155,21 +144,21 @@ void TFT_voidDrawPixel(u16 x, u16 y, u16 color);
  * @param[in] color The color of the line in 16-bit RGB565 format.
  * @retval None
  */
-void TFT_voidDrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u16 color);
+void TFT_voidDrawLine(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, u16 x1, u16 y1, u16 x2, u16 y2, u16 color);
 
 /**
  * @brief Displays an image on the TFT screen.
  *
  * This function displays an image stored in memory at the specified (x, y) coordinates.
  *
- * @param[in] x The X-coordinate where the image will be displayed.
- * @param[in] y The Y-coordinate where the image will be displayed.
+ * @param[in] Copy_psTftDisplay Pointer to the TFT display configuration structure.
+ * @param[in] Copy_psSpiPeripheral The SPI peripheral to be used for communication.
+ * @param[in] Copy_XPosition The X-coordinate where the image will be displayed.
+ * @param[in] Copy_YPosition The Y-coordinate where the image will be displayed.
  * @param[in] image Pointer to the image data in RGB565 format.
- * @param[in] width The width of the image in pixels.
- * @param[in] height The height of the image in pixels.
  * @retval None
  */
-void TFT_voidDisplayImage(u16 x, u16 y, const u16* image, u16 width, u16 height);
+void TFT_voidDisplayImage(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, const u16 *Copy_Image);
 
 /**
  * @brief Displays text on the TFT screen.

@@ -59,8 +59,25 @@
  * This option should be set to the default background color used when clearing the display.
  * The color is represented in 16-bit RGB565 format.
  * For example, BLACK can be represented as 0x0000 (RGB565 value).
+ *
+ * User options for this macro include:
+ * - COLOR_BLACK       0x0000   Black Color (RGB565)
+ * - COLOR_WHITE       0xFFFF   White Color (RGB565)
+ * - COLOR_RED         0xF800   Red Color (RGB565)
+ * - COLOR_GREEN       0x07E0   Green Color (RGB565)
+ * - COLOR_BLUE        0x001F   Blue Color (RGB565)
+ * - COLOR_CYAN        0x07FF   Cyan Color (RGB565)
+ * - COLOR_MAGENTA     0xF81F   Magenta Color (RGB565)
+ * - COLOR_YELLOW      0xFFE0   Yellow Color (RGB565)
+ * - COLOR_ORANGE      0xFD20   Orange Color (RGB565)
+ * - COLOR_PURPLE      0x8010   Purple Color (RGB565)
+ * - COLOR_PINK        0xF81F   Pink Color (RGB565)
+ * - COLOR_LIME        0x07E0   Lime Color (RGB565)
+ * - COLOR_TEAL        0x0410   Teal Color (RGB565)
+ * - COLOR_VIOLET      0x801F   Violet Color (RGB565)
+ * - COLOR_BROWN       0xA145   Brown Color (RGB565)
  */
-#define TFT_DEFAULT_BACKGROUND_COLOR    0x0000
+#define TFT_DEFAULT_BACKGROUND_COLOR    COLOR_BLACK
 
 ///**
 // * @brief Structure representing the font used for rendering text on the TFT display.
