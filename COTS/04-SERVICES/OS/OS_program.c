@@ -19,43 +19,45 @@
 
 
 /****************************************< FUNCTIONS IMPLEMENTATION ****************************************/
-u8 SOS_u8CreateTask(u8 Copy_u8TaskPriority, u16 Copy_u16TaskPeriodicity, void (*Copy_pfTask)(void), u8 Copy_u8FirstDelay)
+u8 OS_CreateTask(u8 Copy_u8TaskPriority, u16 Copy_u16TaskPeriodicity, void (*Copy_pfTask)(void), u8 Copy_u8FirstDelay)
 {
     u8 Local_u8ErrorStatus = 0;
+
     if(Copy_pfTask != NULL)
     {
-        SOS_Tasks[Copy_u8TaskPriority].Periodicity = Copy_u16TaskPeriodicity;
-        SOS_Tasks[Copy_u8TaskPriority].OS_pfSetTask = Copy_pfTask;
-        SOS_Tasks[Copy_u8TaskPriority].FirstDelay = Copy_u8FirstDelay;
+        OS_Tasks[Copy_u8TaskPriority].Periodicity = Copy_u16TaskPeriodicity;
+        OS_Tasks[Copy_u8TaskPriority].OS_pfSetTask = Copy_pfTask;
+        OS_Tasks[Copy_u8TaskPriority].FirstDelay = Copy_u8FirstDelay;
     }
     else
     {
         Local_u8ErrorStatus = 1;
     }
+
     return Local_u8ErrorStatus;
 }
-void SOS_voidStart(void)
+void OS_Start(void)
 {
     /*****************************< Initialization *****************************/
-    MSTK_voidInit();
+    STK_Init();
     /**< Set the Tick time to be ===> 1msec */
-    MSTK_voidSetIntervalPeriodic(SOS_TICK_TIME,SOS_voidSetScheduler);
+    MSTK_voidSetIntervalPeriodic(OS_TICK_TIME, OS_SetScheduler);
 }
 
-static void SOS_voidSetScheduler(void)
+static void OS_SetScheduler(void)
 {
-    for (u8 Local_u8Count = 0; Local_u8Count < SOS_NUMBER_OS_TASKS;Local_u8Count++)
+    for (u8 Local_u8Count = 0; Local_u8Count < OS_NUMBER_TASKS;Local_u8Count++)
     {
-        if(SOS_Tasks[Local_u8Count].OS_pfSetTask != NULL)
+        if(OS_Tasks[Local_u8Count].OS_pfSetTask != NULL)
         {
-            if(SOS_Tasks[Local_u8Count].FirstDelay == 0)
+            if(OS_Tasks[Local_u8Count].FirstDelay == 0)
             {
-                SOS_Tasks[Local_u8Count].FirstDelay = ((SOS_Tasks[Local_u8Count].Periodicity)/SOS_TICK_TIME)-1;
-                SOS_Tasks[Local_u8Count].OS_pfSetTask();
+                OS_Tasks[Local_u8Count].FirstDelay = ((OS_Tasks[Local_u8Count].Periodicity) / OS_TICK_TIME)-1;
+                OS_Tasks[Local_u8Count].OS_pfSetTask();
             }
             else
             {
-                SOS_Tasks[Local_u8Count].FirstDelay--;
+                OS_Tasks[Local_u8Count].FirstDelay--;
             }
         }
     }

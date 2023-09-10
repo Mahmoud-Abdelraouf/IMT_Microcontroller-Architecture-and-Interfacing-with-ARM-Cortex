@@ -13,7 +13,7 @@
 #define __OS_CONFIG_H__
 
 
-#define SOS_NUMBER_OS_TASKS             3
+#define OS_NUMBER_TASKS             3
 
 
 

@@ -13,7 +13,7 @@
 #define __OS_PRIVATE_H__
 
 
-#define SOS_TICK_TIME       1000
+#define OS_TICK_TIME       1000
 
 /**
  * @brief A struct representing a task in the operating system.
@@ -26,7 +26,7 @@ typedef struct {
     void (*OS_pfSetTask)(void);     /**< A pointer to the function that implements the task. */
     u8 FirstDelay;                  /**< The initial delay of the task in ticks. */
     /**< The current state of the task's scheduler. */
-}SOS_Task_t;
+} OS_Task_t;
 
 /**
  * @brief An array containing the registered tasks for the operating system.
@@ -34,7 +34,7 @@ typedef struct {
  * This array holds the registered tasks for the operating system. Each task is represented
  * by a "SOS_Task_t" structure.
  */
-static SOS_Task_t SOS_Tasks[SOS_NUMBER_OS_TASKS] = {NULL};
+static OS_Task_t OS_Tasks[OS_NUMBER_TASKS] = {NULL};
 
 
 /**
@@ -47,7 +47,7 @@ static SOS_Task_t SOS_Tasks[SOS_NUMBER_OS_TASKS] = {NULL};
  *
  * @retval     None
  */
-static void SOS_voidSetScheduler(void);
+static void OS_voidSetScheduler(void);
 
 
 

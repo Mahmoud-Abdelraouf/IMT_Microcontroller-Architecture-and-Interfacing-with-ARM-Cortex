@@ -27,7 +27,7 @@
  * @retval     0                        The task was created successfully.
  * @retval     1                        An error occurred while creating the task.
  */
-u8 SOS_u8CreateTask(u8 Copy_u8TaskPriority, u16 Copy_u16TaskPeriodicity, void (*Copy_pfTask)(void));
+u8 OS_CreateTask(u8 Copy_u8TaskPriority, u16 Copy_u16TaskPeriodicity, void (*Copy_pfTask)(void), u8 Copy_u8FirstDelay);
 
 /**
  * @brief Starts the operating system scheduler.
@@ -40,7 +40,7 @@ u8 SOS_u8CreateTask(u8 Copy_u8TaskPriority, u16 Copy_u16TaskPeriodicity, void (*
  *
  * @retval     None
  */
-void SOS_voidStart(void);
+void OS_voidStart(void);
 
 
 

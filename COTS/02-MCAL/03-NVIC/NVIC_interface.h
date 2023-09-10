@@ -169,7 +169,7 @@ typedef u8 IRQn_Type;
  *   - E_OK     : Interrupt enabled successfully.
  *   - E_NOT_OK : An error occurred (invalid interrupt number).
  */
-Std_ReturnType MCAL_NVIC_EnableIRQ(IRQn_Type Copy_IRQn);
+Std_ReturnType NVIC_EnableIRQ(IRQn_Type Copy_IRQn);
 
 /**
  * @brief Disable a specific interrupt in the NVIC.
@@ -182,7 +182,7 @@ Std_ReturnType MCAL_NVIC_EnableIRQ(IRQn_Type Copy_IRQn);
  *   - E_OK     : Interrupt disabled successfully.
  *   - E_NOT_OK : An error occurred (invalid interrupt number).
  */
-Std_ReturnType MCAL_NVIC_DisableIRQ(IRQn_Type Copy_IRQn);
+Std_ReturnType NVIC_DisableIRQ(IRQn_Type Copy_IRQn);
 
 /**
  * @brief Set a specific interrupt as pending in the NVIC.
@@ -195,7 +195,7 @@ Std_ReturnType MCAL_NVIC_DisableIRQ(IRQn_Type Copy_IRQn);
  *   - E_OK     : Interrupt set as pending successfully.
  *   - E_NOT_OK : An error occurred (invalid interrupt number).
  */
-Std_ReturnType MCAL_NVIC_SetPendingIRQ(IRQn_Type Copy_IRQn);
+Std_ReturnType NVIC_SetPendingIRQ(IRQn_Type Copy_IRQn);
 
 /**
  * @brief Clear the pending status of a specific interrupt in the NVIC.
@@ -208,7 +208,7 @@ Std_ReturnType MCAL_NVIC_SetPendingIRQ(IRQn_Type Copy_IRQn);
  *   - E_OK     : Pending status cleared successfully.
  *   - E_NOT_OK : An error occurred (invalid interrupt number).
  */
-Std_ReturnType MCAL_NVIC_ClearPendingIRQ(IRQn_Type Copy_IRQn);
+Std_ReturnType NVIC_ClearPendingIRQ(IRQn_Type Copy_IRQn);
 
 /**
  * @brief Get the pending status of a specific interrupt in the NVIC.
@@ -223,7 +223,7 @@ Std_ReturnType MCAL_NVIC_ClearPendingIRQ(IRQn_Type Copy_IRQn);
  *   - E_OK     : Interrupt is pending, and the pending status is returned in 'Copy_ReturnPendingFlag'.
  *   - E_NOT_OK : An error occurred (invalid interrupt number), and 'Copy_ReturnPendingFlag' is not modified.
  */
-Std_ReturnType MCAL_NVIC_GetPendingIRQ(IRQn_Type Copy_IRQn, u8 *Copy_ReturnPendingFlag);
+Std_ReturnType NVIC_GetPendingIRQ(IRQn_Type Copy_IRQn, u8 *Copy_ReturnPendingFlag);
 
 /**
  * @brief Set the priority of a specific interrupt in the NVIC.
@@ -237,7 +237,7 @@ Std_ReturnType MCAL_NVIC_GetPendingIRQ(IRQn_Type Copy_IRQn, u8 *Copy_ReturnPendi
  *   - E_OK     : Priority set successfully.
  *   - E_NOT_OK : An error occurred (invalid interrupt number or priority level).
  */
-Std_ReturnType MCAL_NVIC_xSetPriority(IRQn_Type Copy_IRQn, u8 Copy_Priority);
+Std_ReturnType NVIC_xSetPriority(IRQn_Type Copy_IRQn, u8 Copy_Priority);
 
 /**
  * @brief Set the priority of a specific interrupt in the NVIC.
@@ -266,7 +266,7 @@ Std_ReturnType MCAL_NVIC_xSetPriority(IRQn_Type Copy_IRQn, u8 Copy_Priority);
  *
  * @see NVIC_config.h for details on PRIORITY_GROUPING.
  */
-Std_ReturnType MCAL_NVIC_vSetPriority(IRQn_Type Copy_IRQn, u8 Copy_GroupPriority, u8 Copy_SubPriority);
+Std_ReturnType NVIC_vSetPriority(IRQn_Type Copy_IRQn, u8 Copy_GroupPriority, u8 Copy_SubPriority);
 
 /**
  * @brief Get the priority of a specific interrupt in the NVIC.
@@ -280,7 +280,7 @@ Std_ReturnType MCAL_NVIC_vSetPriority(IRQn_Type Copy_IRQn, u8 Copy_GroupPriority
  *   - E_OK     : Priority retrieved successfully, and the value is stored in Copy_Priority.
  *   - E_NOT_OK : An error occurred (invalid interrupt number or Copy_Priority pointer is NULL).
  */
-Std_ReturnType MCAL_NVIC_xGetPriority(IRQn_Type IRQn, u8 *Copy_Priority);
+Std_ReturnType NVIC_xGetPriority(IRQn_Type IRQn, u8 *Copy_Priority);
 
 /**
  * @} (end of group NVIC_Control)

@@ -24,7 +24,7 @@
 /**< SCB */
 #include "SCB_interface.h"
 /*****************************< Function Implementations *****************************/
-Std_ReturnType MCAL_NVIC_EnableIRQ(IRQn_Type Copy_IRQn)
+Std_ReturnType NVIC_EnableIRQ(IRQn_Type Copy_IRQn)
 {
    Std_ReturnType Local_FunctionStatus = E_NOT_OK;
     
@@ -52,7 +52,7 @@ Std_ReturnType MCAL_NVIC_EnableIRQ(IRQn_Type Copy_IRQn)
     
 }
 
-Std_ReturnType MCAL_NVIC_DisableIRQ(IRQn_Type Copy_IRQn)
+Std_ReturnType NVIC_DisableIRQ(IRQn_Type Copy_IRQn)
 {
     Std_ReturnType Local_FunctionStatus = E_NOT_OK;
 
@@ -79,7 +79,7 @@ Std_ReturnType MCAL_NVIC_DisableIRQ(IRQn_Type Copy_IRQn)
     return Local_FunctionStatus;
 }
 
-Std_ReturnType MCAL_NVIC_SetPendingIRQ(IRQn_Type Copy_IRQn)
+Std_ReturnType NVIC_SetPendingIRQ(IRQn_Type Copy_IRQn)
 {
     Std_ReturnType Local_FunctionStatus = E_NOT_OK;
 
@@ -106,7 +106,7 @@ Std_ReturnType MCAL_NVIC_SetPendingIRQ(IRQn_Type Copy_IRQn)
     return Local_FunctionStatus;
 }
 
-Std_ReturnType MCAL_NVIC_ClearPendingIRQ(IRQn_Type Copy_IRQn)
+Std_ReturnType NVIC_ClearPendingIRQ(IRQn_Type Copy_IRQn)
 {
     Std_ReturnType Local_FunctionStatus = E_NOT_OK;
 
@@ -129,7 +129,7 @@ Std_ReturnType MCAL_NVIC_ClearPendingIRQ(IRQn_Type Copy_IRQn)
     return Local_FunctionStatus;
 }
 
-Std_ReturnType MCAL_NVIC_GetPendingIRQ(IRQn_Type Copy_IRQn, u8 *Copy_ReturnPendingFlag)
+Std_ReturnType NVIC_GetPendingIRQ(IRQn_Type Copy_IRQn, u8 *Copy_ReturnPendingFlag)
 {
     Std_ReturnType Local_FunctionStatus = E_NOT_OK;
 
@@ -184,7 +184,7 @@ Std_ReturnType MCAL_NVIC_GetPendingIRQ(IRQn_Type Copy_IRQn, u8 *Copy_ReturnPendi
     return Local_FunctionStatus;
 }
 
-Std_ReturnType MCAL_NVIC_xSetPriority(IRQn_Type Copy_IRQn, u8 Copy_Priority)
+Std_ReturnType NVIC_xSetPriority(IRQn_Type Copy_IRQn, u8 Copy_Priority)
 {
     Std_ReturnType Local_FunctionStatus = E_NOT_OK;
 
@@ -214,7 +214,7 @@ Std_ReturnType MCAL_NVIC_xSetPriority(IRQn_Type Copy_IRQn, u8 Copy_Priority)
     return Local_FunctionStatus;
 }
 
-Std_ReturnType MCAL_NVIC_vSetPriority(IRQn_Type Copy_IRQn, u8 Copy_GroupPriority, u8 Copy_SubPriority)
+Std_ReturnType NVIC_vSetPriority(IRQn_Type Copy_IRQn, u8 Copy_GroupPriority, u8 Copy_SubPriority)
 {
     Std_ReturnType Local_FunctionStatus = E_NOT_OK;
     u8 NVIC_MAX_Group_Priority;
@@ -275,7 +275,7 @@ Std_ReturnType MCAL_NVIC_vSetPriority(IRQn_Type Copy_IRQn, u8 Copy_GroupPriority
     return Local_FunctionStatus;
 }
 
-Std_ReturnType MCAL_NVIC_xGetPriority(IRQn_Type Copy_IRQn, u8 *Copy_Priority)
+Std_ReturnType NVIC_xGetPriority(IRQn_Type Copy_IRQn, u8 *Copy_Priority)
 {
     Std_ReturnType Local_FunctionStatus = E_NOT_OK;
 
