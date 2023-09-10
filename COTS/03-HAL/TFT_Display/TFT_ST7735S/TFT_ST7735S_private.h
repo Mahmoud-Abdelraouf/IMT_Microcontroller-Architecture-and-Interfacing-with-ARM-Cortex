@@ -1,7 +1,8 @@
 /**
+ ********************************************************************************************
  * @file TFT_Displays_private.h
  * @brief This file contains private definitions and declarations for the TFT Displays module.
- *
+ ********************************************************************************************
  * @date 20 Jul 2023
  * @version V01
  * @author Mahmoud Abdelraouf Mahmoud
@@ -9,6 +10,7 @@
  * @attention This file contains internal/private functions, constants, and structures for
  * the TFT Displays module. Users of this module should not directly interact with these
  * definitions as they are intended for internal use only.
+ ********************************************************************************************
  */
 
 #ifndef __TFT_ST7735S_DISPLAYS_PRIVATE_H__

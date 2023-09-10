@@ -20,55 +20,55 @@
 #include "GPIO_private.h"
 #include "GPIO_config.h"
 
-void MGPIO_voidSetPinDirection(u8 Copy_u8PORT, u8 Copy_u8PIN, u8 Copy_u8Mode)
+void GPIO_SetPinMode(u8 Copy_PORT, u8 Copy_PIN, u8 Copy_Mode)
 {
-	switch(Copy_u8PORT)
+	switch(Copy_PORT)
 	{
-		case MGPIOA:
-			if(Copy_u8PIN < 8)
+		case GPIO_PORTA:
+			if(Copy_PIN < 8)
 			{
-				MGPIOA_CRL_R &= ~((0b1111) << (Copy_u8PIN * 4));
-				MGPIOA_CRL_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
+				GPIOA_CRL_R &= ~((0b1111) << (Copy_PIN * 4));
+				GPIOA_CRL_R |= ((Copy_Mode) << (Copy_PIN * 4));
 			}
-			else if(Copy_u8PIN < 16)
+			else if(Copy_PIN < 16)
 			{
-				Copy_u8PIN-=8;
-				MGPIOA_CRH_R &= ~((0b1111) << (Copy_u8PIN * 4));
-			    MGPIOA_CRH_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
-			}
-			else
-			{
-				/**< RETURN ERROR STATUS */
-			}
-		break;
-		case MGPIOB:
-			if(Copy_u8PIN < 8)
-			{
-				MGPIOB_CRL_R &= ~((0b1111) << (Copy_u8PIN * 4));
-				MGPIOB_CRL_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
-			}
-			else if(Copy_u8PIN < 16)
-			{
-				Copy_u8PIN-=8;
-				MGPIOB_CRH_R &=~ ((0b1111) << (Copy_u8PIN * 4));
-				MGPIOB_CRH_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
+				Copy_PIN-=8;
+				GPIOA_CRH_R &= ~((0b1111) << (Copy_PIN * 4));
+			    GPIOA_CRH_R |= ((Copy_Mode) << (Copy_PIN * 4));
 			}
 			else
 			{
 				/**< RETURN ERROR STATUS */
 			}
 		break;
-		case MGPIOC:
-			if(Copy_u8PIN < 8)
+		case GPIO_PORTB:
+			if(Copy_PIN < 8)
 			{
-				MGPIOC_CRL_R &=~ ((0b1111) << (Copy_u8PIN * 4));
-				MGPIOC_CRL_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
+				GPIOB_CRL_R &= ~((0b1111) << (Copy_PIN * 4));
+				GPIOB_CRL_R |= ((Copy_Mode) << (Copy_PIN * 4));
 			}
-			else if(Copy_u8PIN < 16)
+			else if(Copy_PIN < 16)
 			{
-				Copy_u8PIN-=8;
-				MGPIOC_CRH_R &=~ ((0b1111) << (Copy_u8PIN * 4));
-				MGPIOC_CRH_R |= ((Copy_u8Mode) << (Copy_u8PIN * 4));
+				Copy_PIN-=8;
+				GPIOB_CRH_R &=~ ((0b1111) << (Copy_PIN * 4));
+				GPIOB_CRH_R |= ((Copy_Mode) << (Copy_PIN * 4));
+			}
+			else
+			{
+				/**< RETURN ERROR STATUS */
+			}
+		break;
+		case GPIO_PORTC:
+			if(Copy_PIN < 8)
+			{
+				GPIOC_CRL_R &=~ ((0b1111) << (Copy_PIN * 4));
+				GPIOC_CRL_R |= ((Copy_Mode) << (Copy_PIN * 4));
+			}
+			else if(Copy_PIN < 16)
+			{
+				Copy_PIN-=8;
+				GPIOC_CRH_R &=~ ((0b1111) << (Copy_PIN * 4));
+				GPIOC_CRH_R |= ((Copy_Mode) << (Copy_PIN * 4));
 			}
 			else
 			{
@@ -82,48 +82,48 @@ void MGPIO_voidSetPinDirection(u8 Copy_u8PORT, u8 Copy_u8PIN, u8 Copy_u8Mode)
 	/**< RETURN ERRORSTATUS */
 }
 
-void MGPIO_voidSetPinValue(u8 Copy_u8PORT,u8 Copy_u8PIN, u8 Copy_u8Value)
+void GPIO_SetPinValue(u8 Copy_PORT,u8 Copy_PIN, u8 Copy_Value)
 {
-	if(Copy_u8PIN < 16)
+	if(Copy_PIN < 16)
 	{
-		switch(Copy_u8PORT)
+		switch(Copy_PORT)
 		{
-			case MGPIOA:
-				if(Copy_u8Value == MGPIO_HIGH)
+			case GPIO_PORTA:
+				if(Copy_Value == GPIO_HIGH)
 				{
-					SET_BIT(MGPIOA_ODR_R, Copy_u8PIN);
+					SET_BIT(GPIOA_ODR_R, Copy_PIN);
 				}
-				else if(Copy_u8Value == MGPIO_LOW)
+				else if(Copy_Value == GPIO_LOW)
 				{
-					CLR_BIT(MGPIOA_ODR_R, Copy_u8PIN);
-				}
-				else
-				{
-					/**< RETURN ERROR STATUS */
-				}
-			break;
-			case MGPIOB:
-				if(Copy_u8Value == MGPIO_HIGH)
-				{
-					SET_BIT(MGPIOB_ODR_R, Copy_u8PIN);
-				}
-				else if(Copy_u8Value == MGPIO_LOW)
-				{
-					CLR_BIT(MGPIOB_ODR_R, Copy_u8PIN);
+					CLR_BIT(GPIOA_ODR_R, Copy_PIN);
 				}
 				else
 				{
 					/**< RETURN ERROR STATUS */
 				}
 			break;
-			case MGPIOC:
-				if(Copy_u8Value == MGPIO_HIGH)
+			case GPIO_PORTB:
+				if(Copy_Value == GPIO_HIGH)
 				{
-					SET_BIT(MGPIOC_ODR_R, Copy_u8PIN);
+					SET_BIT(GPIOB_ODR_R, Copy_PIN);
 				}
-				else if(Copy_u8Value == MGPIO_LOW)
+				else if(Copy_Value == GPIO_LOW)
 				{
-					CLR_BIT(MGPIOC_ODR_R, Copy_u8PIN);
+					CLR_BIT(GPIOB_ODR_R, Copy_PIN);
+				}
+				else
+				{
+					/**< RETURN ERROR STATUS */
+				}
+			break;
+			case GPIO_PORTC:
+				if(Copy_Value == GPIO_HIGH)
+				{
+					SET_BIT(GPIOC_ODR_R, Copy_PIN);
+				}
+				else if(Copy_Value == GPIO_LOW)
+				{
+					CLR_BIT(GPIOC_ODR_R, Copy_PIN);
 				}
 				else
 				{
@@ -142,16 +142,16 @@ void MGPIO_voidSetPinValue(u8 Copy_u8PORT,u8 Copy_u8PIN, u8 Copy_u8Value)
 	/**< RETURN ERROR STATUS */
 }
 
-u8  MGPIO_u8GetPinValue(u8 Copy_u8PORT, u8 Copy_u8PIN)
+u8  MGPIO_u8GetPinValue(u8 Copy_PORT, u8 Copy_PIN)
 {
 	u8 Local_u8ReturnPinValue = 0;
-	if(Copy_u8PIN < 16)
+	if(Copy_PIN < 16)
 	{
-		switch(Copy_u8PORT)
+		switch(Copy_PORT)
 		{
-			case MGPIOA: Local_u8ReturnPinValue = GET_BIT(MGPIOA_IDR_R, Copy_u8PIN); break;
-			case MGPIOB: Local_u8ReturnPinValue = GET_BIT(MGPIOB_IDR_R, Copy_u8PIN); break;
-			case MGPIOC: Local_u8ReturnPinValue = GET_BIT(MGPIOC_IDR_R, Copy_u8PIN); break;
+			case GPIO_PORTA: Local_u8ReturnPinValue = GET_BIT(GPIOA_IDR_R, Copy_PIN); break;
+			case GPIO_PORTB: Local_u8ReturnPinValue = GET_BIT(GPIOB_IDR_R, Copy_PIN); break;
+			case GPIO_PORTC: Local_u8ReturnPinValue = GET_BIT(GPIOC_IDR_R, Copy_PIN); break;
 		}
 	}
 	else

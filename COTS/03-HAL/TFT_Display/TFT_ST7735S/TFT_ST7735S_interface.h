@@ -1,15 +1,11 @@
 /**
- * @defgroup TFT_Displays_Module TFT Displays Module
- * @{
- */
-
-/**
+ ********************************************************************************************
  * @file TFT_Displays_interface.h
  * @brief This file contains the interface of the TFT Displays module.
  * 
  * This module provides functions for interfacing with TFT (Thin-Film Transistor) displays
  * to control graphical user interfaces (GUIs), display images, and render text.
- *
+ ********************************************************************************************
  * @date 20 Jul 2023
  * @version V01
  * @author Mahmoud Abdelraouf Mahmoud
@@ -20,6 +16,7 @@
  *
  * @see TFT_Configuration_Options for configuration options.
  * @see TFT_Functions for available functions.
+ ********************************************************************************************
  */
 
 #ifndef __TFT_ST7735S_DISPLAYS_INTERFACE_H__
@@ -176,6 +173,5 @@ void TFT_voidDisplayImage(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_
 
 /** @} TFT_Functions */
 
-/** @} TFT_Displays_Module */
 
 #endif /**< __TFT_ST7735S_DISPLAYS_INTERFACE_H__ */

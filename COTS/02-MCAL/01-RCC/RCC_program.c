@@ -19,7 +19,7 @@
 #include "RCC_private.h"
 #include "RCC_config.h"
 
-void MRCC_voidInitSysClock(void)
+void RCC_InitSysClock(void)
 {
 	#if 	RCC_CLOCK_TYPE == RCC_HSE_CRYSTAL
 		RCC_CR_R   = 0x00010000; 						/**< Enable HSE with no bypass */
@@ -35,7 +35,7 @@ void MRCC_voidInitSysClock(void)
 		RCC_CFGR_R = 0x00000000;						/**< HSI selected as system clock */
 	#elif	RCC_CLOCK_TYPE == RCC_PLL
 		#if RCC_PLL_INPUT == RCC_PLL_IN_HSI_DIV_2
-			CLR_BIT(MRCC_CFGR_R, RCC_PLLSRC_BIT);		/**< 0: HSI OSCILLATOR CLOCK / 2 SELECTED AS PLL INPUT CLOCK */
+			CLR_BIT(RCC_CFGR_R, RCC_PLLSRC_BIT);		/**< 0: HSI OSCILLATOR CLOCK / 2 SELECTED AS PLL INPUT CLOCK */
 		#elif RCC_PLL_INPUT == RCC_PLL_IN_HSE_DIV_2
 			SET_BIT(RCC_CFGR_R, RCC_PLLSRC_BIT);		/**< 1: HSE OSCILLATOR CLOCK SELECTED AS PLL INPUT CLOCK */
 			SET_BIT(RCC_CFGR_R, RCC_PLLXTPRE_BIT);		/**< 1: HSE CLOCK DIVIDED BY 2 */
@@ -51,15 +51,15 @@ void MRCC_voidInitSysClock(void)
 }
 
 
-void MRCC_voidEnableClock(u8 Copy_u8BusId,u8 Copy_u8PeriphId)
+void MRCC_voidEnableClock(u8 Copy_BusId,u8 Copy_PeriphId)
 {
-	if(Copy_u8PeriphId <=31)
+	if(Copy_PeriphId <=31)
 	{
-		switch(Copy_u8BusId)
+		switch(Copy_BusId)
 		{
-			case MRCC_AHB  : SET_BIT(RCC_AHBENR_R , Copy_u8PeriphId); break;
-			case MRCC_APB1 : SET_BIT(RCC_APB1ENR_R, Copy_u8PeriphId); break;
-			case MRCC_APB2 : SET_BIT(RCC_APB2ENR_R, Copy_u8PeriphId); break;
+			case RCC_AHB  : SET_BIT(RCC_AHBENR_R , Copy_PeriphId); break;
+			case RCC_APB1 : SET_BIT(RCC_APB1ENR_R, Copy_PeriphId); break;
+			case RCC_APB2 : SET_BIT(RCC_APB2ENR_R, Copy_PeriphId); break;
 			//default       : /* Return Error */                  break;
 		}
 	}
@@ -70,15 +70,15 @@ void MRCC_voidEnableClock(u8 Copy_u8BusId,u8 Copy_u8PeriphId)
 }
 
 
-void MRCC_voidDisableClock(u8 Copy_u8BusId,u8 Copy_u8PeriphId)
+void MRCC_voidDisableClock(u8 Copy_BusId,u8 Copy_PeriphId)
 {
-	if(Copy_u8PeriphId <=31)
+	if(Copy_PeriphId <=31)
 	{
-		switch(Copy_u8BusId)
+		switch(Copy_BusId)
 		{
-			case MRCC_AHB  : CLR_BIT(RCC_AHBENR_R , Copy_u8PeriphId); break;
-			case MRCC_APB1 : CLR_BIT(RCC_APB1ENR_R, Copy_u8PeriphId); break;
-			case MRCC_APB2 : CLR_BIT(RCC_APB2ENR_R, Copy_u8PeriphId); break;
+			case RCC_AHB  : CLR_BIT(RCC_AHBENR_R , Copy_PeriphId); break;
+			case RCC_APB1 : CLR_BIT(RCC_APB1ENR_R, Copy_PeriphId); break;
+			case RCC_APB2 : CLR_BIT(RCC_APB2ENR_R, Copy_PeriphId); break;
 			//default       : /* Return Error */                    break;
 		}
 	}

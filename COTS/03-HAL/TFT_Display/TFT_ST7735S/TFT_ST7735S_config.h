@@ -1,7 +1,8 @@
 /**
+ ******************************************************************************************** 
  * @file TFT_Displays_config.h
  * @brief This file contains the configuration options for the TFT Displays module.
- *
+ ********************************************************************************************
  * @date 20 Jul 2023
  * @version V01
  * @author Mahmoud Abdelraouf Mahmoud
@@ -11,6 +12,7 @@
  *
  * @attention The configuration options in this file should be adjusted according to
  * the specific TFT display used and the microcontroller's capabilities.
+ ********************************************************************************************
  */
 
 #ifndef __TFT_ST7735S_DISPLAYS_CONFIG_H__
