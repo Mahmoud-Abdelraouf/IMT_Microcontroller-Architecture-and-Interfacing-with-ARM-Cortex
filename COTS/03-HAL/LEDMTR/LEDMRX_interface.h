@@ -30,7 +30,7 @@ void HLEDMTRX_voidTurnOn(u8 Copy_u8Row, u8 Copy_u8Col);
  * @param Copy_u8Col The column number of the LED to turn off (0-indexed).
  * @return None.
  */
-void HLEDMTRX_voidTurnOff(u8 Copy_u8Row, u8 Copy_u8Col);
+void LEDMTRX_TurnOff(u8 Copy_Row, u8 Copy_Col);
 
 /**
  * @brief Clear all LEDs in the LED matrix.
@@ -39,7 +39,7 @@ void HLEDMTRX_voidTurnOff(u8 Copy_u8Row, u8 Copy_u8Col);
  * 
  * @return None.
  */
-void HLEDMTRX_voidClear(void);
+void LEDMTRX_Clear(void);
 
 /**
  * @brief Initialize the LED matrix.
@@ -48,7 +48,7 @@ void HLEDMTRX_voidClear(void);
  * 
  * @return None.
  */
-void HLEDMTRX_voidInit(void);
+void LEDMTRX_Init(void);
 
 /**
  * @brief Displays data on the LED Matrix.
@@ -62,7 +62,7 @@ void HLEDMTRX_voidInit(void);
  *
  * @return void
  */
-void HLEDMTRX_voidDisplay(u8 *Copy_pau8Data);
+void LEDMTRX_Display(u8 *Copy_pau8Data);
 
 /**
  * @brief Set the state of an LED at a specific row and column in the LED matrix.
@@ -74,7 +74,7 @@ void HLEDMTRX_voidDisplay(u8 *Copy_pau8Data);
  * @param state The state to set the LED to (0 for off, 1 for on).
  * @return None.
  */
-void HLEDMTRX_voidSetLedState(u8 row, u8 col, u8 state);
+void LEDMTRX_SetLedState(u8 row, u8 col, u8 state);
 
 /**
  * @brief Shift the LED matrix display to the left by one column.
@@ -83,7 +83,7 @@ void HLEDMTRX_voidSetLedState(u8 row, u8 col, u8 state);
  * 
  * @return None.
  */
-void HLEDMTRX_voidShiftLeft(u8 *Copy_pau8Data);
+void LEDMTRX_ShiftLeft(u8 *Copy_pau8Data);
 
 /**
  * @brief Set the state of a specific row in the LED matrix.
@@ -94,6 +94,6 @@ void HLEDMTRX_voidShiftLeft(u8 *Copy_pau8Data);
  * @param state The state to set the row to (0 for off, 1 for on).
  * @return None.
  */
-void HLEDMTRX_voidSetRowState(u8 row, u8 state);
+void LEDMTRX_SetRowState(u8 row, u8 state);
 
 #endif /**< __LEDMATRIX_INTERFACE_H__ */

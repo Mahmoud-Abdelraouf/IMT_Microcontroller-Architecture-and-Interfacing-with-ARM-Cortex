@@ -46,30 +46,30 @@
  * @{
  */
 
-void TFT_voidInit(const TFT_Config_t *Copy_TftDisplay, SPI_t Copy_SpiPeripheral)
+void TFT_Init(const TFT_Config_t *Copy_TftDisplay, SPI_t Copy_SpiPeripheral)
 {
     /**< Set the Reset (RES) pin to high logic level to release reset signal */
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_RESPin.TFT_Port, Copy_TftDisplay->TFT_RESPin.TFT_Pin, GPIO_HIGH);
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_RESPin.TFT_Port, Copy_TftDisplay->TFT_RESPin.TFT_Pin, GPIO_HIGH);
     
     /**< Wait for a specified delay before proceeding */
-    MSTK_voidSetDelay(5);
+    STK_SetDelay(5);
     
     /**< Set the Reset (RST) pin to low logic level to assert reset signal */
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_RESPin.TFT_Port, Copy_TftDisplay->TFT_RESPin.TFT_Pin, GPIO_LOW);
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_RESPin.TFT_Port, Copy_TftDisplay->TFT_RESPin.TFT_Pin, GPIO_LOW);
     
     /**< Wait for a short delay */
-    MSTK_voidSetDelay(15);
+    STK_SetDelay(15);
     
     /**< Set the Reset (RES) pin to high logic level to release reset signal */
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_RESPin.TFT_Port, Copy_TftDisplay->TFT_RESPin.TFT_Pin, GPIO_HIGH);
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_RESPin.TFT_Port, Copy_TftDisplay->TFT_RESPin.TFT_Pin, GPIO_HIGH);
     
     /**< Wait for a specified delay before proceeding */
-    MSTK_voidSetDelay(15);
+    STK_SetDelay(15);
     
     TFT_InitController(Copy_TftDisplay, Copy_SpiPeripheral);
 }
 
-void TFT_voidClearScreen(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral)
+void TFT_ClearScreen(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral)
 {
     /**< Set the X and Y addresses */
     TFT_SetXYAddress(Copy_TftDisplay, Copy_SpiPeripheral, 0, 0);
@@ -85,7 +85,7 @@ void TFT_voidClearScreen(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_S
     }
 }
 
-void TFT_voidDrawLine(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, u16 x1, u16 y1, u16 x2, u16 y2, u16 color)
+void TFT_DrawLine(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, u16 x1, u16 y1, u16 x2, u16 y2, u16 color)
 {
     int Local_dx = abs(x2 - x1);            /**< Calculate the absolute difference in X coordinates. */
     int Local_sx = x1 < x2 ? 1 : -1;        /**< Determine the X direction (positive or negative). */
@@ -120,7 +120,7 @@ void TFT_voidDrawLine(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiP
     }
 }
 
-void TFT_voidDisplayImage(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, const u16 *Copy_Image)
+void TFT_DisplayImage(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, const u16 *Copy_Image)
 {
     /*******************************************< Set the X and Y addresses for drawing pixels *******************************************/ 
 	
@@ -192,16 +192,16 @@ static void TFT_SendCommand(const TFT_Config_t *Copy_TftDisplay, const SPI_t Cop
     u8 Local_u8ReceivedData = 0;
 
     /**<  Set CS (Chip Select) pin low to select the TFT display for communication */
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_CSPin.TFT_Port, Copy_TftDisplay->TFT_CSPin.TFT_Pin,MGPIO_LOW); 
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_CSPin.TFT_Port, Copy_TftDisplay->TFT_CSPin.TFT_Pin,GPIO_LOW); 
 
     /**< Set DC (Data/Command Control) pin low to indicate command mode */ 
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_DCPin.TFT_Port, Copy_TftDisplay->TFT_DCPin.TFT_Pin,MGPIO_LOW); 
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_DCPin.TFT_Port, Copy_TftDisplay->TFT_DCPin.TFT_Pin,GPIO_LOW); 
 
     /**< Perform SPI data transfer to send the command byte */ 
     SPI_voidTransfer(Copy_SpiPeripheral, &Copy_Command, &Local_u8ReceivedData, 1); 
 
     /**< Set CS pin high to release the TFT display */ 
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_CSPin.TFT_Port, Copy_TftDisplay->TFT_CSPin.TFT_Pin,MGPIO_HIGH); 
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_CSPin.TFT_Port, Copy_TftDisplay->TFT_CSPin.TFT_Pin, GPIO_HIGH); 
 }
 
 static void TFT_SendData(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, u8 Copy_Data)
@@ -210,16 +210,16 @@ static void TFT_SendData(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_S
     u8 Local_u8ReceivedData = 0;
 
     /**<  Set CS (Chip Select) pin low to select the TFT display for communication */
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_CSPin.TFT_Port, Copy_TftDisplay->TFT_CSPin.TFT_Pin,MGPIO_LOW); 
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_CSPin.TFT_Port, Copy_TftDisplay->TFT_CSPin.TFT_Pin, GPIO_LOW); 
 
     /**< Set DC (Data/Command Control) pin low to indicate command mode */ 
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_DCPin.TFT_Port, Copy_TftDisplay->TFT_DCPin.TFT_Pin,MGPIO_HIGH); 
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_DCPin.TFT_Port, Copy_TftDisplay->TFT_DCPin.TFT_Pin, GPIO_HIGH); 
 
     /**< Perform SPI data transfer to send the command byte */ 
     SPI_voidTransfer(Copy_SpiPeripheral, &Copy_Data, &Local_u8ReceivedData, 1); 
 
     /**< Set CS pin high to release the TFT display */ 
-    MGPIO_voidSetPinValue(Copy_TftDisplay->TFT_CSPin.TFT_Port, Copy_TftDisplay->TFT_CSPin.TFT_Pin,MGPIO_HIGH); 
+    GPIO_SetPinValue(Copy_TftDisplay->TFT_CSPin.TFT_Port, Copy_TftDisplay->TFT_CSPin.TFT_Pin,GPIO_HIGH); 
 }
 
 static void TFT_DrawPixel(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, u16 Copy_XPosition, u16 Copy_YPosition, u16 color) 
@@ -287,11 +287,11 @@ static void TFT_InitController(const TFT_Config_t *Copy_TftDisplay, const SPI_t 
     /**<==============================================================================================================*/
     /**< Send command for software reset */
     TFT_SendCommand(Copy_TftDisplay, Copy_SpiPeripheral, 0x01);
-    MSTK_voidSetDelay(150);
+    STK_SetDelay(150);
 
     /**< Send command to exit sleep mode */
     TFT_SendCommand(Copy_TftDisplay, Copy_SpiPeripheral, 0x11);
-    MSTK_voidSetDelay(500);
+    STK_SetDelay(500);
 
     /**< Send command to configure frame rate control - normal mode */
     TFT_SendCommand(Copy_TftDisplay, Copy_SpiPeripheral, 0xB1);
@@ -416,11 +416,11 @@ static void TFT_InitController(const TFT_Config_t *Copy_TftDisplay, const SPI_t 
 
     /**< Turn off inversion */
     TFT_SendCommand(Copy_TftDisplay, Copy_SpiPeripheral, 0x13);
-    MSTK_voidSetDelay(10);
+    STK_SetDelay(10);
 
     /**< Turn on display */
     TFT_SendCommand(Copy_TftDisplay, Copy_SpiPeripheral, 0x29);
-    MSTK_voidSetDelay(100);
+    STK_SetDelay(100);
     /**<=========================================================================================================================*/
     /*******************************************< End of ST7735S display configuration *******************************************/
     /**<=========================================================================================================================*/

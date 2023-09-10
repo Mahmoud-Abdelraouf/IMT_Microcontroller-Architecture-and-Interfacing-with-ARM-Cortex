@@ -44,13 +44,13 @@ SPI_t SPI_SelectSpiPeripheral(SPI_Peripheral_t Copy_SPI)
 void SPI_voidInit(SPI_t Copy_SelectedSPI, const SPI_config_t *Copy_SPIConfig)
 {
   /********************************< Configure the SPI peripheral ********************************/
-  if(Copy_SelectedSPI == NULL && Copy_SPIConfig == NULL)
+  if(Copy_SelectedSPI == NULL && Copy_SPIConfig == NULL || Copy_SelectedSPI == NULL)
   {
     SPI_DefaultInitiation();
   }
   else
   {
-    /* Set the data frame format */
+    /**< Set the data frame format */
     if (Copy_SPIConfig->DataFrame == SPI_DATA_FRAME_8BIT)
     {
       CLR_BIT(Copy_SelectedSPI->CR1, SPI_CR1_DFF);
@@ -60,7 +60,7 @@ void SPI_voidInit(SPI_t Copy_SelectedSPI, const SPI_config_t *Copy_SPIConfig)
 	    SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_DFF);
     }
 
-    /* Set the frame format */
+    /**< Set the frame format */
     if(Copy_SPIConfig->FrameFormat == SPI_LSB_FIRST)
     {
       SET_BIT(Copy_SelectedSPI->CR1,SPI_CR1_LSBFIRST);
@@ -70,7 +70,7 @@ void SPI_voidInit(SPI_t Copy_SelectedSPI, const SPI_config_t *Copy_SPIConfig)
       CLR_BIT(Copy_SelectedSPI->CR1,SPI_CR1_LSBFIRST);
     }
 
-    /* Set the clock polarity */
+    /**< Set the clock polarity */
     if (Copy_SPIConfig->ClockPolarity == SPI_CLOCK_POLARITY_HIGH)
     {
       SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_CPOL);
@@ -80,7 +80,7 @@ void SPI_voidInit(SPI_t Copy_SelectedSPI, const SPI_config_t *Copy_SPIConfig)
 	    CLR_BIT(Copy_SelectedSPI->CR1, SPI_CR1_CPOL);
     }
 
-    /* Set the clock phase */
+    /**< Set the clock phase */
     if (Copy_SPIConfig->ClockPhase == SPI_WRITE_READ)
     {
       SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_CPHA);
@@ -90,29 +90,29 @@ void SPI_voidInit(SPI_t Copy_SelectedSPI, const SPI_config_t *Copy_SPIConfig)
       CLR_BIT(Copy_SelectedSPI->CR1, SPI_CR1_CPHA);
     }
 
-    /* Set the clock speed */
+    /**< Set the clock speed */
     Copy_SelectedSPI->CR1 &= ~SPI_CR1_BR_MSK;
     Copy_SelectedSPI->CR1 |= Copy_SPIConfig->BaudRateDIV;
 
     #if SPI_MODE == SPI_MASTER_MODE
-      /* Config the SPI to mater mode */
-      SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_SSM);   /* Set the SSM to manage the slave bit by software */
-      SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_SSI);   /* Set the SSI to work in the Master mode */
+      /**< Config the SPI to mater mode */
+      SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_SSM);   /**< Set the SSM to manage the slave bit by software */
+      SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_SSI);   /**< Set the SSI to work in the Master mode */
 
-      /* Set the master mode */
+      /**< Set the master mode */
       SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_MSTR);
 
       #elif SPI_MODE == SPI_SLAVE_MODE
-        /* Config the SPI to slave mode */
+        /**< Config the SPI to slave mode */
         CLR_BIT(Copy_SelectedSPI->CR1, SPI_CR1_SSM);   /* Clear the SSM to manage the slave bit by hardware */
 
-        /* Set the slave mode */
+        /**< Set the slave mode */
         CLR_BIT(Copy_SelectedSPI->CR1, SPI_CR1_MSTR);  /* Clear the MSTR to select the spi to work in slave mode */
       #else
         #error "ERROR!! Wrong choice"
     #endif
 
-    /* Enable the SPI peripheral */
+    /**< Enable the SPI peripheral */
     SET_BIT(Copy_SelectedSPI->CR1, SPI_CR1_SPE);
 
   }
@@ -121,22 +121,22 @@ void SPI_voidInit(SPI_t Copy_SelectedSPI, const SPI_config_t *Copy_SPIConfig)
 void SPI_voidTransfer(SPI_t Copy_SPI, u8 *Copy_TxData, u8 *Copy_RxData, u16 Copy_Size)
 {
 
-  /* Iterator to loop on the data */
+  /**< Iterator to loop on the data */
   u16 Local_Iterator;
 
   #if SPI_MODE == SPI_MASTER_MODE
-    /* Clear the slave select pin -> Enable the slave select pin */
-    MGPIO_voidSetPinValue(GPIO_PORTA, GPIO_PIN4, GPIO_LOW);
+    /**< Clear the slave select pin -> Enable the slave select pin */
+    GPIO_SetPinValue(GPIO_PORTA, GPIO_PIN4, GPIO_LOW);
   #endif
 
-  /* Send and receive the data */
+  /**< Send and receive the data */
   for (Local_Iterator = 0; Local_Iterator < Copy_Size; Local_Iterator++)
   {
-    /* Send the data */
-    SPI_voidSendByte(Copy_SPI,Copy_TxData[Local_Iterator]);
+    /**< Send the data */
+    SPI_SendByte(Copy_SPI, Copy_TxData[Local_Iterator]);
 
-    /* Receive the data */
-    Copy_RxData[Local_Iterator] = SPI_u8ReceiveByte(Copy_SPI);
+    /**< Receive the data */
+    Copy_RxData[Local_Iterator] = SPI_ReceiveByte(Copy_SPI);
   }
 
   /* Wait for the transmission to complete */
@@ -144,7 +144,7 @@ void SPI_voidTransfer(SPI_t Copy_SPI, u8 *Copy_TxData, u8 *Copy_RxData, u16 Copy
 
   #if SPI_MODE == SPI_MASTER_MODE
     /* Set the slave select pin -> Disable the slave select pin */
-    MGPIO_voidSetPinValue(GPIO_PORTA, GPIO_PIN4, GPIO_HIGH);
+    GPIO_SetPinValue(GPIO_PORTA, GPIO_PIN4, GPIO_HIGH);
   #endif
 
 }
@@ -161,7 +161,7 @@ void SPI_voidTransfer(SPI_t Copy_SPI, u8 *Copy_TxData, u8 *Copy_RxData, u16 Copy
 static void SPI_SendByte(SPI_RegDef_t *Copy_SPI, u8 Copy_Data)
 {
   /* Wait for the transmit buffer to be empty */
-  while (!GET_BIT(Copy_SPI->SR,SPI_SR_TXE));
+  while (!GET_BIT(Copy_SPI->SR, SPI_SR_TXE));
 
   /* Send the data */
   *((u8*)&(Copy_SPI->DR)) = Copy_Data;
@@ -170,7 +170,7 @@ static void SPI_SendByte(SPI_RegDef_t *Copy_SPI, u8 Copy_Data)
 static u8 SPI_ReceiveByte(SPI_RegDef_t *Copy_SPI)
 {
   /* Wait for the receive buffer to be full */
-  while (!GET_BIT(Copy_SPI->SR,SPI_SR_RXNE));
+  while (!GET_BIT(Copy_SPI->SR, SPI_SR_RXNE));
 
   /* Return the received data */
   return *((u8*)&(Copy_SPI->DR));
@@ -179,7 +179,7 @@ static u8 SPI_ReceiveByte(SPI_RegDef_t *Copy_SPI)
 static void SPI_WaitForTransmissionComplete(SPI_RegDef_t *Copy_SPI)
 {
   /* Wait for the transmission to complete */
-  while (GET_BIT(Copy_SPI->SR,SPI_SR_BSY));
+  while (GET_BIT(Copy_SPI->SR, SPI_SR_BSY));
 }
 
 static void SPI_DefaultInitiation(void)
@@ -188,7 +188,7 @@ static void SPI_DefaultInitiation(void)
   CLR_BIT(SPI_Default->CR1, SPI_CR1_DFF);
 
   /**< Set the frame format to be the LSB first */
-  SET_BIT(SPI_Default->CR1,SPI_CR1_LSBFIRST);
+  SET_BIT(SPI_Default->CR1, SPI_CR1_LSBFIRST);
 
   /**< Set the clock polarity to be clock polarity high at idle state */
   SET_BIT(SPI_Default->CR1, SPI_CR1_CPOL);

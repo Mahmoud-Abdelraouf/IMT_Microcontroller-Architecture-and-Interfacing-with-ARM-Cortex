@@ -42,14 +42,14 @@
  * @note The available options for each LEDMRX_ROW0_PIN are:
  *       - MGPIOAX, Y, where X is the port letter (e.g., A, B, C, etc.) and Y is the pin number (0-15).
  */
-#define LEDMTRX_ROW0_PIN                 MGPIOA, 0
-#define LEDMTRX_ROW1_PIN                 MGPIOA, 1
-#define LEDMTRX_ROW2_PIN                 MGPIOA, 2
-#define LEDMTRX_ROW3_PIN                 MGPIOA, 3
-#define LEDMTRX_ROW4_PIN                 MGPIOA, 4
-#define LEDMTRX_ROW5_PIN                 MGPIOA, 5
-#define LEDMTRX_ROW6_PIN                 MGPIOA, 6
-#define LEDMTRX_ROW7_PIN                 MGPIOA, 7
+#define LEDMTRX_ROW0_PIN                 GPIO_PORTA, 0
+#define LEDMTRX_ROW1_PIN                 GPIO_PORTA, 1
+#define LEDMTRX_ROW2_PIN                 GPIO_PORTA, 2
+#define LEDMTRX_ROW3_PIN                 GPIO_PORTA, 3
+#define LEDMTRX_ROW4_PIN                 GPIO_PORTA, 4
+#define LEDMTRX_ROW5_PIN                 GPIO_PORTA, 5
+#define LEDMTRX_ROW6_PIN                 GPIO_PORTA, 6
+#define LEDMTRX_ROW7_PIN                 GPIO_PORTA, 7
 
 
 
@@ -61,14 +61,14 @@
  * @note The available options for each LEDMRX_COL_PIN are:
  *       - MGPIOAX, Y, where X is the port letter (e.g., A, B, C, etc.) and Y is the pin number (0-15).
  */
-#define LEDMTRX_COL0_PIN                 MGPIOB, 0
-#define LEDMTRX_COL1_PIN                 MGPIOB, 1
-#define LEDMTRX_COL2_PIN                 MGPIOB, 5
-#define LEDMTRX_COL3_PIN                 MGPIOB, 6
-#define LEDMTRX_COL4_PIN                 MGPIOB, 7
-#define LEDMTRX_COL5_PIN                 MGPIOB, 8
-#define LEDMTRX_COL6_PIN                 MGPIOB, 9
-#define LEDMTRX_COL7_PIN                 MGPIOB, 10
+#define LEDMTRX_COL0_PIN                 GPIO_PORTB, 0
+#define LEDMTRX_COL1_PIN                 GPIO_PORTB, 1
+#define LEDMTRX_COL2_PIN                 GPIO_PORTB, 5
+#define LEDMTRX_COL3_PIN                 GPIO_PORTB, 6
+#define LEDMTRX_COL4_PIN                 GPIO_PORTB, 7
+#define LEDMTRX_COL5_PIN                 GPIO_PORTB, 8
+#define LEDMTRX_COL6_PIN                 GPIO_PORTB, 9
+#define LEDMTRX_COL7_PIN                 GPIO_PORTB, 10
 
 
 

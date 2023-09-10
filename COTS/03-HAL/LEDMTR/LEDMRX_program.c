@@ -22,188 +22,189 @@
 
 
 
-void HLEDMTRX_voidTurnOn(u8 Copy_u8Row, u8 Copy_u8Col)
+void LEDMTRX_TurnOn(u8 Copy_u8Row, u8 Copy_u8Col)
 {
  
 }
 
-void HLEDMTRX_voidTurnOff(u8 Copy_u8Row, u8 Copy_u8Col)
+void LEDMTRX_TurnOff(u8 Copy_u8Row, u8 Copy_u8Col)
 {
   
 }
 
-void HLEDMTRX_voidClear(void)
+void LEDMTRX_Clear(void)
 {
   
 }
 
-void HLEDMTRX_voidInit(void)
+void LEDMTRX_Init(void)
 {
   /**< Set Rows as output push-pull with 2MHZ */
-  MGPIO_voidSetPinDirection(LEDMTRX_ROW0_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_ROW1_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_ROW2_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_ROW3_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_ROW4_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_ROW5_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_ROW6_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_ROW7_PIN,MGPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_ROW0_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_ROW1_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_ROW2_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_ROW3_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_ROW4_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_ROW5_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_ROW6_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_ROW7_PIN, GPIO_OUTPUT_PP_2MHZ);
+
   /**< Set columns as output push-pull with 2MHZ */
-  MGPIO_voidSetPinDirection(LEDMTRX_COL0_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_COL1_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_COL2_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_COL3_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_COL4_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_COL5_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_COL6_PIN,MGPIO_OUTPUT_PP_2MHZ);
-  MGPIO_voidSetPinDirection(LEDMTRX_COL7_PIN,MGPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_COL0_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_COL1_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_COL2_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_COL3_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_COL4_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_COL5_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_COL6_PIN, GPIO_OUTPUT_PP_2MHZ);
+  GPIO_SetPinMode(LEDMTRX_COL7_PIN, GPIO_OUTPUT_PP_2MHZ);
 }
 
-void HLEDMTRX_voidDisplay(u8 *Copy_pau8Data)
+void LEDMTRX_Display(u8 *Copy_Data)
 {
   /****************************< Column 0 ****************************/
   /**< Disable All Columns */
-  HLEDMTRX_voidDisableAllCols();
+  LEDMTRX_DisableAllCols();
   /**< Display Column 0 Date */
-  HLEDMTRX_voidSetRowValues(Copy_pau8Data[0]);
+  LEDMTRX_SetRowValues(Copy_Data[0]);
   /**< Enable Column 0 */
-  MGPIO_voidSetPinValue(LEDMTRX_COL0_PIN,MGPIO_LOW);
+  GPIO_SetPinValue(LEDMTRX_COL0_PIN, GPIO_LOW);
   /**< Delay for 2.5mse */
-  MSTK_voidSetDelayMs(2.5);
+  STK_SetDelay(2.5);
   /****************************< Column 1 ****************************/
   /**< Disable All Columns */
-  HLEDMTRX_voidDisableAllCols();
+  LEDMTRX_DisableAllCols();
   /**< Display Column 1 Date */
-  HLEDMTRX_voidSetRowValues(Copy_pau8Data[1]);
+  HLEDMTRX_voidSetRowValues(Copy_Data[1]);
   /**< Enable Column 1 */
-  MGPIO_voidSetPinValue(LEDMTRX_COL1_PIN,MGPIO_LOW);
+  GPIO_SetPinValue(LEDMTRX_COL1_PIN, GPIO_LOW);
   /**< Delay for 2.5mse */
-  MSTK_voidSetDelayMs(2.5);
+  STK_SetDelay(2.5);
   /****************************< Column 2 ****************************/
   /**< Disable All Columns */
-  HLEDMTRX_voidDisableAllCols();
+  LEDMTRX_DisableAllCols();
   /**< Display Column 2 Date */
-  HLEDMTRX_voidSetRowValues(Copy_pau8Data[2]);
+  HLEDMTRX_voidSetRowValues(Copy_Data[2]);
   /**< Enable Column 2 */
-  MGPIO_voidSetPinValue(LEDMTRX_COL2_PIN,MGPIO_LOW);
+  GPIO_SetPinValue(LEDMTRX_COL2_PIN, GPIO_LOW);
   /**< Delay for 2.5mse */
-  MSTK_voidSetDelayMs(2.5);
+  STK_SetDelay(2.5);
   /****************************< Column 3 ****************************/
   /**< Disable All Columns */
-  HLEDMTRX_voidDisableAllCols();
+  LEDMTRX_DisableAllCols();
   /**< Display Column 1 Date */
-  HLEDMTRX_voidSetRowValues(Copy_pau8Data[3]);
+  HLEDMTRX_voidSetRowValues(Copy_Data[3]);
   /**< Enable Column 1 */
-  MGPIO_voidSetPinValue(LEDMTRX_COL3_PIN,MGPIO_LOW);
+  GPIO_SetPinValue(LEDMTRX_COL3_PIN, GPIO_LOW);
   /**< Delay for 2.5mse */
-  MSTK_voidSetDelayMs(2.5);
+  STK_SetDelay(2.5);
   /****************************< Column 4 ****************************/
   /**< Disable All Columns */
-  HLEDMTRX_voidDisableAllCols();
+  LEDMTRX_DisableAllCols();
   /**< Display Column 1 Date */
-  HLEDMTRX_voidSetRowValues(Copy_pau8Data[4]);
+  HLEDMTRX_voidSetRowValues(Copy_Data[4]);
   /**< Enable Column 1 */
-  MGPIO_voidSetPinValue(LEDMTRX_COL4_PIN,MGPIO_LOW);
+  GPIO_SetPinValue(LEDMTRX_COL4_PIN, GPIO_LOW);
   /**< Delay for 2.5mse */
-  MSTK_voidSetDelayMs(2.5);
+  STK_SetDelay(2.5);
   /****************************< Column 5 ****************************/
   /**< Disable All Columns */
-  HLEDMTRX_voidDisableAllCols();
+  LEDMTRX_DisableAllCols();
   /**< Display Column 1 Date */
-  HLEDMTRX_voidSetRowValues(Copy_pau8Data[5]);
+  HLEDMTRX_voidSetRowValues(Copy_Data[5]);
   /**< Enable Column 1 */
-  MGPIO_voidSetPinValue(LEDMTRX_COL5_PIN,MGPIO_LOW);
+  GPIO_SetPinValue(LEDMTRX_COL5_PIN, GPIO_LOW);
   /**< Delay for 2.5mse */
-  MSTK_voidSetDelayMs(2.5);
+  STK_SetDelay(2.5);
   /****************************< Column 6 ****************************/
   /**< Disable All Columns */
-  HLEDMTRX_voidDisableAllCols();
+  LEDMTRX_DisableAllCols();
   /**< Display Column 1 Date */
-  HLEDMTRX_voidSetRowValues(Copy_pau8Data[6]);
+  HLEDMTRX_voidSetRowValues(Copy_Data[6]);
   /**< Enable Column 1 */
-  MGPIO_voidSetPinValue(LEDMTRX_COL6_PIN,MGPIO_LOW);
+  GPIO_SetPinValue(LEDMTRX_COL6_PIN, GPIO_LOW);
   /**< Delay for 2.5mse */
-  MSTK_voidSetDelayMs(2.5);
+  STK_SetDelay(2.5);
   /****************************< Column 7 ****************************/
   /**< Disable All Columns */
-  HLEDMTRX_voidDisableAllCols();
+  LEDMTRX_DisableAllCols();
   /**< Display Column 1 Date */
-  HLEDMTRX_voidSetRowValues(Copy_pau8Data[7]);
+  HLEDMTRX_voidSetRowValues(Copy_Data[7]);
   /**< Enable Column 1 */
-  MGPIO_voidSetPinValue(LEDMTRX_COL7_PIN,MGPIO_LOW);
+  GPIO_SetPinValue(LEDMTRX_COL7_PIN, GPIO_LOW);
   /**< Delay for 2.5mse */
-  MSTK_voidSetDelayMs(2.5); 
+  STK_SetDelay(2.5); 
   /****************************< Shift left the data ****************************/
-  HLEDMTRX_voidShiftLeft(Copy_pau8Data);
+  HLEDMTRX_voidShiftLeft(Copy_Data);
   /****************************< Set Delay ****************************/
-  MSTK_voidSetDelayMs(500);
+  STK_SetDelay(500);
 }
 
 
-static void HLEDMTRX_voidDisableAllCols(void)
+static void LEDMTRX_DisableAllCols(void)
 {
-  MGPIO_voidSetPinValue(LEDMTRX_COL0_PIN,MGPIO_HIGH);
-  MGPIO_voidSetPinValue(LEDMTRX_COL1_PIN,MGPIO_HIGH);
-  MGPIO_voidSetPinValue(LEDMTRX_COL2_PIN,MGPIO_HIGH);
-  MGPIO_voidSetPinValue(LEDMTRX_COL3_PIN,MGPIO_HIGH);
-  MGPIO_voidSetPinValue(LEDMTRX_COL4_PIN,MGPIO_HIGH);
-  MGPIO_voidSetPinValue(LEDMTRX_COL5_PIN,MGPIO_HIGH);
-  MGPIO_voidSetPinValue(LEDMTRX_COL6_PIN,MGPIO_HIGH);
-  MGPIO_voidSetPinValue(LEDMTRX_COL7_PIN,MGPIO_HIGH);
+  GPIO_SetPinValue(LEDMTRX_COL0_PIN, GPIO_HIGH);
+  GPIO_SetPinValue(LEDMTRX_COL1_PIN, GPIO_HIGH);
+  GPIO_SetPinValue(LEDMTRX_COL2_PIN, GPIO_HIGH);
+  GPIO_SetPinValue(LEDMTRX_COL3_PIN, GPIO_HIGH);
+  GPIO_SetPinValue(LEDMTRX_COL4_PIN, GPIO_HIGH);
+  GPIO_SetPinValue(LEDMTRX_COL5_PIN, GPIO_HIGH);
+  GPIO_SetPinValue(LEDMTRX_COL6_PIN, GPIO_HIGH);
+  GPIO_SetPinValue(LEDMTRX_COL7_PIN, GPIO_HIGH);
 }
 
 
-static void HLEDMTRX_voidSetRowValues(u8 Copy_u8Value)
+static void LEDMTRX_SetRowValues(u8 Copy_Value)
 {
-  u8 Local_u8BitValue = 0;
+  u8 Local_BitValue = 0;
 
-  Local_u8BitValue = GET_BIT(Copy_u8Value,0);
-  MGPIO_voidSetPinValue(LEDMTRX_ROW0_PIN,Local_u8BitValue);
-  Local_u8BitValue = GET_BIT(Copy_u8Value,1);
-  MGPIO_voidSetPinValue(LEDMTRX_ROW1_PIN,Local_u8BitValue);
-  Local_u8BitValue = GET_BIT(Copy_u8Value,2);
-  MGPIO_voidSetPinValue(LEDMTRX_ROW2_PIN,Local_u8BitValue);
-  Local_u8BitValue = GET_BIT(Copy_u8Value,3);
-  MGPIO_voidSetPinValue(LEDMTRX_ROW3_PIN,Local_u8BitValue);
-  Local_u8BitValue = GET_BIT(Copy_u8Value,4);
-  MGPIO_voidSetPinValue(LEDMTRX_ROW4_PIN,Local_u8BitValue);
-  Local_u8BitValue = GET_BIT(Copy_u8Value,5);
-  MGPIO_voidSetPinValue(LEDMTRX_ROW5_PIN,Local_u8BitValue);
-  Local_u8BitValue = GET_BIT(Copy_u8Value,6);
-  MGPIO_voidSetPinValue(LEDMTRX_ROW6_PIN,Local_u8BitValue);
-  Local_u8BitValue = GET_BIT(Copy_u8Value,7);
-  MGPIO_voidSetPinValue(LEDMTRX_ROW7_PIN,Local_u8BitValue);
+  Local_BitValue = GET_BIT(Copy_Value,0);
+  GPIO_SetPinValue(LEDMTRX_ROW0_PIN, Local_BitValue);
+  Local_BitValue = GET_BIT(Copy_Value,1);
+  GPIO_SetPinValue(LEDMTRX_ROW1_PIN, Local_BitValue);
+  Local_BitValue = GET_BIT(Copy_Value,2);
+  GPIO_SetPinValue(LEDMTRX_ROW2_PIN, Local_BitValue);
+  Local_BitValue = GET_BIT(Copy_Value,3);
+  GPIO_SetPinValue(LEDMTRX_ROW3_PIN, Local_BitValue);
+  Local_BitValue = GET_BIT(Copy_Value,4);
+  GPIO_SetPinValue(LEDMTRX_ROW4_PIN, Local_BitValue);
+  Local_BitValue = GET_BIT(Copy_Value,5);
+  GPIO_SetPinValue(LEDMTRX_ROW5_PIN, Local_BitValue);
+  Local_BitValue = GET_BIT(Copy_Value,6);
+  GPIO_SetPinValue(LEDMTRX_ROW6_PIN, Local_BitValue);
+  Local_BitValue = GET_BIT(Copy_Value,7);
+  GPIO_SetPinValue(LEDMTRX_ROW7_PIN, Local_BitValue);
 }
 
 
-void HLEDMTRX_voidShiftLeft(u8 *Copy_pau8Data)
+void LEDMTRX_ShiftLeft(u8 *Copy_Data)
 {
-  u8 Local_u8Temp= 0;
+  u8 Local_Temp= 0;
 
   /**< Save the fist element in of the Data in temp variable */
-  Local_u8Temp = Copy_pau8Data[0];
+  Local_Temp = Copy_Data[0];
 
   /**< Shift data left */ 
   for (u8 Local_u8ColsIterator = 0; Local_u8ColsIterator < LEDMTRX_NUM_COLS; Local_u8ColsIterator++)
   {
-    Copy_pau8Data[Local_u8ColsIterator] = Copy_pau8Data[Local_u8ColsIterator+1];
+    Copy_Data[Local_u8ColsIterator] = Copy_Data[Local_u8ColsIterator+1];
   }
 
   /**< Set the last column data by the fist one */
-  Copy_pau8Data[LEDMTRX_NUM_COLS-1] = Local_u8Temp;
+  Copy_Data[LEDMTRX_NUM_COLS-1] = Local_Temp;
 
 }
 
 
-void HLEDMTRX_voidDisplayWithShift(u8 *Copy_pau8Data, u16 Copy_u16DelayMs)
+void LEDMTRX_DisplayWithShift(u8 *Copy_Data, u16 Copy_DelayMs)
 {
   for(u8 i = 0; i < LEDMTRX_NUM_COLS; i++)
   {
-    HLEDMTRX_voidSetRowValues(Copy_pau8Data[i]);
-    MGPIO_voidSetPinValue(LEDMTRX_COL0_PIN + i, MGPIO_LOW);
-    MSTK_voidSetDelayMs(Copy_u16DelayMs);
-    HLEDMTRX_voidDisableAllCols();
-    HLEDMTRX_voidShiftLeft(Copy_pau8Data);
+    LEDMTRX_SetRowValues(Copy_Data[i]);
+    GPIO_SetPinValue(LEDMTRX_COL0_PIN + i, GPIO_LOW);
+    STK_SetDelay(Copy_DelayMs);
+    LEDMTRX_DisableAllCols();
+    LEDMTRX_ShiftLeft(Copy_Data);
   }
 }
 

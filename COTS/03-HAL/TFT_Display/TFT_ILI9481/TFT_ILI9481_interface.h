@@ -111,7 +111,7 @@ typedef struct {
  *
  * @note This function sends a series of commands to configure the TFT display.
  */
-void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheSpiTftUsed);
+void TFT_Init(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheSpiTftUsed);
 
 /**
  * @brief Clears the display screen.
@@ -121,7 +121,7 @@ void TFT_voidInit(const TFT_Config_t *Copy_psTftDisplay, SPI_t Copy_psTheSpiTftU
  * @param None
  * @retval None
  */
-void TFT_voidClearScreen(void);
+void TFT_ClearScreen(void);
 
 /**
  * @brief Draws a pixel at the specified coordinates with the given color.
@@ -133,7 +133,7 @@ void TFT_voidClearScreen(void);
  * @param[in] color The color of the pixel in 16-bit RGB565 format.
  * @retval None
  */
-void TFT_voidDrawPixel(u16 x, u16 y, u16 color);
+void TFT_DrawPixel(u16 x, u16 y, u16 color);
 
 /**
  * @brief Draws a line between two points with the given color.
@@ -148,7 +148,7 @@ void TFT_voidDrawPixel(u16 x, u16 y, u16 color);
  * @param[in] color The color of the line in 16-bit RGB565 format.
  * @retval None
  */
-void TFT_voidDrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u16 color);
+void TFT_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u16 color);
 
 /**
  * @brief Displays an image on the TFT screen.
@@ -162,7 +162,7 @@ void TFT_voidDrawLine(u16 x1, u16 y1, u16 x2, u16 y2, u16 color);
  * @param[in] height The height of the image in pixels.
  * @retval None
  */
-void TFT_voidDisplayImage(u16 x, u16 y, const u16* image, u16 width, u16 height);
+void TFT_DisplayImage(u16 x, u16 y, const u16* image, u16 width, u16 height);
 
 /**
  * @brief Displays text on the TFT screen.

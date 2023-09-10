@@ -115,7 +115,7 @@ typedef struct {
  *
  * @note This function sends a series of commands to configure the TFT display.
  */
-void TFT_voidInit(const TFT_Config_t *Copy_TftDisplay, SPI_t Copy_SpiPeripheral);
+void TFT_Init(const TFT_Config_t *Copy_TftDisplay, SPI_t Copy_SpiPeripheral);
 
 /**
  * @brief Clears the TFT screen by filling it with the default background color.
@@ -126,7 +126,7 @@ void TFT_voidInit(const TFT_Config_t *Copy_TftDisplay, SPI_t Copy_SpiPeripheral)
  * @param[in] Copy_SpiPeripheral The SPI peripheral to be used for communication.
  * @retval None
  */
-void TFT_voidClearScreen(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral);
+void TFT_ClearScreen(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral);
 
 /**
  * @brief Draws a line between two points with the given color.
@@ -141,7 +141,7 @@ void TFT_voidClearScreen(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_S
  * @param[in] color The color of the line in 16-bit RGB565 format.
  * @retval None
  */
-void TFT_voidDrawLine(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, u16 x1, u16 y1, u16 x2, u16 y2, u16 color);
+void TFT_DrawLine(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, u16 x1, u16 y1, u16 x2, u16 y2, u16 color);
 
 /**
  * @brief Displays an image on the TFT screen.
@@ -155,7 +155,7 @@ void TFT_voidDrawLine(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiP
  * @param[in] image Pointer to the image data in RGB565 format.
  * @retval None
  */
-void TFT_voidDisplayImage(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, const u16 *Copy_Image);
+void TFT_DisplayImage(const TFT_Config_t *Copy_TftDisplay, const SPI_t Copy_SpiPeripheral, const u16 *Copy_Image);
 
 /**
  * @brief Displays text on the TFT screen.

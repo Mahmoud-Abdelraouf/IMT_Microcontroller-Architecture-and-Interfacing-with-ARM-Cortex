@@ -14,9 +14,9 @@
 #define __LEDMATRIX_PRIVATE_H__
 
 
-static void HLEDMTRX_voidDisableAllCols(void);
+static void LEDMTRX_DisableAllCols(void);
 
-static void HLEDMTRX_voidSetRowValues(u8 Copy_u8Value);
+static void LEDMTRX_SetRowValues(u8 Copy_u8Value);
 
 /*****************************< Concatenate function *****************************/
 #define Conc(NUM)			Conc_Help(NUM)
