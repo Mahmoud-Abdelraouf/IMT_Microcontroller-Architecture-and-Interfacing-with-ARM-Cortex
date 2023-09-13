@@ -21,6 +21,7 @@
 
 /**< Define Callback Global Variable */
 static void (*STK_Callback)(void) = NULL;
+
 /**< Define Variable for interval mode */
 static u8 STK_ModeOfInterval;
 
@@ -170,12 +171,12 @@ void SysTick_Handler(void)
     { 
         if(STK_ModeOfInterval == STK_SINGLE_INTERVAL)  
         {
-            MSTK_voidReset();
+            STK_Reset();
         }
         /**< Callback notification */
-        STK_pfCallback();
+        STK_Callback();
 
-         /**< Clear the count/interrupt flag */
+        /**< Clear the count/interrupt flag */
         STK->CTRL &= ~STK_CTRL_COUNTFLAG_MASK;
     }
 }

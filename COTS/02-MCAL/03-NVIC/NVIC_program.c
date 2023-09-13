@@ -203,7 +203,7 @@ Std_ReturnType NVIC_xSetPriority(IRQn_Type Copy_IRQn, u8 Copy_Priority)
         NVIC_IPR_BASE_ADDRESS[RegisterIndex] &= ~(0xFF << BitPosition);
 
         /**< Set the priority in the appropriate IPRx register */ 
-        NVIC_IPR_BASE_ADDRESS[RegisterIndex] = (Copy_Priority << BitPosition);
+        NVIC_IPR_BASE_ADDRESS[RegisterIndex] = (((Copy_Priority << BitPosition)) << 4);
         
         /**< Set the group and sub-group priority for interrupt handling in SCB_AIRCR register */
         SCB_SetPriorityGrouping(NVIC_0GROUP_16SUB);
@@ -267,7 +267,7 @@ Std_ReturnType NVIC_vSetPriority(IRQn_Type Copy_IRQn, u8 Copy_GroupPriority, u8 
     RegValue |= (Local_Priority << BitPosition);
     
     /**< Write the modified value back to the IPR register */ 
-    NVIC_IPR_BASE_ADDRESS[RegisterIndex] = RegValue;
+    NVIC_IPR_BASE_ADDRESS[RegisterIndex] = (RegValue << 4);
 
     /**< Configure the priority grouping for the Nested Vectored Interrupt Controller (NVIC) */
     SCB_SetPriorityGrouping(PRIORITY_GROUPING);

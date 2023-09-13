@@ -30,7 +30,8 @@
  * Multiplexed Pin Assignments Register (MAPR), External Interrupt Configuration Registers (EXTICR0-3),
  * and Multiplexed Pin Assignments Register 2 (MAPR2).
  */
-typedef struct AFIO_t{
+typedef struct AFIO_t
+{
     volatile u32 EVCR;        /**< Event Control Register. */
     volatile u32 MAPR;        /**< Multiplexed Pin Assignments Register. */
     volatile u32 EXTICR[4];   /**< External Interrupt Configuration Registers. */

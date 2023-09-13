@@ -118,8 +118,6 @@ u8 EXTI_SwTrigger(u8 Copy_Line)
 	return Local_u8ErrorStatus;
 }
 
-
-
 u8 EXTI_SetCallBack(void (*Copy_Callback)(void))
 {
 	u8 Local_u8ErrorStatus = 0;
