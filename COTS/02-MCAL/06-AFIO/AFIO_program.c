@@ -19,35 +19,6 @@
 #include "AFIO_interface.h"
 #include "AFIO_config.h"
 /*************************************< FUNCTIONS IMPLEMENTATION *************************************/
-
-/**
-void MAFIO_voidSetEXTIConfiguration(u8 Copy_u8Line, u8 Copy_u8PortMap)
-{
-    u8 Local_u8RegIndex = 0;
-    if(Copy_u8Line < 4)
-    {
-        Local_u8RegIndex = 0;
-    }
-    else if(Copy_u8Line < 8)
-    {
-        Local_u8RegIndex = 1;
-        Copy_u8Line -= 4;
-    }
-    else if(Copy_u8Line < 12)
-    {
-        Local_u8RegIndex = 2;
-        Copy_u8Line -= 8;
-    }
-    else if(Copy_u8Line < 16)
-    {
-        Local_u8RegIndex = 3;
-        Copy_u8Line -= 12;
-    }
-    AFIO -> EXTICR[Local_u8RegIndex] &=~ ((0b1111) << (Copy_u8Line * 4));
-    AFIO -> EXTICR[Local_u8RegIndex] |=  ((Copy_u8PortMap) << (Copy_u8Line * 4));
-
-}*/
-
 void AFIO_SetEXTIPinConfiguration(u8 Copy_Line, u8 Copy_PortMap)
 {
     u8 Local_u8RegIndex = Copy_Line / 4;   /**< Calculate register index using integer division */
