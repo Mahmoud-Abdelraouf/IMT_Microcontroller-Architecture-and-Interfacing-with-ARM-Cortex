@@ -50,7 +50,7 @@ static void OS_SetScheduler(void)
         {
             if(OS_Tasks[Local_u8Count].FirstDelay == 0)
             {
-                OS_Tasks[Local_u8Count].FirstDelay = ((OS_Tasks[Local_u8Count].Periodicity) / OS_TICK_TIME)-1;
+                OS_Tasks[Local_u8Count].FirstDelay = ((OS_Tasks[Local_u8Count].Periodicity)-1);
                 OS_Tasks[Local_u8Count].OS_pfSetTask();
             }
             else
