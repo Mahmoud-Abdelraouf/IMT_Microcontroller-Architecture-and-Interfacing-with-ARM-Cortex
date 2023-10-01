@@ -16,8 +16,6 @@
 #include "OS_config.h"
 #include "OS_interface.h"
 #include "OS_private.h"
-
-
 /****************************************< FUNCTIONS IMPLEMENTATION ****************************************/
 u8 OS_CreateTask(u8 Copy_u8TaskPriority, u16 Copy_u16TaskPeriodicity, void (*Copy_pfTask)(void), u8 Copy_u8FirstDelay)
 {

@@ -51,13 +51,13 @@ void STK_Init(void)
 
 void STK_Start(void)
 {
-    /* Start the SysTick timer */
+    /**< Start the SysTick timer */
     STK->CTRL |= STK_CTRL_ENABLE_MASK;
 }
 
 void STK_Stop(void)
 {
-    /* Stop the SysTick timer */
+    /**< Stop the SysTick timer */
     STK->CTRL &= ~STK_CTRL_ENABLE_MASK;
 }
 

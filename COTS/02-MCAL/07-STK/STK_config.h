@@ -60,8 +60,6 @@
 
 
 
-
-
 #endif /**< __STK_CONFIG_H__ */
 
 

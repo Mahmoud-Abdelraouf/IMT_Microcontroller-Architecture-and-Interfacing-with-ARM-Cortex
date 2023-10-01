@@ -1,9 +1,10 @@
 /**
+ ********************************************************************************************************************************** 
  * @file UART_private.h
  * @brief Private file for the UART driver.
  * @date 19 Jul 2023
  * @version V01
- * 
+ ********************************************************************************************************************************** 
  * @details This file contains private definitions and declarations for the UART driver.
  * 
  * @author Mahmoud Abdelraouf Mahmoud
@@ -23,7 +24,7 @@
  * @deprecated This module is deprecated and will be replaced in future versions.
  * 
  * @remarks Some additional remarks.
- * 
+ ********************************************************************************************************************************** 
  * @addtogroup UART_Driver
  * @{
  */

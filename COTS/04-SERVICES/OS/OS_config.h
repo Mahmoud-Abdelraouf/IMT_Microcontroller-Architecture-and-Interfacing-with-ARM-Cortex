@@ -13,8 +13,8 @@
 #define __OS_CONFIG_H__
 
 
-#define OS_NUMBER_TASKS             3
-
+#define OS_NUMBER_TASKS    3
+#define OS_TICK_TIME       1000
 
 
 

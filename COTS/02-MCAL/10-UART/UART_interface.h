@@ -1,9 +1,10 @@
 /**
+ ********************************************************************************************************************************** 
  * @file UART_interface.h
  * @brief Interface file for the UART driver.
  * @date 19 Jul 2023
  * @version V01
- * 
+ ********************************************************************************************************************************** 
  * @details This file contains the function prototypes and definitions for the UART driver.
  * 
  * @author Mahmoud Abdelraouf Mahmoud
@@ -23,7 +24,7 @@
  * @deprecated This module is deprecated and will be replaced in future versions.
  * 
  * @remarks Some additional remarks.
- * 
+ ********************************************************************************************************************************** 
  * @defgroup UART_Driver UART Driver
  * @{
  */
@@ -133,14 +134,14 @@ typedef enum
     UART_HW_FLOW_CONTROL_RTS_CTS /**< RTS and CTS hardware flow control */
 } UART_HW_FlowControl_t;
 
-typedef struct 
-{
-   u8 HwFlowControl:2;
-   u8 ParityMode:2;
-   u8 BaudRate:2;
-   u8 StopBits:2;
-   u8 WordLength:1;
-}UART_Config_t;
+typedef struct {
+  u8 HwFlowControl:2;
+  u8 ParityMode:2;
+  u8 BaudRate:2;
+  u8 StopBits:2;
+  u8 WordLength:1;
+  u8 : 7; /**< Padding to align to 8 bits */ 
+} UART_Config_t;
 
 /**
  * @}
@@ -234,7 +235,7 @@ USART_RegDef_t *UART_GetUSARTBaseAddress(USART_Selection_t usart);
  * /**< Now the UART peripheral is configured and ready to use for communication.
  * @endcode
  */
-void UART_voidInit(USART_RegDef_t *Copy_psUSART, UART_Config_t *config);
+void UART_Init(USART_RegDef_t *Copy_USART, UART_Config_t *config);
 
 /**
  * @brief Transmit data through the UART peripheral.
@@ -273,7 +274,7 @@ void UART_voidInit(USART_RegDef_t *Copy_psUSART, UART_Config_t *config);
  * /**< Now the data is transmitted through the UART peripheral.
  * @endcode
  */
-void UART_voidTransmit(USART_RegDef_t *Copy_psUSART, u8* data, u16 size);
+void UART_Transmit(USART_RegDef_t *Copy_USART, u8* data, u16 size);
 
 /**
  * @brief Receive data through the UART peripheral.
@@ -316,7 +317,7 @@ void UART_voidTransmit(USART_RegDef_t *Copy_psUSART, u8* data, u16 size);
  * /**< Now the data is received and stored in the 'received_data_buffer'.
  * @endcode
  */
-void UART_voidReceive(USART_RegDef_t *Copy_psUSART, u8* data, u16 size);
+void UART_Receive(USART_RegDef_t *Copy_USART, u8* data, u16 size);
 
 /**
  * @}

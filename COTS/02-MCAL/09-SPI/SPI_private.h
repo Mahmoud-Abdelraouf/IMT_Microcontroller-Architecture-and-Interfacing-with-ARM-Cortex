@@ -1,16 +1,18 @@
 /**
+ ********************************************************************************************************************************** 
  * @file SPI_private.h
  * @brief Private file for the SPI driver.
  * 
  * This file contains the private function prototypes and definitions for the SPI driver.
  * These functions and definitions are not intended to be used outside of the driver.
- * 
+ ********************************************************************************************************************************** 
  * @note Do not include this file directly in your application code.
  *       Instead, include the public interface file (SPI_interface.h).
  * 
  * @author Mahmoud Abdelraouf Mahmoud
  * @date 15 Jul 2023
  * @version V01
+ ********************************************************************************************************************************** 
  */
 
 #ifndef __SPI_PRIVATE_H__

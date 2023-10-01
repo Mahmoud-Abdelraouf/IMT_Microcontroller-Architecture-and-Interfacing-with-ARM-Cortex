@@ -12,9 +12,6 @@
 #ifndef __OS_PRIVATE_H__
 #define __OS_PRIVATE_H__
 
-
-#define OS_TICK_TIME       1000
-
 /**
  * @brief A struct representing a task in the operating system.
  *
@@ -47,7 +44,7 @@ static OS_Task_t OS_Tasks[OS_NUMBER_TASKS] = {NULL};
  *
  * @retval     None
  */
-static void OS_voidSetScheduler(void);
+static void OS_SetScheduler(void);
 
 
 

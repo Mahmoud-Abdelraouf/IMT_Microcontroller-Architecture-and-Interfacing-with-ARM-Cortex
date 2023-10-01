@@ -1,4 +1,14 @@
-
+/**
+ ********************************************************************************************************************************** 
+ * @file SPI_registers.h
+ * @brief Header file for SPI peripheral register definitions.
+ * @version V01
+ * @date 15 Jul 2023
+ * @author Mahmoud Abdelraouf
+ * 
+ * @copyright Copyright (c) 2023
+ ********************************************************************************************************************************** 
+ */
 #ifndef __SPI_REGISTERS_H__
 #define __SPI_REGISTERS_H__
 /**

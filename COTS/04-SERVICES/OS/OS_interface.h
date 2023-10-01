@@ -14,6 +14,8 @@
 #define __OS_INTERFACE_H__
 
 
+
+
 /**
  * @brief Creates a new task in the operating system.
  *
@@ -40,9 +42,7 @@ u8 OS_CreateTask(u8 Copy_u8TaskPriority, u16 Copy_u16TaskPeriodicity, void (*Cop
  *
  * @retval     None
  */
-void OS_voidStart(void);
-
-
+void OS_Start(void);
 
 
 
